@@ -180,9 +180,9 @@ section{padding:52px 48px}
 .port-sub{max-width:260px;color:var(--muted);font-size:14px;line-height:1.6}
 /* PORTFOLIO FLIPBOOK v3 */
 .fb-scene{max-width:1100px;margin:0 auto;padding-bottom:52px;position:relative}
-.fb-scene::before,.fb-scene::after{content:'';position:absolute;left:3%;width:94%;background:var(--card);border:1px solid var(--border);z-index:0;pointer-events:none}
-.fb-scene::before{bottom:-7px;height:calc(100% - 52px);transform:rotate(.35deg)}
-.fb-scene::after{bottom:-14px;left:5%;width:90%;height:calc(100% - 52px);transform:rotate(-.45deg);opacity:.5}
+.fb-scene::before,.fb-scene::after{content:'';position:absolute;left:3%;width:94%;height:540px;background:var(--card);border:1px solid var(--border);z-index:0;pointer-events:none}
+.fb-scene::before{top:5px;transform:rotate(.35deg)}
+.fb-scene::after{top:10px;left:5%;width:90%;transform:rotate(-.45deg);opacity:.5}
 .fb-body{display:flex;height:540px;position:relative;z-index:1}
 /* LEFT TEXT PAGE */
 .fb-left{flex:0 0 45%;background:var(--dark);border:1px solid var(--border);border-right:none;padding:52px 48px 48px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
@@ -225,9 +225,9 @@ section{padding:52px 48px}
 .fb-arrow:active{background:rgba(255,77,0,.08)}
 .fb-arrow svg{width:15px;height:15px}
 .fb-segs{display:flex;align-items:center;gap:8px;flex:1;justify-content:center}
-.fb-seg{width:28px;height:2px;background:rgba(255,255,255,.1);cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .4s,height .4s;flex-shrink:0}
+.fb-seg{width:28px;height:2px;background:rgba(255,255,255,.22);cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .4s;flex-shrink:0}
 .fb-seg::before{content:'';position:absolute;top:-12px;bottom:-12px;left:-2px;right:-2px}
-.fb-seg:hover{background:rgba(255,77,0,.5)}
+.fb-seg:hover{background:rgba(255,77,0,.6)}
 .fb-seg.on{background:var(--orange);width:46px;height:3px}
 .fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:46px;text-align:right}
 .fb-count em{color:var(--cream);font-style:normal}
