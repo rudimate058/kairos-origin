@@ -224,9 +224,11 @@ section{padding:52px 48px}
 .fb-arrow:hover{border-color:var(--orange);color:var(--orange)}
 .fb-arrow:active{background:rgba(255,77,0,.08)}
 .fb-arrow svg{width:15px;height:15px}
-.fb-dots{display:flex;align-items:center;gap:7px;flex:1;justify-content:center}
-.fb-dot{width:5px;height:5px;background:var(--border);cursor:pointer;transition:width .4s cubic-bezier(0.16,1,0.3,1),background .4s}
-.fb-dot.on{background:var(--orange);width:22px}
+.fb-segs{display:flex;align-items:center;gap:5px;flex:1;justify-content:center}
+.fb-seg{width:26px;height:2px;background:var(--border);border:none;padding:0;cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .45s,height .45s;outline:none;flex-shrink:0}
+.fb-seg::before{content:'';position:absolute;top:-9px;bottom:-9px;left:0;right:0}
+.fb-seg:hover{background:rgba(255,77,0,.4)}
+.fb-seg.on{background:var(--orange);width:42px;height:3px}
 .fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:46px;text-align:right}
 .fb-count em{color:var(--cream);font-style:normal}
 /* MOBILE */
@@ -725,13 +727,13 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <button class="fb-arrow" id="fbPrev" aria-label="Vorherige Seite">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="fb-dots" id="fbDots">
-        <div class="fb-dot on"  data-i="0"></div>
-        <div class="fb-dot"     data-i="1"></div>
-        <div class="fb-dot"     data-i="2"></div>
-        <div class="fb-dot"     data-i="3"></div>
-        <div class="fb-dot"     data-i="4"></div>
-        <div class="fb-dot"     data-i="5"></div>
+      <div class="fb-segs" id="fbSegs">
+        <button class="fb-seg on" data-i="0" aria-label="Seite 1"></button>
+        <button class="fb-seg"    data-i="1" aria-label="Seite 2"></button>
+        <button class="fb-seg"    data-i="2" aria-label="Seite 3"></button>
+        <button class="fb-seg"    data-i="3" aria-label="Seite 4"></button>
+        <button class="fb-seg"    data-i="4" aria-label="Seite 5"></button>
+        <button class="fb-seg"    data-i="5" aria-label="Seite 6"></button>
       </div>
       <div class="fb-count"><em id="fbCur">01</em>&thinsp;/&thinsp;06</div>
       <button class="fb-arrow" id="fbNext" aria-label="N&auml;chste Seite">
@@ -943,16 +945,20 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <button class="legal-close" onclick="closeLegal()">✕</button>
     </div>
     <div class="legal-body">
-      <h3>Angaben gemäß § 5 ECG</h3>
-      <p>Kairos Origin GmbH<br>Franz-Singer-Straße 5, 6091 Götzens<br>Resselstraße 33, 6020 Innsbruck</p>
-      <h3>Geschäftsführung</h3>
-      <p>[Name des Geschäftsführers hier eintragen]</p>
+      <h3>Angaben gem&auml;&szlig; &sect; 5 ECG</h3>
+      <p>Kairos Origin GmbH<br>Franz-Singer-Stra&szlig;e 5<br>6091 G&ouml;tzens, Austria</p>
       <h3>Kontakt</h3>
-      <p>E-Mail: [E-Mail-Adresse]<br>Tel: [Telefonnummer]</p>
+      <p>Tel.: <a href="tel:+436811019378" style="color:var(--orange);text-decoration:none">+43 681 101 937 80</a><br>
+      Mail: <a href="mailto:office@kairos-origin.com" style="color:var(--orange);text-decoration:none">office@kairos-origin.com</a><br>
+      Web: <a href="https://kairos-origin.com" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">kairos-origin.com</a></p>
       <h3>Unternehmensregistrierung</h3>
-      <p>UID-Nummer: [UID hier eintragen]<br>Firmenbuchnummer: [FN hier eintragen]<br>Firmenbuchgericht: [Gericht]</p>
+      <p>Gesellschaft mit beschr&auml;nkter Haftung<br>
+      Firmensitz: Innsbruck<br>
+      Firmenbuchnummer: FN 663210 i<br>
+      Firmenbuchgericht: Innsbruck<br>
+      UID-Nr.: ATU82598958</p>
       <h3>Haftungsausschluss</h3>
-      <p>[Haftungsausschluss-Text hier einfügen]</p>
+      <p>Trotz sorgf&auml;ltiger inhaltlicher Kontrolle &uuml;bernehmen wir keine Haftung f&uuml;r die Inhalte externer Links. F&uuml;r den Inhalt der verlinkten Seiten sind ausschlie&szlig;lich deren Betreiber verantwortlich.</p>
     </div>
   </div>
 </div>
@@ -1064,7 +1070,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var descEl=document.getElementById('fbDesc');
   var tagsEl=document.getElementById('fbTags');
   var curEl=document.getElementById('fbCur');
-  var dots=document.querySelectorAll('.fb-dot');
+  var dots=document.querySelectorAll('.fb-seg');
 
   function mod(n){return((n%N)+N)%N;}
 
@@ -1136,7 +1142,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   document.getElementById('fbNext').addEventListener('click',function(){go(cur+1);});
   document.getElementById('fbPrev').addEventListener('click',function(){go(cur-1);});
   document.getElementById('fbRight').addEventListener('click',function(e){
-    if(e.target.closest('.fb-arrow,.fb-dots'))return;
+    if(e.target.closest('.fb-arrow,.fb-segs'))return;
     go(cur+1);
   });
   dots.forEach(function(dot){
