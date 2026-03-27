@@ -178,41 +178,69 @@ section{padding:52px 48px}
 #portfolio{border-top:1px solid var(--border);background:radial-gradient(ellipse at 100% 0%,rgba(255,77,0,.05) 0%,transparent 50%),var(--black)}
 .port-head{max-width:1200px;margin:0 auto 20px;display:flex;justify-content:space-between;align-items:flex-end}
 .port-sub{max-width:260px;color:var(--muted);font-size:14px;line-height:1.6}
-/* PORTFOLIO CAROUSEL */
-.pcombo-wrap{position:relative;max-width:1200px;margin:0 auto;overflow:hidden}
-.pcombo{display:flex;overflow:visible;gap:0;cursor:grab;user-select:none;will-change:transform}
-.pcombo.dragging{cursor:grabbing}
-.pcombo-panel{flex:0 0 calc((100% - 40px) / 2.15);min-width:0;height:420px;position:relative;overflow:hidden;cursor:pointer;display:block;text-decoration:none;margin-right:2px}
-.pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.9}
-.pcombo-img{width:100%;height:100%;object-fit:cover;opacity:.55;transition:transform .7s var(--ease),opacity .5s}
-.pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.75}
-.pcombo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,31,.98) 0%,rgba(13,13,31,.55) 45%,rgba(13,13,31,.1) 100%)}
-.pcombo-lbl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;z-index:2;transition:padding .4s var(--ease)}
-.pcombo-panel:hover .pcombo-lbl{padding-bottom:28px}
-.pcombo-accent{display:block;width:28px;height:2px;background:var(--orange);margin-bottom:12px;transition:width .4s var(--ease)}
-.pcombo-panel:hover .pcombo-accent{width:48px}
-.pcombo-title{display:block;font-family:var(--fd);font-size:clamp(22px,2.5vw,42px);letter-spacing:.04em;text-transform:uppercase;color:var(--orange);line-height:.95;margin-bottom:10px;text-shadow:0 2px 30px rgba(255,77,0,.35)}
-.pcombo-cat{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,.5);margin-bottom:0}
-.pcombo-line{position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,77,0,.35),transparent)}
-/* CAROUSEL CONTROLS */
-.pc-nav{display:flex;align-items:center;gap:16px;max-width:1200px;margin:18px auto 0}
-.pc-btn{width:44px;height:44px;border:1px solid var(--border);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s var(--ease);flex-shrink:0}
-.pc-btn:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
-.pc-btn:disabled{opacity:.25;cursor:not-allowed}
-.pc-btn svg{width:16px;height:16px}
-.pc-progress{flex:1;height:1.5px;background:var(--border);position:relative;overflow:hidden}
-.pc-bar{position:absolute;left:0;top:0;height:100%;background:var(--orange);transition:width .45s var(--ease);width:0%}
-.pc-count{font-family:var(--fd);font-size:12px;color:var(--muted);letter-spacing:.15em;flex-shrink:0;min-width:48px;text-align:right}
-.pc-count span{color:var(--cream)}
+/* ── BOOK PORTFOLIO ── */
+.book-stage{max-width:1100px;margin:0 auto;padding-bottom:56px}
+.book-wrap{position:relative;width:100%;height:520px;perspective:2800px;perspective-origin:50% 36%;filter:drop-shadow(0 40px 80px rgba(0,0,0,.9)) drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.book{display:flex;width:100%;height:100%;transform-style:preserve-3d;border:1px solid rgba(255,255,255,.045)}
+/* LEFT PAGE */
+.bpage-l{flex:1;background:linear-gradient(135deg,#1c1510 0%,var(--card) 60%);padding:52px 44px 44px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.bpage-l::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 10% 90%,rgba(255,77,0,.09) 0%,transparent 55%);pointer-events:none}
+.bpage-l::after{content:'';position:absolute;top:0;right:0;bottom:0;width:22px;background:linear-gradient(to left,rgba(0,0,0,.25),transparent);pointer-events:none}
+/* SPINE */
+.bspine{width:9px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.85) 0%,rgba(70,45,22,.6) 45%,rgba(0,0,0,.75) 100%);position:relative;z-index:20;box-shadow:2px 0 10px rgba(0,0,0,.5),-2px 0 10px rgba(0,0,0,.5)}
+.bspine::before{content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;transform:translateX(-50%);background:linear-gradient(to bottom,transparent 5%,rgba(255,77,0,.22) 50%,transparent 95%)}
+/* RIGHT PAGE */
+.bpage-r{flex:1;position:relative;overflow:hidden;transform-style:preserve-3d;cursor:pointer}
+.bpage-r-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9;display:block}
+.bpage-r-ov{position:absolute;inset:0;background:linear-gradient(140deg,rgba(12,9,5,.55) 0%,transparent 50%),linear-gradient(to top,rgba(12,9,5,.45) 0%,transparent 50%);z-index:1;pointer-events:none}
+/* Page edge lines (stacked pages look) */
+.bpage-r::before{content:'';position:absolute;right:0;top:0;bottom:0;width:5px;background:repeating-linear-gradient(to right,transparent 0,transparent 1px,rgba(255,255,255,.03) 1px,rgba(255,255,255,.03) 2px);z-index:10;pointer-events:none}
+/* FLIP ELEMENT */
+.bflip{position:absolute;inset:0;transform-style:preserve-3d;z-index:8;will-change:transform}
+.bflip-f,.bflip-b{position:absolute;inset:0;backface-visibility:hidden}
+.bflip-f{overflow:hidden}
+.bflip-f img{width:100%;height:100%;object-fit:cover;display:block}
+/* Dynamic fold shadow — direction set via data attr */
+.bflip-f::after{content:'';position:absolute;inset:0;opacity:0;pointer-events:none}
+.bflip.dir-next .bflip-f::after{background:linear-gradient(to left,rgba(0,0,0,.75) 0%,rgba(0,0,0,.25) 35%,transparent 65%);animation:foldShadow .88s ease forwards}
+.bflip.dir-prev .bflip-f::after{background:linear-gradient(to right,rgba(0,0,0,.75) 0%,rgba(0,0,0,.25) 35%,transparent 65%);animation:foldShadow .88s ease forwards}
+@keyframes foldShadow{0%{opacity:0}42%{opacity:1}100%{opacity:0}}
+.bflip-b{transform:rotateY(180deg);background:linear-gradient(to left,#1c1510 0%,#0e0a07 100%);box-shadow:inset -16px 0 40px rgba(0,0,0,.7),inset 0 0 80px rgba(0,0,0,.3)}
+/* LEFT PAGE CONTENT */
+.bpg-num{font-family:var(--fd);font-size:110px;line-height:1;color:rgba(255,77,0,.07);letter-spacing:.01em;user-select:none;position:absolute;top:24px;right:32px}
+.bpg-cat{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;opacity:.9}
+.bpg-title{font-family:var(--fd);font-size:clamp(26px,3vw,46px);line-height:.88;letter-spacing:.05em;color:var(--white);margin-bottom:18px}
+.bpg-div{width:32px;height:2px;background:var(--orange);margin-bottom:18px;transition:width .4s var(--ease)}
+.bpage-l:hover .bpg-div{width:52px}
+.bpg-desc{font-size:12.5px;line-height:1.76;color:rgba(240,235,227,.42);max-width:300px}
+.bpg-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:18px}
+.bpg-tag{font-size:9.5px;padding:3px 9px;border:1px solid rgba(255,77,0,.18);color:rgba(255,77,0,.55);letter-spacing:.1em;text-transform:uppercase}
+/* Fade-out when content switches */
+.bpg-cat,.bpg-title,.bpg-div,.bpg-desc,.bpg-tags{transition:opacity .2s,transform .2s}
+.bpage-l.fading .bpg-cat,.bpage-l.fading .bpg-title,.bpage-l.fading .bpg-div,.bpage-l.fading .bpg-desc,.bpage-l.fading .bpg-tags{opacity:0;transform:translateY(7px)}
+/* NAVIGATION */
+.book-nav-row{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:20px}
+.bnav{background:none;border:1px solid var(--border);color:var(--cream);width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,color .2s,background .2s;flex-shrink:0}
+.bnav:hover{border-color:var(--orange);color:var(--orange);background:rgba(255,77,0,.07)}
+.bnav:disabled{opacity:.15;pointer-events:none}
+.bpdots{display:flex;gap:7px;align-items:center}
+.bpdot{width:6px;height:6px;border-radius:50%;background:var(--border);border:none;padding:0;cursor:pointer;transition:background .3s,transform .3s,width .3s}
+.bpdot.on{background:var(--orange);transform:scale(1.4)}
+.book-pg-info{font-family:var(--fd);font-size:18px;letter-spacing:.14em;color:rgba(240,235,227,.22);min-width:56px;text-align:center}
+.book-pg-info .bpg-cur{color:var(--orange)}
 @media(max-width:768px){
   .port-head{flex-direction:column;gap:8px;align-items:flex-start}
   .port-sub{display:none}
-  .pcombo-panel{flex:0 0 88%;height:260px}
-  .pcombo-lbl{padding:16px}
-  .pcombo-title{font-size:22px;margin-bottom:6px}
-  .pcombo-accent{width:20px;margin-bottom:8px}
-  .pcombo-cat{font-size:8px}
-  .pc-nav{margin:14px 0 0}
+  .book-wrap{height:auto;filter:drop-shadow(0 12px 35px rgba(0,0,0,.75))}
+  .book{flex-direction:column}
+  .bspine{width:100%;height:4px;background:linear-gradient(to bottom,rgba(0,0,0,.8),rgba(60,40,18,.5),rgba(0,0,0,.7))}
+  .bspine::before{display:none}
+  .bpage-l{padding:28px 22px 24px;min-height:240px}
+  .bpage-r{height:210px;cursor:default}
+  .bpage-r::before{display:none}
+  .bflip{display:none}
+  .bpg-num{font-size:60px;top:14px;right:18px}
+  .bpg-title{font-size:22px}
 }
 
 /* PARTNERS */
@@ -627,90 +655,49 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     </div>
     <p class="port-sub rv d2">Projekte, die bewegen. Momente, die bleiben.</p>
   </div>
-  <div class="pcombo-wrap rv d2">
-    <div class="pcombo" id="pcombo">
-
-      <!-- PANEL 01: PROJECT MANAGEMENT -->
-      <a class="pcombo-panel" href="#leistungen">
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=700&q=85&auto=format&fit=crop" alt="Project Management" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PROJECT<br>MANAGEMENT</span>
-          <span class="pcombo-cat">01 — Planung mit Präzision</span>
+  <div class="book-stage rv d2">
+    <div class="book-wrap" id="bookWrap">
+      <div class="book">
+        <!-- LEFT PAGE: text content -->
+        <div class="bpage-l" id="bLeft">
+          <div class="bpg-num" id="bNum">01</div>
+          <p class="bpg-cat" id="bCat"></p>
+          <h3 class="bpg-title" id="bTitle"></h3>
+          <div class="bpg-div"></div>
+          <p class="bpg-desc" id="bDesc"></p>
+          <div class="bpg-tags" id="bTags"></div>
         </div>
-      </a>
-
-      <!-- PANEL 02: EVENTS -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="SommerEvent.png" alt="Events" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">EVENTS &amp;<br>EVENT SUPPORT</span>
-          <span class="pcombo-cat">02 — Momente, die bewegen</span>
+        <!-- SPINE -->
+        <div class="bspine"></div>
+        <!-- RIGHT PAGE: image -->
+        <div class="bpage-r" id="bRight">
+          <img class="bpage-r-bg" id="bRightBg" src="" alt="">
+          <div class="bpage-r-ov"></div>
+          <!-- PAGE-FLIP OVERLAY -->
+          <div class="bflip" id="bFlip">
+            <div class="bflip-f"><img id="bFlipImg" src="" alt=""></div>
+            <div class="bflip-b"></div>
+          </div>
         </div>
-      </a>
-
-      <!-- PANEL 03: PROMOTION -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=85&auto=format&fit=crop" alt="Promotion" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PROMOTION</span>
-          <span class="pcombo-cat">03 — Am Puls der Marke</span>
-        </div>
-      </a>
-
-      <!-- PANEL 04: CLOTHING -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&q=85&auto=format&fit=crop" alt="Clothing" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">CLOTHING</span>
-          <span class="pcombo-cat">04 — Marke zum Anziehen</span>
-        </div>
-      </a>
-
-      <!-- PANEL 05: PARTNERSHIPS -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=85&auto=format&fit=crop" alt="Partnerships" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PARTNERSHIPS<br>&amp; BRAND</span>
-          <span class="pcombo-cat">05 — Starke Allianzen</span>
-        </div>
-      </a>
-
-      <!-- PANEL 06: BRANDING -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=700&q=85&auto=format&fit=crop" alt="Branding" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">BRANDING</span>
-          <span class="pcombo-cat">06 — Visuelle Markenpräsenz</span>
-        </div>
-      </a>
-
+      </div>
     </div>
-    <div class="pc-nav">
-      <button class="pc-btn" id="pc-prev" aria-label="Vorheriges Projekt" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <!-- NAVIGATION -->
+    <div class="book-nav-row">
+      <button class="bnav" id="bPrev" aria-label="Zurück">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
       </button>
-      <div class="pc-progress"><div class="pc-bar" id="pc-bar"></div></div>
-      <button class="pc-btn" id="pc-next" aria-label="Nächstes Projekt">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      <div class="bpdots" id="bDots">
+        <button class="bpdot on"></button>
+        <button class="bpdot"></button>
+        <button class="bpdot"></button>
+        <button class="bpdot"></button>
+        <button class="bpdot"></button>
+        <button class="bpdot"></button>
+      </div>
+      <div class="book-pg-info"><span class="bpg-cur" id="bCur">01</span>&thinsp;/&thinsp;06</div>
+      <button class="bnav" id="bNext" aria-label="Weiter">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
-      <span class="pc-count"><span id="pc-cur">01</span> / 06</span>
     </div>
   </div>
 </section>
@@ -1012,59 +999,158 @@ document.getElementById('cform').addEventListener('submit',e=>{
   setTimeout(()=>{btn.textContent='Nachricht senden →';btn.style.background='';e.target.reset()},3000);
 });
 
-// PORTFOLIO CAROUSEL
+// ── BOOK PORTFOLIO ──
 (function(){
-  const track=document.getElementById('pcombo');
-  if(!track)return;
-  const panels=track.querySelectorAll('.pcombo-panel');
-  const total=panels.length;
-  const prevBtn=document.getElementById('pc-prev');
-  const nextBtn=document.getElementById('pc-next');
-  const bar=document.getElementById('pc-bar');
-  const cur=document.getElementById('pc-cur');
-  let idx=0;
+  const projects=[
+    {num:'01',cat:'Planung mit Präzision',title:'PROJECT<br>MANAGEMENT',desc:'Wir übernehmen die komplette Projektsteuerung – von der ersten Idee bis zur erfolgreichen Umsetzung. Effizient organisiert, lösungsorientiert geführt und immer auf Ihr Ziel ausgerichtet.',tags:['Strategie','Organisation','Umsetzung'],img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=80&auto=format&fit=crop'},
+    {num:'02',cat:'Momente, die bewegen',title:'EVENTS &amp;<br>EVENT SUPPORT',desc:'Messe, Firmenveranstaltung oder POS-Aktivierung: Wir unterstützen Marken dort, wo sie erlebbar werden – mit Planung, Organisation, Logistik und Material aus einer Hand.',tags:['Events','Logistik','Aktivierung'],img:'SommerEvent.png'},
+    {num:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Von klassischen Werbemitteln bis hin zu individuellen Sonderanfertigungen: Wir entwickeln, sourcen und produzieren Promotionartikel, die Marken sichtbar machen.',tags:['Werbemittel','Sourcing','Produktion'],img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=80&auto=format&fit=crop'},
+    {num:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Merch, Teamwear oder Event-Bekleidung: maßgeschneiderte Textillösungen inklusive Branding, Produktion und Qualitätskontrolle – damit Ihre Marke sichtbar bleibt.',tags:['Textil','Teamwear','Merch'],img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=80&auto=format&fit=crop'},
+    {num:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS<br>&amp; BRAND',desc:'Wir bringen Marken zusammen und entwickeln Partnerschaften mit echtem Mehrwert – auf Basis von Identität, Positionierung und langfristiger Zusammenarbeit.',tags:['Kooperationen','Brand','Strategie'],img:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=80&auto=format&fit=crop'},
+    {num:'06',cat:'Visuelle Markenpräsenz',title:'BRANDING',desc:'Werbebanner, Displays, Blow-Ups, Aufsteller und Sonderproduktionen – perfekt abgestimmt auf Ihren Markenauftritt, hochwertig, präsent und sofort einsatzbereit.',tags:['Banner','Display','Print'],img:'sundowner.png'}
+  ];
 
-  function getSlideWidth(){return panels[0].offsetWidth+2;}
+  let cur=0, busy=false;
+  const DOM={
+    left:  document.getElementById('bLeft'),
+    num:   document.getElementById('bNum'),
+    cat:   document.getElementById('bCat'),
+    title: document.getElementById('bTitle'),
+    desc:  document.getElementById('bDesc'),
+    tags:  document.getElementById('bTags'),
+    bg:    document.getElementById('bRightBg'),
+    flip:  document.getElementById('bFlip'),
+    fImg:  document.getElementById('bFlipImg'),
+    prev:  document.getElementById('bPrev'),
+    next:  document.getElementById('bNext'),
+    cur:   document.getElementById('bCur'),
+    right: document.getElementById('bRight'),
+    dots:  [...document.querySelectorAll('#bDots .bpdot')]
+  };
 
-  function goTo(n){
-    idx=Math.max(0,Math.min(n,total-1));
-    track.style.transform='translateX(-'+(idx*getSlideWidth())+'px)';
-    track.style.transition='transform .55s cubic-bezier(0.16,1,0.3,1)';
-    prevBtn.disabled=idx===0;
-    nextBtn.disabled=idx===total-1;
-    bar.style.width=((idx/(total-1))*100)+'%';
-    cur.textContent=String(idx+1).padStart(2,'0');
+  function paint(i){
+    const p=projects[i];
+    DOM.num.textContent=p.num;
+    DOM.cat.textContent=p.cat;
+    DOM.title.innerHTML=p.title;
+    DOM.desc.textContent=p.desc;
+    DOM.tags.innerHTML=p.tags.map(t=>`<span class="bpg-tag">${t}</span>`).join('');
+    DOM.cur.textContent=p.num;
+    DOM.dots.forEach((d,j)=>d.classList.toggle('on',j===i));
+    DOM.prev.disabled=false;
+    DOM.next.disabled=false;
   }
 
-  prevBtn.addEventListener('click',()=>goTo(idx-1));
-  nextBtn.addEventListener('click',()=>goTo(idx+1));
+  function rAF(fn){requestAnimationFrame(()=>requestAnimationFrame(fn));}
 
+  function goTo(next,dir){
+    next=((next%projects.length)+projects.length)%projects.length;
+    if(busy||next===cur)return;
+    busy=true;
+    const p=projects[next];
+
+    // Mobile: simple fade
+    if(window.innerWidth<=768){
+      DOM.left.classList.add('fading');
+      setTimeout(()=>{cur=next;paint(cur);DOM.bg.src=p.img;DOM.left.classList.remove('fading');busy=false;},260);
+      return;
+    }
+
+    const DUR=880;
+    // Direction-specific settings:
+    // next → page folds LEFT  (origin: left,  angle: -180deg) — spine is the pivot
+    // prev → page folds RIGHT (origin: right, angle: +180deg) — outer edge is pivot
+    const origin = dir==='next' ? 'left center' : 'right center';
+    const angle  = dir==='next' ? '-180deg'      : '180deg';
+
+    // Prep flip: front = current image, bg = incoming image (visible once flip leaves)
+    DOM.fImg.src = DOM.bg.src;
+    DOM.bg.src   = p.img;
+
+    // Reset flip, set direction class for shadow gradient
+    DOM.flip.classList.remove('dir-next','dir-prev');
+    DOM.flip.style.cssText='transition:none;transform:rotateY(0deg);transform-origin:'+origin;
+
+    // Update left-page content mid-way through flip
+    const midT = DUR * 0.38;
+    setTimeout(()=>{
+      DOM.left.classList.add('fading');
+      setTimeout(()=>{ cur=next; paint(cur); DOM.left.classList.remove('fading'); }, 230);
+    }, midT);
+
+    // Trigger animation on next paint
+    rAF(()=>{
+      DOM.flip.style.transition=`transform ${DUR}ms cubic-bezier(.55,0,.1,1)`;
+      DOM.flip.style.transform =`rotateY(${angle})`;
+      DOM.flip.classList.add('dir-'+dir); // activates fold-shadow animation
+    });
+
+    // After flip: reset and unlock
+    setTimeout(()=>{
+      DOM.flip.classList.remove('dir-next','dir-prev');
+      DOM.flip.style.cssText='transition:none;transform:rotateY(0deg);transform-origin:left center';
+      DOM.fImg.src=p.img;
+      busy=false;
+    }, DUR+30);
+  }
+
+  // Arrow buttons
+  DOM.next.addEventListener('click',()=>goTo(cur+1,'next'));
+  DOM.prev.addEventListener('click',()=>goTo(cur-1,'prev'));
+  // Dots
+  DOM.dots.forEach((d,i)=>d.addEventListener('click',()=>goTo(i,i>cur?'next':'prev')));
+  // Click right page = next
+
+  // Keyboard arrows (ignore when typing)
   document.addEventListener('keydown',e=>{
     if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
-    const sec=document.getElementById('portfolio');
-    if(!sec)return;
-    const r=sec.getBoundingClientRect();
-    if(r.top>window.innerHeight||r.bottom<0)return;
-    if(e.key==='ArrowRight')goTo(idx+1);
-    if(e.key==='ArrowLeft')goTo(idx-1);
+    if(e.key==='ArrowRight')goTo(cur+1,'next');
+    if(e.key==='ArrowLeft') goTo(cur-1,'prev');
   });
+  // Touch + Mouse swipe/drag
+  let tx=0, mx=0, dragging=false, wasDrag=false;
+  const wrap=document.getElementById('bookWrap');
 
-  let startX=0,isDragging=false;
-  track.addEventListener('mousedown',e=>{startX=e.clientX;isDragging=true;track.classList.add('dragging');});
-  track.addEventListener('mouseup',e=>{
-    if(!isDragging)return;
-    isDragging=false;track.classList.remove('dragging');
-    const diff=e.clientX-startX;
-    if(Math.abs(diff)>50)goTo(diff<0?idx+1:idx-1);
-  });
-  track.addEventListener('mouseleave',()=>{isDragging=false;track.classList.remove('dragging');});
-  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});
-  track.addEventListener('touchend',e=>{
-    const diff=e.changedTouches[0].clientX-startX;
-    if(Math.abs(diff)>40)goTo(diff<0?idx+1:idx-1);
-  });
+  // Touch
+  wrap.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+  wrap.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>48){dx<0?goTo(cur+1,'next'):goTo(cur-1,'prev');}
+  },{passive:true});
 
-  goTo(0);
+  // Mouse drag — live page-tilt preview + release to flip
+  wrap.addEventListener('mousedown',e=>{
+    if(busy)return;
+    mx=e.clientX; dragging=true; wasDrag=false;
+    wrap.style.cursor='grabbing';
+  });
+  document.addEventListener('mousemove',e=>{
+    if(!dragging||busy)return;
+    const dx=e.clientX-mx;
+    if(Math.abs(dx)<6)return;
+    wasDrag=true;
+    const pct=Math.min(Math.abs(dx)/160,1);
+    const angle=dx<0?-(pct*28):pct*28;
+    const origin=dx<0?'left center':'right center';
+    DOM.flip.style.cssText=`transition:none;transform:rotateY(${angle}deg);transform-origin:${origin}`;
+  });
+  document.addEventListener('mouseup',e=>{
+    if(!dragging)return;
+    dragging=false;
+    wrap.style.cursor='';
+    DOM.flip.style.cssText='transition:transform .3s var(--ease);transform:rotateY(0deg);transform-origin:left center';
+    if(wasDrag){
+      const dx=e.clientX-mx;
+      if(Math.abs(dx)>50){dx<0?goTo(cur+1,'next'):goTo(cur-1,'prev');}
+    }
+  });
+  // Prevent click-to-next firing after a drag
+  DOM.right.addEventListener('click',e=>{if(wasDrag){wasDrag=false;return;}goTo(cur+1,'next');});
+
+  // Init
+  paint(0);
+  DOM.bg.src  =projects[0].img;
+  DOM.fImg.src=projects[0].img;
 })();
 
 // PARALLAX HERO GLOW
