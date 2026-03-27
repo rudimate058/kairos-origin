@@ -198,11 +198,12 @@ section{padding:52px 48px}
 .cdesc{font-size:13px;color:rgba(240,235,227,.55);line-height:1.55}
 .ctags{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
 .ctag{font-size:11px;padding:4px 10px;background:rgba(255,77,0,.14);color:var(--orange);letter-spacing:.05em}
-/* PORTFOLIO COMBO */
-.pcombo{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:240px 240px;border:1px solid var(--border);overflow:hidden;gap:2px;background:var(--border)}
-.pcombo-panel{position:relative;overflow:hidden;cursor:pointer;display:block;text-decoration:none}
+/* PORTFOLIO CAROUSEL */
+.pcombo-wrap{position:relative;max-width:1200px;margin:0 auto;overflow:hidden}
+.pcombo{display:flex;overflow:visible;gap:0;cursor:grab;user-select:none;will-change:transform}
+.pcombo.dragging{cursor:grabbing}
+.pcombo-panel{flex:0 0 calc((100% - 40px) / 2.15);min-width:0;height:420px;position:relative;overflow:hidden;cursor:pointer;display:block;text-decoration:none;margin-right:2px}
 .pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.9}
-.pcombo-img{width:100%;height:100%;object-fit:cover;opacity:.6;transition:transform .7s var(--ease),opacity .4s}
 .pcombo-img{width:100%;height:100%;object-fit:cover;opacity:.55;transition:transform .7s var(--ease),opacity .5s}
 .pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.75}
 .pcombo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,31,.98) 0%,rgba(13,13,31,.55) 45%,rgba(13,13,31,.1) 100%)}
@@ -210,18 +211,28 @@ section{padding:52px 48px}
 .pcombo-panel:hover .pcombo-lbl{padding-bottom:28px}
 .pcombo-accent{display:block;width:28px;height:2px;background:var(--orange);margin-bottom:12px;transition:width .4s var(--ease)}
 .pcombo-panel:hover .pcombo-accent{width:48px}
-.pcombo-title{display:block;font-family:var(--fd);font-size:clamp(26px,3vw,46px);letter-spacing:.04em;text-transform:uppercase;color:var(--orange);line-height:.95;margin-bottom:10px;text-shadow:0 2px 30px rgba(255,77,0,.35)}
+.pcombo-title{display:block;font-family:var(--fd);font-size:clamp(22px,2.5vw,42px);letter-spacing:.04em;text-transform:uppercase;color:var(--orange);line-height:.95;margin-bottom:10px;text-shadow:0 2px 30px rgba(255,77,0,.35)}
 .pcombo-cat{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,.5);margin-bottom:0}
 .pcombo-line{position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,77,0,.35),transparent)}
+/* CAROUSEL CONTROLS */
+.pc-nav{display:flex;align-items:center;gap:16px;max-width:1200px;margin:18px auto 0}
+.pc-btn{width:44px;height:44px;border:1px solid var(--border);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s var(--ease);flex-shrink:0}
+.pc-btn:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
+.pc-btn:disabled{opacity:.25;cursor:not-allowed}
+.pc-btn svg{width:16px;height:16px}
+.pc-progress{flex:1;height:1.5px;background:var(--border);position:relative;overflow:hidden}
+.pc-bar{position:absolute;left:0;top:0;height:100%;background:var(--orange);transition:width .45s var(--ease);width:0%}
+.pc-count{font-family:var(--fd);font-size:12px;color:var(--muted);letter-spacing:.15em;flex-shrink:0;min-width:48px;text-align:right}
+.pc-count span{color:var(--cream)}
 @media(max-width:768px){
   .port-head{flex-direction:column;gap:8px;align-items:flex-start}
   .port-sub{display:none}
-  .pcombo{grid-template-columns:1fr;grid-template-rows:none;height:auto;gap:2px}
-  .pcombo-panel{height:140px}
+  .pcombo-panel{flex:0 0 88%;height:260px}
   .pcombo-lbl{padding:16px}
   .pcombo-title{font-size:22px;margin-bottom:6px}
   .pcombo-accent{width:20px;margin-bottom:8px}
   .pcombo-cat{font-size:8px}
+  .pc-nav{margin:14px 0 0}
 }
 
 /* PARTNERS */
@@ -637,79 +648,91 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     </div>
     <p class="port-sub rv d2">Projekte, die bewegen. Momente, die bleiben.</p>
   </div>
-  <div class="pcombo rv">
+  <div class="pcombo-wrap rv">
+    <div class="pcombo" id="pcombo">
 
-    <!-- PANEL 01: PROJECT MANAGEMENT -->
-    <a class="pcombo-panel" href="#leistungen">
-      <img class="pcombo-img" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=700&q=85&auto=format&fit=crop" alt="Project Management" loading="lazy">
-      <div class="pcombo-overlay"></div>
-      <div class="pcombo-lbl">
-        <span class="pcombo-accent"></span>
-        <span class="pcombo-title">PROJECT<br>MANAGEMENT</span>
-        <span class="pcombo-cat">01 — Planung mit Präzision</span>
-      </div>
-    </a>
+      <!-- PANEL 01: PROJECT MANAGEMENT -->
+      <a class="pcombo-panel" href="#leistungen">
+        <img class="pcombo-img" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=700&q=85&auto=format&fit=crop" alt="Project Management" loading="lazy">
+        <div class="pcombo-overlay"></div>
+        <div class="pcombo-lbl">
+          <span class="pcombo-accent"></span>
+          <span class="pcombo-title">PROJECT<br>MANAGEMENT</span>
+          <span class="pcombo-cat">01 — Planung mit Präzision</span>
+        </div>
+      </a>
 
-    <!-- PANEL 02: EVENTS -->
-    <a class="pcombo-panel" href="#leistungen">
-      <div class="pcombo-line"></div>
-      <img class="pcombo-img" src="SommerEvent.png" alt="Events" loading="lazy">
-      <div class="pcombo-overlay"></div>
-      <div class="pcombo-lbl">
-        <span class="pcombo-accent"></span>
-        <span class="pcombo-title">EVENTS &amp;<br>EVENT SUPPORT</span>
-        <span class="pcombo-cat">02 — Momente, die bewegen</span>
-      </div>
-    </a>
+      <!-- PANEL 02: EVENTS -->
+      <a class="pcombo-panel" href="#leistungen">
+        <div class="pcombo-line"></div>
+        <img class="pcombo-img" src="SommerEvent.png" alt="Events" loading="lazy">
+        <div class="pcombo-overlay"></div>
+        <div class="pcombo-lbl">
+          <span class="pcombo-accent"></span>
+          <span class="pcombo-title">EVENTS &amp;<br>EVENT SUPPORT</span>
+          <span class="pcombo-cat">02 — Momente, die bewegen</span>
+        </div>
+      </a>
 
-    <!-- PANEL 03: PROMOTION -->
-    <a class="pcombo-panel" href="#leistungen">
-      <div class="pcombo-line"></div>
-      <img class="pcombo-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=85&auto=format&fit=crop" alt="Promotion" loading="lazy">
-      <div class="pcombo-overlay"></div>
-      <div class="pcombo-lbl">
-        <span class="pcombo-accent"></span>
-        <span class="pcombo-title">PROMOTION</span>
-        <span class="pcombo-cat">03 — Am Puls der Marke</span>
-      </div>
-    </a>
+      <!-- PANEL 03: PROMOTION -->
+      <a class="pcombo-panel" href="#leistungen">
+        <div class="pcombo-line"></div>
+        <img class="pcombo-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=85&auto=format&fit=crop" alt="Promotion" loading="lazy">
+        <div class="pcombo-overlay"></div>
+        <div class="pcombo-lbl">
+          <span class="pcombo-accent"></span>
+          <span class="pcombo-title">PROMOTION</span>
+          <span class="pcombo-cat">03 — Am Puls der Marke</span>
+        </div>
+      </a>
 
-    <!-- PANEL 04: CLOTHING -->
-    <a class="pcombo-panel" href="#leistungen">
-      <div class="pcombo-line"></div>
-      <img class="pcombo-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&q=85&auto=format&fit=crop" alt="Clothing" loading="lazy">
-      <div class="pcombo-overlay"></div>
-      <div class="pcombo-lbl">
-        <span class="pcombo-accent"></span>
-        <span class="pcombo-title">CLOTHING</span>
-        <span class="pcombo-cat">04 — Marke zum Anziehen</span>
-      </div>
-    </a>
+      <!-- PANEL 04: CLOTHING -->
+      <a class="pcombo-panel" href="#leistungen">
+        <div class="pcombo-line"></div>
+        <img class="pcombo-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&q=85&auto=format&fit=crop" alt="Clothing" loading="lazy">
+        <div class="pcombo-overlay"></div>
+        <div class="pcombo-lbl">
+          <span class="pcombo-accent"></span>
+          <span class="pcombo-title">CLOTHING</span>
+          <span class="pcombo-cat">04 — Marke zum Anziehen</span>
+        </div>
+      </a>
 
-    <!-- PANEL 05: PARTNERSHIPS -->
-    <a class="pcombo-panel" href="#leistungen">
-      <div class="pcombo-line"></div>
-      <img class="pcombo-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=85&auto=format&fit=crop" alt="Partnerships" loading="lazy">
-      <div class="pcombo-overlay"></div>
-      <div class="pcombo-lbl">
-        <span class="pcombo-accent"></span>
-        <span class="pcombo-title">PARTNERSHIPS<br>&amp; BRAND</span>
-        <span class="pcombo-cat">05 — Starke Allianzen</span>
-      </div>
-    </a>
+      <!-- PANEL 05: PARTNERSHIPS -->
+      <a class="pcombo-panel" href="#leistungen">
+        <div class="pcombo-line"></div>
+        <img class="pcombo-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=85&auto=format&fit=crop" alt="Partnerships" loading="lazy">
+        <div class="pcombo-overlay"></div>
+        <div class="pcombo-lbl">
+          <span class="pcombo-accent"></span>
+          <span class="pcombo-title">PARTNERSHIPS<br>&amp; BRAND</span>
+          <span class="pcombo-cat">05 — Starke Allianzen</span>
+        </div>
+      </a>
 
-    <!-- PANEL 06: BRANDING -->
-    <a class="pcombo-panel" href="#leistungen">
-      <div class="pcombo-line"></div>
-      <img class="pcombo-img" src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=700&q=85&auto=format&fit=crop" alt="Branding" loading="lazy">
-      <div class="pcombo-overlay"></div>
-      <div class="pcombo-lbl">
-        <span class="pcombo-accent"></span>
-        <span class="pcombo-title">BRANDING</span>
-        <span class="pcombo-cat">06 — Visuelle Markenpräsenz</span>
-      </div>
-    </a>
+      <!-- PANEL 06: BRANDING -->
+      <a class="pcombo-panel" href="#leistungen">
+        <div class="pcombo-line"></div>
+        <img class="pcombo-img" src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=700&q=85&auto=format&fit=crop" alt="Branding" loading="lazy">
+        <div class="pcombo-overlay"></div>
+        <div class="pcombo-lbl">
+          <span class="pcombo-accent"></span>
+          <span class="pcombo-title">BRANDING</span>
+          <span class="pcombo-cat">06 — Visuelle Markenpräsenz</span>
+        </div>
+      </a>
 
+    </div>
+    <div class="pc-nav">
+      <button class="pc-btn" id="pc-prev" aria-label="Vorheriges Projekt" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="pc-progress"><div class="pc-bar" id="pc-bar"></div></div>
+      <button class="pc-btn" id="pc-next" aria-label="Nächstes Projekt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <span class="pc-count"><span id="pc-cur">01</span> / 06</span>
+    </div>
   </div>
 </section>
 
@@ -1073,6 +1096,66 @@ window.addEventListener('scroll',()=>{
       </a>
     `,{maxWidth:240,minWidth:200});
   });
+})();
+
+// PORTFOLIO CAROUSEL
+(function(){
+  const track=document.getElementById('pcombo');
+  if(!track)return;
+  const panels=track.querySelectorAll('.pcombo-panel');
+  const total=panels.length;
+  const prevBtn=document.getElementById('pc-prev');
+  const nextBtn=document.getElementById('pc-next');
+  const bar=document.getElementById('pc-bar');
+  const cur=document.getElementById('pc-cur');
+  let idx=0;
+
+  function getSlideWidth(){
+    return panels[0].offsetWidth+2;
+  }
+
+  function goTo(n){
+    idx=Math.max(0,Math.min(n,total-1));
+    track.style.transform='translateX(-'+(idx*getSlideWidth())+'px)';
+    track.style.transition='transform .55s cubic-bezier(0.16,1,0.3,1)';
+    prevBtn.disabled=idx===0;
+    nextBtn.disabled=idx===total-1;
+    bar.style.width=((idx/(total-1))*100)+'%';
+    cur.textContent=String(idx+1).padStart(2,'0');
+  }
+
+  prevBtn.addEventListener('click',()=>goTo(idx-1));
+  nextBtn.addEventListener('click',()=>goTo(idx+1));
+
+  // Keyboard
+  document.addEventListener('keydown',e=>{
+    const sec=document.getElementById('portfolio');
+    if(!sec)return;
+    const r=sec.getBoundingClientRect();
+    if(r.top>window.innerHeight||r.bottom<0)return;
+    if(e.key==='ArrowRight')goTo(idx+1);
+    if(e.key==='ArrowLeft')goTo(idx-1);
+  });
+
+  // Mouse drag
+  let startX=0,isDragging=false;
+  track.addEventListener('mousedown',e=>{startX=e.clientX;isDragging=true;track.classList.add('dragging');});
+  track.addEventListener('mouseup',e=>{
+    if(!isDragging)return;
+    isDragging=false;track.classList.remove('dragging');
+    const diff=e.clientX-startX;
+    if(Math.abs(diff)>50)goTo(diff<0?idx+1:idx-1);
+  });
+  track.addEventListener('mouseleave',()=>{isDragging=false;track.classList.remove('dragging');});
+
+  // Touch swipe
+  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});
+  track.addEventListener('touchend',e=>{
+    const diff=e.changedTouches[0].clientX-startX;
+    if(Math.abs(diff)>40)goTo(diff<0?idx+1:idx-1);
+  });
+
+  goTo(0);
 })();
 </script>
 </body>
