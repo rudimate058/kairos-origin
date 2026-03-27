@@ -1173,7 +1173,7 @@ window.addEventListener('scroll',()=>{
 
 
 // COOKIE CONSENT
-(function(){
+document.addEventListener('DOMContentLoaded',function(){
   if(localStorage.getItem('kairos_cookie_consent'))return;
 
   const overlay=document.getElementById('cookieOverlay');
@@ -1214,7 +1214,7 @@ window.addEventListener('scroll',()=>{
   });
 
   setTimeout(showBanner,800);
-})();
+});
 </script>
 
 <!-- COOKIE BANNER -->
