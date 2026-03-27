@@ -406,6 +406,41 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 .popup-route:hover{background:#FF7A35}
 .leaflet-control-attribution{background:rgba(12,9,5,.8)!important;color:rgba(240,235,227,.3)!important}
 .leaflet-control-attribution a{color:rgba(255,77,0,.6)!important}
+
+/* COOKIE BANNER */
+.cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(3px)}
+.cookie-overlay.open{opacity:1;pointer-events:auto}
+.cookie-box{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(24px);width:min(560px,calc(100vw - 32px));background:var(--dark);border:1px solid var(--border);border-top:2px solid var(--orange);z-index:9101;padding:28px 28px 24px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.cookie-box.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.cookie-title{font-family:var(--fd);font-size:22px;letter-spacing:.06em;color:var(--white);margin-bottom:12px}
+.cookie-text{font-size:13px;line-height:1.75;color:rgba(240,235,227,.6);margin-bottom:20px}
+.cookie-text a{color:var(--orange);text-decoration:none}
+.cookie-text a:hover{text-decoration:underline}
+.cookie-btns{display:flex;gap:8px;flex-wrap:wrap}
+.cookie-btn{flex:1;min-width:120px;padding:12px 16px;font-family:var(--fb);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;transition:all .22s var(--ease)}
+.cookie-btn:hover{border-color:var(--orange);color:var(--orange)}
+.cookie-btn.primary{background:var(--orange);border-color:var(--orange);color:var(--white)}
+.cookie-btn.primary:hover{background:var(--orange2);border-color:var(--orange2)}
+/* COOKIE SETTINGS PANEL */
+.cookie-settings{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(24px);width:min(560px,calc(100vw - 32px));background:var(--dark);border:1px solid var(--border);border-top:2px solid var(--orange);z-index:9102;padding:28px 28px 24px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease),transform .4s var(--ease);display:none}
+.cookie-settings.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);display:block}
+.cookie-settings-title{font-family:var(--fd);font-size:20px;letter-spacing:.06em;color:var(--white);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+.cookie-toggle-row{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
+.cookie-toggle-row:last-of-type{border-bottom:none;margin-bottom:16px}
+.cookie-toggle-label{font-size:13px;color:var(--cream);font-weight:600;margin-bottom:3px;letter-spacing:.04em}
+.cookie-toggle-desc{font-size:11px;color:var(--muted);line-height:1.55;max-width:340px}
+.cookie-toggle{position:relative;width:40px;height:22px;flex-shrink:0;margin-left:16px;margin-top:2px}
+.cookie-toggle input{opacity:0;width:0;height:0;position:absolute}
+.cookie-toggle-track{position:absolute;inset:0;background:var(--border);border-radius:11px;transition:background .25s var(--ease);cursor:pointer}
+.cookie-toggle input:checked+.cookie-toggle-track{background:var(--orange)}
+.cookie-toggle-track::after{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .25s var(--ease)}
+.cookie-toggle input:checked+.cookie-toggle-track::after{transform:translateX(18px)}
+.cookie-toggle-track.disabled{opacity:.35;cursor:not-allowed}
+@media(max-width:480px){
+  .cookie-box,.cookie-settings{bottom:16px;padding:20px 18px 18px}
+  .cookie-btns{flex-direction:column}
+  .cookie-btn{min-width:0}
+}
 </style>
 </head>
 <body>
@@ -1135,6 +1170,95 @@ window.addEventListener('scroll',()=>{
     `,{maxWidth:240,minWidth:200});
   });
 })();
+
+
+// COOKIE CONSENT
+(function(){
+  if(localStorage.getItem('kairos_cookie_consent'))return;
+
+  const overlay=document.getElementById('cookieOverlay');
+  const box=document.getElementById('cookieBox');
+  const settings=document.getElementById('cookieSettings');
+
+  function showBanner(){
+    overlay.classList.add('open');
+    box.classList.add('open');
+  }
+
+  function hideBanner(){
+    overlay.classList.remove('open');
+    box.classList.remove('open');
+    settings.classList.remove('open');
+    settings.style.display='none';
+  }
+
+  function accept(type){
+    localStorage.setItem('kairos_cookie_consent',type);
+    hideBanner();
+  }
+
+  document.getElementById('cookieBtnAll').addEventListener('click',()=>accept('all'));
+  document.getElementById('cookieBtnNecessary').addEventListener('click',()=>accept('necessary'));
+  document.getElementById('cookieBtnSettings').addEventListener('click',()=>{
+    box.classList.remove('open');
+    settings.style.display='block';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>settings.classList.add('open')));
+  });
+  document.getElementById('cookieSettingsSave').addEventListener('click',()=>{
+    const analytics=document.getElementById('cookieToggleAnalytics').checked;
+    accept(analytics?'all':'necessary');
+  });
+  document.getElementById('cookieSettingsBack').addEventListener('click',()=>{
+    settings.classList.remove('open');
+    setTimeout(()=>{settings.style.display='none';box.classList.add('open');},350);
+  });
+
+  setTimeout(showBanner,800);
+})();
 </script>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-overlay" id="cookieOverlay"></div>
+<div class="cookie-box" id="cookieBox">
+  <p class="cookie-title">Cookie-Einstellungen</p>
+  <p class="cookie-text">Wir verwenden technisch notwendige Cookies sowie Analyse-Cookies (Matomo) zur Verbesserung unserer Website. Analyse-Cookies werden nur mit deiner Einwilligung gesetzt. Mehr Informationen findest du in unserer <a href="#" onclick="openLegal('datenschutz');return false;">Datenschutzerklärung</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-btn" id="cookieBtnSettings">Einstellungen</button>
+    <button class="cookie-btn" id="cookieBtnNecessary">Nur notwendige</button>
+    <button class="cookie-btn primary" id="cookieBtnAll">Alle akzeptieren</button>
+  </div>
+</div>
+
+<!-- COOKIE SETTINGS PANEL -->
+<div class="cookie-settings" id="cookieSettings">
+  <div class="cookie-settings-title">
+    <span>Cookie-Einstellungen</span>
+    <button id="cookieSettingsBack" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;transition:color .2s" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--muted)'">←</button>
+  </div>
+  <div class="cookie-toggle-row">
+    <div>
+      <p class="cookie-toggle-label">Notwendige Cookies</p>
+      <p class="cookie-toggle-desc">Technisch erforderlich für den Betrieb der Website. Können nicht deaktiviert werden.</p>
+    </div>
+    <label class="cookie-toggle">
+      <input type="checkbox" checked disabled>
+      <span class="cookie-toggle-track disabled"></span>
+    </label>
+  </div>
+  <div class="cookie-toggle-row">
+    <div>
+      <p class="cookie-toggle-label">Analyse-Cookies (Matomo)</p>
+      <p class="cookie-toggle-desc">Helfen uns, die Nutzung der Website zu verstehen und zu verbessern. Alle Daten werden anonymisiert.</p>
+    </div>
+    <label class="cookie-toggle">
+      <input type="checkbox" id="cookieToggleAnalytics">
+      <span class="cookie-toggle-track"></span>
+    </label>
+  </div>
+  <div class="cookie-btns">
+    <button class="cookie-btn primary" id="cookieSettingsSave" style="flex:none;width:100%">Auswahl speichern</button>
+  </div>
+</div>
+
 </body>
 </html>
