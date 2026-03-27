@@ -178,56 +178,68 @@ section{padding:52px 48px}
 #portfolio{border-top:1px solid var(--border);background:radial-gradient(ellipse at 100% 0%,rgba(255,77,0,.05) 0%,transparent 50%),var(--black)}
 .port-head{max-width:1200px;margin:0 auto 20px;display:flex;justify-content:space-between;align-items:flex-end}
 .port-sub{max-width:260px;color:var(--muted);font-size:14px;line-height:1.6}
-/* PORTFOLIO BOOK-FLIP */
-.book-stage{max-width:1100px;margin:0 auto;padding-bottom:48px}
-.book-wrap{position:relative;width:100%;height:540px;perspective:3000px;perspective-origin:50% 40%;cursor:pointer}
-.book-wrap::before,.book-wrap::after{content:'';position:absolute;bottom:-6px;left:2%;width:96%;height:100%;background:var(--card);border:1px solid var(--border);z-index:-1;transform:rotate(.4deg)}
-.book-wrap::after{bottom:-12px;left:4%;width:92%;transform:rotate(-.5deg);opacity:.55}
-.book{width:100%;height:100%;display:flex;position:relative;transform-style:preserve-3d}
-.bpage-l{flex:0 0 46%;height:100%;background:var(--dark);border:1px solid var(--border);border-right:none;padding:48px 44px 44px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.bpage-l::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,.04) 0%,transparent 60%);pointer-events:none}
-.bspine{width:8px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.4),rgba(255,77,0,.12),rgba(0,0,0,.25));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.bpage-r{flex:1;height:100%;position:relative;overflow:hidden;transform-style:preserve-3d}
-.bpage-r::after{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 40px 40px;border-color:transparent transparent rgba(255,77,0,.18) transparent;z-index:5;pointer-events:none}
-.bpage-r-hint{position:absolute;bottom:14px;right:52px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,.35);z-index:5;pointer-events:none;transition:opacity .4s}
-.book-wrap:hover .bpage-r-hint{opacity:0}
-.bpage-r-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65;transition:transform .8s var(--ease),opacity .5s}
-.book-wrap:hover .bpage-r-bg{transform:scale(1.04);opacity:.75}
-.bpage-r-ov{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.6) 0%,rgba(13,13,31,.1) 100%)}
-.bflip{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:left center;transition:transform .9s cubic-bezier(0.16,1,0.3,1)}
-.bflip.flipping{transform:rotateY(-180deg)}
-.bflip-f,.bflip-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.bflip-f img{width:100%;height:100%;object-fit:cover;opacity:.65}
-.bflip-b{background:var(--dark);border-left:1px solid var(--border);transform:rotateY(180deg)}
-.bpg-num{font-family:var(--fd);font-size:120px;line-height:1;color:rgba(255,77,0,.06);position:absolute;top:20px;right:24px;letter-spacing:-.02em;transition:color .5s;pointer-events:none}
-.book-wrap:hover .bpg-num{color:rgba(255,77,0,.1)}
-.bpg-cat{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);margin:0 0 14px;opacity:.8}
-.bpg-title{font-family:var(--fd);font-size:clamp(28px,3.2vw,48px);letter-spacing:.04em;text-transform:uppercase;color:var(--white);line-height:.95;margin:0 0 20px}
-.bpg-div{width:32px;height:1.5px;background:var(--orange);margin-bottom:18px}
-.bpg-desc{font-size:13px;color:rgba(240,235,227,.6);line-height:1.75;margin:0 0 20px;max-width:300px}
-.bpg-tags{display:flex;flex-wrap:wrap;gap:6px}
-.bpg-tag{font-size:8px;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,77,0,.25);color:rgba(255,77,0,.7)}
-.book-nav-row{display:flex;align-items:center;max-width:1100px;margin:16px auto 0;gap:16px}
-.bnav{width:44px;height:44px;border:1px solid var(--border);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s var(--ease);flex-shrink:0}
-.bnav:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
-.bnav:disabled{opacity:.25;cursor:not-allowed}
-.bnav svg{width:16px;height:16px}
-.bpdots{display:flex;gap:8px;align-items:center;flex:1;justify-content:center}
-.bdot{width:6px;height:6px;background:var(--border);transition:all .35s var(--ease);cursor:pointer}
-.bdot.active{background:var(--orange);width:20px}
-.book-pg-info{font-family:var(--fd);font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:48px;text-align:right}
-.book-pg-info span{color:var(--cream)}
-@media(max-width:900px){
-  .book-wrap{height:auto;perspective:none;display:block;cursor:default}
-  .book{flex-direction:column;height:auto}
-  .bpage-l{flex:none;width:100%;padding:32px 24px 28px;border-right:1px solid var(--border);border-bottom:none;box-sizing:border-box}
-  .bspine{width:100%;height:6px;background:linear-gradient(to bottom,rgba(0,0,0,.4),rgba(255,77,0,.12),rgba(0,0,0,.25));border-left:1px solid var(--border);border-right:1px solid var(--border)}
-  .bpage-r{flex:none;width:100%;height:280px}
-  .bpg-num{font-size:80px;top:12px;right:16px}
-  .bpg-title{font-size:28px}
-  .bflip{display:none}
-  .bpage-r-hint{display:none}
-  .book-wrap::before,.book-wrap::after{display:none}
+/* PORTFOLIO FLIPBOOK v3 */
+.fb-scene{max-width:1100px;margin:0 auto;padding-bottom:52px;position:relative}
+.fb-scene::before,.fb-scene::after{content:'';position:absolute;left:3%;width:94%;background:var(--card);border:1px solid var(--border);z-index:0;pointer-events:none}
+.fb-scene::before{bottom:-7px;height:calc(100% - 52px);transform:rotate(.35deg)}
+.fb-scene::after{bottom:-14px;left:5%;width:90%;height:calc(100% - 52px);transform:rotate(-.45deg);opacity:.5}
+.fb-body{display:flex;height:540px;position:relative;z-index:1}
+/* LEFT TEXT PAGE */
+.fb-left{flex:0 0 45%;background:var(--dark);border:1px solid var(--border);border-right:none;padding:52px 48px 48px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.fb-left::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,.035) 0%,transparent 55%);pointer-events:none}
+.fb-num{font-family:'Palatino Linotype',Palatino,serif;font-size:110px;line-height:1;color:rgba(255,77,0,.065);position:absolute;top:18px;right:18px;letter-spacing:-.02em;pointer-events:none;user-select:none;transition:color .6s ease}
+.fb-scene:hover .fb-num{color:rgba(255,77,0,.11)}
+.fb-content{position:relative;z-index:2;transition:opacity .3s ease,transform .3s ease}
+.fb-content.out{opacity:0;transform:translateY(7px)}
+.fb-cat{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);opacity:.85;margin:0 0 15px}
+.fb-title{font-family:'Palatino Linotype',Palatino,serif;font-size:clamp(26px,3vw,48px);letter-spacing:.04em;text-transform:uppercase;color:var(--cream);line-height:.92;margin:0 0 20px}
+.fb-rule{width:28px;height:1.5px;background:var(--orange);margin-bottom:18px}
+.fb-desc{font-size:13px;color:rgba(240,235,227,.58);line-height:1.8;margin:0 0 20px;max-width:290px}
+.fb-tags{display:flex;flex-wrap:wrap;gap:5px}
+.fb-tag{font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(255,77,0,.22);color:rgba(255,77,0,.65);transition:border-color .2s,color .2s}
+.fb-tag:hover{border-color:var(--orange);color:var(--orange)}
+/* SPINE */
+.fb-spine{width:10px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.5) 0%,rgba(255,77,0,.18) 45%,rgba(0,0,0,.38) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
+/* RIGHT IMAGE PAGE */
+.fb-right{flex:1;position:relative;overflow:hidden;border:1px solid var(--border);border-left:none;perspective:2200px}
+.fb-right::after{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 36px 36px;border-color:transparent transparent rgba(255,77,0,.22) transparent;z-index:8;pointer-events:none}
+.fb-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.68;transition:none}
+.fb-bg-ov{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.55) 0%,rgba(13,13,31,.05) 70%);z-index:1;pointer-events:none}
+/* THE FLIP CARD */
+.fb-card{position:absolute;inset:0;transform-style:preserve-3d;z-index:2;cursor:pointer}
+.fb-card-f,.fb-card-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.fb-card-f img,.fb-card-b img{width:100%;height:100%;object-fit:cover;opacity:.68}
+.fb-card-f::after,.fb-card-b::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.55) 0%,rgba(13,13,31,.05) 70%);pointer-events:none}
+/* Spine shadow on flip card — left edge */
+.fb-card-f::before{content:'';position:absolute;top:0;left:0;bottom:0;width:22px;background:linear-gradient(to right,rgba(0,0,0,.4),transparent);z-index:3;pointer-events:none}
+/* Back face — rotated 180deg */
+.fb-card-b{transform:rotateY(180deg)}
+/* Page-edge sheen — right edge */
+.fb-edge{position:absolute;top:0;right:0;bottom:0;width:3px;background:linear-gradient(to right,rgba(255,255,255,.04),rgba(255,255,255,.1),rgba(255,255,255,.04));z-index:9;pointer-events:none}
+.fb-hint{position:absolute;bottom:13px;right:48px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,.28);z-index:7;pointer-events:none;transition:opacity .5s;white-space:nowrap}
+.fb-scene:hover .fb-hint{opacity:0}
+/* NAV */
+.fb-nav{display:flex;align-items:center;max-width:1100px;margin:18px auto 0;gap:14px}
+.fb-arrow{width:44px;height:44px;border:1px solid var(--border);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,color .25s,background .25s}
+.fb-arrow:hover{border-color:var(--orange);color:var(--orange)}
+.fb-arrow:active{background:rgba(255,77,0,.08)}
+.fb-arrow svg{width:15px;height:15px}
+.fb-dots{display:flex;align-items:center;gap:7px;flex:1;justify-content:center}
+.fb-dot{width:5px;height:5px;background:var(--border);cursor:pointer;transition:width .4s cubic-bezier(0.16,1,0.3,1),background .4s}
+.fb-dot.on{background:var(--orange);width:22px}
+.fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:46px;text-align:right}
+.fb-count em{color:var(--cream);font-style:normal}
+/* MOBILE */
+@media(max-width:880px){
+  .fb-body{flex-direction:column;height:auto}
+  .fb-left{flex:none;width:100%;box-sizing:border-box;border-right:1px solid var(--border);border-bottom:none;padding:30px 24px 26px}
+  .fb-spine{width:100%;height:8px;background:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(255,77,0,.15),rgba(0,0,0,.35));border-left:1px solid var(--border);border-right:1px solid var(--border)}
+  .fb-right{flex:none;height:290px;border-left:1px solid var(--border);perspective:none}
+  .fb-card{display:none}
+  .fb-num{font-size:72px;top:10px;right:12px}
+  .fb-title{font-size:26px}
+  .fb-scene::before,.fb-scene::after{display:none}
+  .fb-hint,.fb-right::after{display:none}
 }
 @media(max-width:768px){
   .port-head{flex-direction:column;gap:8px;align-items:flex-start}
@@ -681,43 +693,48 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     </div>
     <p class="port-sub rv d2">Projekte, die bewegen. Momente, die bleiben.</p>
   </div>
-  <div class="book-stage rv d2">
-    <div class="book-wrap" id="bookWrap">
-      <div class="book">
-        <div class="bpage-l" id="bLeft">
-          <div class="bpg-num" id="bNum">01</div>
-          <p class="bpg-cat" id="bCat"></p>
-          <h3 class="bpg-title" id="bTitle"></h3>
-          <div class="bpg-div"></div>
-          <p class="bpg-desc" id="bDesc"></p>
-          <div class="bpg-tags" id="bTags"></div>
+  <div class="fb-scene rv d2">
+    <div class="fb-body">
+      <!-- LEFT: text page -->
+      <div class="fb-left">
+        <div class="fb-num" id="fbNum">01</div>
+        <div class="fb-content" id="fbContent">
+          <span class="fb-cat" id="fbCat"></span>
+          <h3 class="fb-title" id="fbTitle"></h3>
+          <div class="fb-rule"></div>
+          <p class="fb-desc" id="fbDesc"></p>
+          <div class="fb-tags" id="fbTags"></div>
         </div>
-        <div class="bspine"></div>
-        <div class="bpage-r" id="bRight">
-          <img class="bpage-r-bg" id="bRightBg" src="" alt="">
-          <div class="bpage-r-ov"></div>
-          <span class="bpage-r-hint">Klicken zum Bl&auml;ttern</span>
-          <div class="bflip" id="bFlip">
-            <div class="bflip-f"><img id="bFlipImg" src="" alt=""></div>
-            <div class="bflip-b"></div>
-          </div>
+      </div>
+      <!-- SPINE -->
+      <div class="fb-spine"></div>
+      <!-- RIGHT: image page with flip card -->
+      <div class="fb-right" id="fbRight">
+        <img class="fb-bg" id="fbBg" src="" alt="">
+        <div class="fb-bg-ov"></div>
+        <div class="fb-card" id="fbCard">
+          <div class="fb-card-f"><img id="fbFront" src="" alt=""></div>
+          <div class="fb-card-b"><img id="fbBack" src="" alt=""></div>
         </div>
+        <div class="fb-edge"></div>
+        <span class="fb-hint">Klicken zum Bl&auml;ttern &rarr;</span>
       </div>
     </div>
-    <div class="book-nav-row">
-      <button class="bnav" id="bPrev" aria-label="Vorheriges Projekt" disabled>
+    <!-- NAV -->
+    <div class="fb-nav">
+      <button class="fb-arrow" id="fbPrev" aria-label="Vorherige Seite">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="bpdots" id="bDots">
-        <div class="bdot active" data-i="0"></div>
-        <div class="bdot" data-i="1"></div>
-        <div class="bdot" data-i="2"></div>
-        <div class="bdot" data-i="3"></div>
-        <div class="bdot" data-i="4"></div>
-        <div class="bdot" data-i="5"></div>
+      <div class="fb-dots" id="fbDots">
+        <div class="fb-dot on"  data-i="0"></div>
+        <div class="fb-dot"     data-i="1"></div>
+        <div class="fb-dot"     data-i="2"></div>
+        <div class="fb-dot"     data-i="3"></div>
+        <div class="fb-dot"     data-i="4"></div>
+        <div class="fb-dot"     data-i="5"></div>
       </div>
-      <div class="book-pg-info"><span id="bCur">01</span>&thinsp;/&thinsp;06</div>
-      <button class="bnav" id="bNext" aria-label="N&auml;chstes Projekt">
+      <div class="fb-count"><em id="fbCur">01</em>&thinsp;/&thinsp;06</div>
+      <button class="fb-arrow" id="fbNext" aria-label="N&auml;chste Seite">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
@@ -1021,92 +1038,140 @@ document.getElementById('cform').addEventListener('submit',e=>{
   setTimeout(()=>{btn.textContent='Nachricht senden →';btn.style.background='';e.target.reset()},3000);
 });
 
-// PORTFOLIO BOOK-FLIP
+// PORTFOLIO FLIPBOOK v3 — circular, directional, smooth
 (function(){
-  const projects=[
-    {num:'01',cat:'Planung mit Pr\u00e4zision',title:'PROJECT\nMANAGEMENT',desc:'Strukturierte Projektplanung von der Idee bis zur Umsetzung. Wir koordinieren Teams, Ressourcen und Timelines mit Pr\u00e4zision.',tags:['Planung','Koordination','Timelines'],img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=85&auto=format&fit=crop'},
-    {num:'02',cat:'Momente, die bewegen',title:'EVENTS &\nEVENT SUPPORT',desc:'Von Firmenevents bis zu gro\u00dfen Publikumsveranstaltungen \u2013 wir schaffen unvergessliche Erlebnisse mit Liebe zum Detail.',tags:['Events','Live','Experience'],img:'SommerEvent.png'},
-    {num:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=85&auto=format&fit=crop'},
-    {num:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar machen.',tags:['Fashion','Merch','Branding'],img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=85&auto=format&fit=crop'},
-    {num:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS\n& BRAND',desc:'Strategische Partnerschaften und Markenkollaborationen, die Mehrwert schaffen und neue Reichweiten \u00f6ffnen.',tags:['Partnerships','Strategy','Brand'],img:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=85&auto=format&fit=crop'},
-    {num:'06',cat:'Visuelle Markenpr\u00e4senz',title:'BRANDING',desc:'Konsistente Markenidentit\u00e4t \u00fcber alle Kan\u00e4le. Von der Strategie bis zum finalen Design \u2013 alles aus einer Hand.',tags:['Design','Identity','Strategy'],img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=85&auto=format&fit=crop'}
+  var P=[
+    {n:'01',cat:'Planung mit Pr\u00e4zision',title:'PROJECT<br>MANAGEMENT',desc:'Strukturierte Projektplanung von der Idee bis zur Umsetzung. Wir koordinieren Teams, Ressourcen und Timelines mit Pr\u00e4zision.',tags:['Planung','Koordination','Timelines'],img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=85&auto=format&fit=crop'},
+    {n:'02',cat:'Momente, die bewegen',title:'EVENTS &amp;<br>EVENT SUPPORT',desc:'Von Firmenevents bis zu gro\u00dfen Publikumsveranstaltungen \u2013 wir schaffen unvergessliche Erlebnisse mit Liebe zum Detail.',tags:['Events','Live','Experience'],img:'SommerEvent.png'},
+    {n:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=85&auto=format&fit=crop'},
+    {n:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar und erlebbar machen.',tags:['Fashion','Merch','Branding'],img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=85&auto=format&fit=crop'},
+    {n:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS<br>&amp; BRAND',desc:'Strategische Partnerschaften und Markenkollaborationen, die Mehrwert schaffen und neue Reichweiten \u00f6ffnen.',tags:['Partnerships','Strategy','Brand'],img:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=85&auto=format&fit=crop'},
+    {n:'06',cat:'Visuelle Markenpr\u00e4senz',title:'BRANDING',desc:'Konsistente Markenidentit\u00e4t \u00fcber alle Kan\u00e4le. Von der Strategie bis zum finalen Design \u2013 alles aus einer Hand.',tags:['Design','Identity','Strategy'],img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=85&auto=format&fit=crop'}
   ];
-  const total=projects.length;
-  let idx=0,isAnimating=false;
+  var N=P.length, cur=0, busy=false;
+  var EASE='cubic-bezier(0.645,0.045,0.355,1.000)';
+  var DUR=820;
 
-  const wrap=document.getElementById('bookWrap');
-  if(!wrap)return;
-  const bNum=document.getElementById('bNum');
-  const bCat=document.getElementById('bCat');
-  const bTitle=document.getElementById('bTitle');
-  const bDesc=document.getElementById('bDesc');
-  const bTags=document.getElementById('bTags');
-  const bRightBg=document.getElementById('bRightBg');
-  const bFlip=document.getElementById('bFlip');
-  const bFlipImg=document.getElementById('bFlipImg');
-  const bPrev=document.getElementById('bPrev');
-  const bNext=document.getElementById('bNext');
-  const bCur=document.getElementById('bCur');
-  const dots=document.querySelectorAll('.bdot');
+  var card=document.getElementById('fbCard');
+  if(!card)return;
+  var bg=document.getElementById('fbBg');
+  var front=document.getElementById('fbFront');
+  var back=document.getElementById('fbBack');
+  var content=document.getElementById('fbContent');
+  var numEl=document.getElementById('fbNum');
+  var catEl=document.getElementById('fbCat');
+  var titleEl=document.getElementById('fbTitle');
+  var descEl=document.getElementById('fbDesc');
+  var tagsEl=document.getElementById('fbTags');
+  var curEl=document.getElementById('fbCur');
+  var dots=document.querySelectorAll('.fb-dot');
 
-  function setPage(p){
-    const d=projects[p];
-    bNum.textContent=d.num;
-    bCat.textContent=d.cat;
-    bTitle.innerHTML=d.title.replace('\n','<br>');
-    bDesc.textContent=d.desc;
-    bTags.innerHTML=d.tags.map(t=>'<span class="bpg-tag">'+t+'</span>').join('');
-    bRightBg.src=d.img;
-    bRightBg.alt=d.title.replace('\n',' ');
-    bCur.textContent=d.num;
-    bPrev.disabled=p===0;
-    bNext.disabled=p===total-1;
-    dots.forEach(function(dot,i){dot.classList.toggle('active',i===p);});
+  function mod(n){return((n%N)+N)%N;}
+
+  function renderText(i){
+    var d=P[i];
+    numEl.textContent=d.n;
+    catEl.textContent=d.cat;
+    titleEl.innerHTML=d.title;
+    descEl.textContent=d.desc;
+    tagsEl.innerHTML=d.tags.map(function(t){return'<span class="fb-tag">'+t+'</span>';}).join('');
+    curEl.textContent=d.n;
+    dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
   }
 
-  function flipTo(next){
-    if(isAnimating||next<0||next>=total)return;
-    isAnimating=true;
-    bFlipImg.src=projects[next].img;
-    bFlipImg.alt=projects[next].title;
-    bFlip.classList.add('flipping');
+  /* Core flip: fwd=true flips forward (left pivot), fwd=false flips backward (right pivot) */
+  function go(next){
+    if(busy)return;
+    busy=true;
+    next=mod(next);
+
+    /* Direction: is next "forward" in the circular sequence? */
+    var fwd=mod(next-cur)<=Math.floor(N/2);
+
+    /* 1. Fade out text */
+    content.classList.add('out');
+
+    if(fwd){
+      /* FORWARD: current page peels left, reveals next image behind */
+      front.src=P[cur].img;
+      bg.src=P[next].img;          /* next already loaded as bg */
+      card.style.transition='none';
+      card.style.transformOrigin='left center';
+      card.style.transform='rotateY(0deg)';
+      void card.offsetWidth;
+      card.style.transition='transform '+DUR+'ms '+EASE;
+      card.style.transform='rotateY(-180deg)';
+    } else {
+      /* BACKWARD: new page sweeps in from the left */
+      front.src=P[next].img;       /* incoming page image */
+      bg.src=P[cur].img;           /* current stays behind */
+      card.style.transition='none';
+      card.style.transformOrigin='right center';
+      card.style.transform='rotateY(180deg)'; /* start: back face showing */
+      void card.offsetWidth;
+      card.style.transition='transform '+DUR+'ms '+EASE;
+      card.style.transform='rotateY(0deg)';   /* closes to front face */
+    }
+
+    /* 2. At mid-flip, swap text + update bg for backward */
     setTimeout(function(){
-      setPage(next);
-      bFlip.style.transition='none';
-      bFlip.classList.remove('flipping');
-      void bFlip.offsetWidth;
-      bFlip.style.transition='';
-      idx=next;
-      isAnimating=false;
-    },900);
+      content.classList.remove('out');
+      renderText(next);
+      if(!fwd) bg.src=P[next].img;
+      cur=next;
+    }, DUR*0.5);
+
+    /* 3. After animation: reset card to neutral, ready for next flip */
+    setTimeout(function(){
+      card.style.transition='none';
+      card.style.transform='rotateY(0deg)';
+      front.src=P[cur].img;
+      void card.offsetWidth;
+      card.style.transition='';
+      busy=false;
+    }, DUR+40);
   }
 
-  bNext.addEventListener('click',function(){flipTo(idx+1);});
-  bPrev.addEventListener('click',function(){flipTo(idx-1);});
-  wrap.addEventListener('click',function(){if(idx<total-1)flipTo(idx+1);});
-  dots.forEach(function(dot){dot.addEventListener('click',function(){
-    var i=parseInt(dot.dataset.i);
-    if(i!==idx)flipTo(i);
-  });});
-
-  var touchStartX=0;
-  wrap.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;},{passive:true});
-  wrap.addEventListener('touchend',function(e){
-    var diff=e.changedTouches[0].clientX-touchStartX;
-    if(Math.abs(diff)>40){if(diff<0)flipTo(idx+1);else flipTo(idx-1);}
+  /* Controls */
+  document.getElementById('fbNext').addEventListener('click',function(){go(cur+1);});
+  document.getElementById('fbPrev').addEventListener('click',function(){go(cur-1);});
+  document.getElementById('fbRight').addEventListener('click',function(e){
+    if(e.target.closest('.fb-arrow,.fb-dots'))return;
+    go(cur+1);
+  });
+  dots.forEach(function(dot){
+    dot.addEventListener('click',function(e){
+      e.stopPropagation();
+      var i=parseInt(dot.dataset.i);
+      if(i!==cur)go(i);
+    });
   });
 
+  /* Touch swipe */
+  var tsx=0;
+  var rightEl=document.getElementById('fbRight');
+  rightEl.addEventListener('touchstart',function(e){tsx=e.touches[0].clientX;},{passive:true});
+  rightEl.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-tsx;
+    if(Math.abs(dx)>40){if(dx<0)go(cur+1);else go(cur-1);}
+  });
+
+  /* Keyboard */
   document.addEventListener('keydown',function(e){
     if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
     var sec=document.getElementById('portfolio');
     if(!sec)return;
     var r=sec.getBoundingClientRect();
-    if(r.top>window.innerHeight||r.bottom<0)return;
-    if(e.key==='ArrowRight')flipTo(idx+1);
-    if(e.key==='ArrowLeft')flipTo(idx-1);
+    if(r.top>window.innerHeight*1.2||r.bottom<-100)return;
+    if(e.key==='ArrowRight')go(cur+1);
+    if(e.key==='ArrowLeft')go(cur-1);
   });
 
-  setPage(0);
+  /* Init */
+  bg.src=P[0].img;
+  front.src=P[0].img;
+  back.src=P[1].img;
+  renderText(0);
 })();
 
 // PARALLAX HERO GLOW
