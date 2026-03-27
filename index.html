@@ -441,6 +441,17 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 .leaflet-control-attribution{background:rgba(12,9,5,.8)!important;color:rgba(240,235,227,.3)!important}
 .leaflet-control-attribution a{color:rgba(255,77,0,.6)!important}
 
+/* PAGE LOADER */
+#pg-loader{position:fixed;inset:0;background:var(--black);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .8s cubic-bezier(0.16,1,0.3,1),visibility .8s;overflow:hidden}
+#pg-loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.pl-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,0,.12) 0%,transparent 70%);transform:scale(1);transition:none;pointer-events:none}
+.pl-ring{position:absolute;width:100px;height:100px;border-radius:50%;border:1px solid rgba(255,77,0,.15);animation:plRingPulse 2s ease-in-out infinite}
+.pl-ring2{position:absolute;width:140px;height:140px;border-radius:50%;border:1px solid rgba(255,77,0,.07);animation:plRingPulse 2s ease-in-out .5s infinite}
+@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.4}}
+.pl-icon{width:72px;height:72px;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 0 12px rgba(255,77,0,0))}
+.pl-name{margin-top:22px;font-family:'Palatino Linotype',Palatino,serif;font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:rgba(240,235,227,.22);position:relative;z-index:2}
+.pl-bar{position:absolute;bottom:0;left:0;height:1.5px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
+
 /* COOKIE BANNER */
 .cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(3px)}
 .cookie-overlay.open{opacity:1;pointer-events:auto}
@@ -1361,5 +1372,96 @@ document.addEventListener('DOMContentLoaded',function(){
   </div>
 </div>
 
+<!-- PAGE LOADER -->
+<div id="pg-loader">
+  <div class="pl-glow" id="plGlow"></div>
+  <div class="pl-ring"></div>
+  <div class="pl-ring2"></div>
+  <img src="Icon-KairosOrginsRGB-White.png" class="pl-icon" id="plIcon" alt="">
+  <span class="pl-name">Kairos Origin</span>
+  <div class="pl-bar" id="plBar"></div>
+</div>
+
+<script>
+(function(){
+  var loader=document.getElementById('pg-loader');
+  var icon=document.getElementById('plIcon');
+  var glow=document.getElementById('plGlow');
+  var bar=document.getElementById('plBar');
+  if(!loader||!icon)return;
+
+  document.body.style.overflow='hidden';
+
+  var angle=0, speed=0.8, maxSpeed=32, raf, isDone=false;
+  var startTime=Date.now(), minDuration=1400;
+
+  function frame(){
+    if(isDone)return;
+    // Exponential acceleration
+    speed=Math.min(speed*1.038, maxSpeed);
+    angle+=speed;
+    icon.style.transform='rotate('+angle+'deg)';
+
+    // Glow grows and intensifies with speed
+    var t=speed/maxSpeed; // 0 → 1
+    var glowSize=200+t*220;
+    var glowAlpha=(0.08+t*0.28).toFixed(3);
+    var glowAlpha2=(0.04+t*0.12).toFixed(3);
+    glow.style.width=glowSize+'px';
+    glow.style.height=glowSize+'px';
+    glow.style.background='radial-gradient(circle,rgba(255,77,0,'+glowAlpha+') 0%,rgba(255,77,0,'+glowAlpha2+') 35%,transparent 70%)';
+
+    // Drop shadow on icon intensifies
+    var shadowBlur=Math.round(t*28);
+    var shadowAlpha=(t*0.7).toFixed(2);
+    icon.style.filter='drop-shadow(0 0 '+shadowBlur+'px rgba(255,77,0,'+shadowAlpha+'))';
+
+    // Progress bar
+    var elapsed=Date.now()-startTime;
+    var progress=Math.min(elapsed/minDuration*90, 90); // fills to 90%, rest on load
+    bar.style.width=progress+'%';
+
+    raf=requestAnimationFrame(frame);
+  }
+  frame();
+
+  function hide(){
+    if(isDone)return;
+    isDone=true;
+    cancelAnimationFrame(raf);
+    // Flash the bar to 100%
+    bar.style.transition='width .25s ease';
+    bar.style.width='100%';
+    // Brief final spin burst then fade
+    var burst=angle, burstSpeed=Math.max(speed,22);
+    var frames=0;
+    function finalSpin(){
+      burst+=burstSpeed*1.06;
+      burstSpeed*=1.06;
+      icon.style.transform='rotate('+burst+'deg)';
+      frames++;
+      if(frames<18){requestAnimationFrame(finalSpin);}
+      else{
+        loader.classList.add('hidden');
+        setTimeout(function(){
+          loader.style.display='none';
+          document.body.style.overflow='';
+        },900);
+      }
+    }
+    finalSpin();
+  }
+
+  var pageLoaded=false;
+  window.addEventListener('load',function(){
+    pageLoaded=true;
+    var elapsed=Date.now()-startTime;
+    var wait=Math.max(0,minDuration-elapsed);
+    setTimeout(hide,wait);
+  });
+  // Hard fallback
+  setTimeout(function(){if(!pageLoaded)hide();},3500);
+})();
+</script>
 </body>
 </html>
