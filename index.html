@@ -180,10 +180,10 @@ section{padding:52px 48px}
 .port-sub{max-width:260px;color:var(--muted);font-size:14px;line-height:1.6}
 /* PORTFOLIO FLIPBOOK v3 */
 .fb-scene{max-width:1100px;margin:0 auto;padding-bottom:52px;position:relative}
-.fb-scene::before,.fb-scene::after{content:'';position:absolute;left:3%;width:94%;height:540px;background:var(--card);border:1px solid var(--border);z-index:0;pointer-events:none}
-.fb-scene::before{top:5px;transform:rotate(.35deg)}
-.fb-scene::after{top:10px;left:5%;width:90%;transform:rotate(-.45deg);opacity:.5}
 .fb-body{display:flex;height:540px;position:relative;z-index:1}
+.fb-body::before,.fb-body::after{content:'';position:absolute;inset:0;background:var(--card);border:1px solid var(--border);z-index:-1;pointer-events:none}
+.fb-body::before{transform:rotate(.35deg)}
+.fb-body::after{transform:rotate(-.45deg);opacity:.5}
 /* LEFT TEXT PAGE */
 .fb-left{flex:0 0 45%;background:var(--dark);border:1px solid var(--border);border-right:none;padding:52px 48px 48px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
 .fb-left::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,.035) 0%,transparent 55%);pointer-events:none}
