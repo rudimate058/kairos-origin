@@ -224,11 +224,12 @@ section{padding:52px 48px}
 .fb-arrow:hover{border-color:var(--orange);color:var(--orange)}
 .fb-arrow:active{background:rgba(255,77,0,.08)}
 .fb-arrow svg{width:15px;height:15px}
-.fb-segs{display:flex;align-items:center;gap:5px;flex:1;justify-content:center}
-.fb-seg{width:26px;height:2px;background:var(--border);border:none;padding:0;cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .45s,height .45s;outline:none;flex-shrink:0}
-.fb-seg::before{content:'';position:absolute;top:-9px;bottom:-9px;left:0;right:0}
-.fb-seg:hover{background:rgba(255,77,0,.4)}
-.fb-seg.on{background:var(--orange);width:42px;height:3px}
+.fb-segs{display:flex;align-items:center;gap:6px;flex:1;justify-content:center}
+.fb-seg{width:26px;height:2px;background:rgba(240,235,227,.12);border:none;padding:0;cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .45s,height .45s;outline:none;box-shadow:none;flex-shrink:0;-webkit-appearance:none;appearance:none}
+.fb-seg::before{content:'';position:absolute;top:-10px;bottom:-10px;left:0;right:0}
+.fb-seg:hover{background:rgba(255,77,0,.45)}
+.fb-seg:focus,.fb-seg:focus-visible{outline:none;box-shadow:none}
+.fb-seg.on{background:var(--orange);width:44px;height:3px}
 .fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:46px;text-align:right}
 .fb-count em{color:var(--cream);font-style:normal}
 /* MOBILE */
@@ -253,6 +254,7 @@ section{padding:52px 48px}
 @media(max-width:768px){
   #partners{padding:20px 0}
   .partners-head{padding:0 18px 14px}
+  .mwrap::before,.mwrap::after{width:36px}
   .mtrack2{margin-top:6px}
 }
 .partners-head{text-align:center;padding:0 48px 20px}
@@ -971,16 +973,38 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <button class="legal-close" onclick="closeLegal()">✕</button>
     </div>
     <div class="legal-body">
-      <h3>Verantwortlicher</h3>
-      <p>Kairos Origin GmbH, Franz-Singer-Straße 5, 6091 Götzens</p>
-      <h3>Erhebung und Verarbeitung personenbezogener Daten</h3>
-      <p>[Datenschutztext hier einfügen — welche Daten werden erhoben, zu welchem Zweck, wie lange gespeichert.]</p>
-      <h3>Ihre Rechte (DSGVO)</h3>
-      <p>Sie haben das Recht auf Auskunft, Berichtigung, Löschung und Einschränkung der Verarbeitung Ihrer personenbezogenen Daten. Kontakt: [E-Mail]</p>
-      <h3>Cookies</h3>
-      <p>[Cookie-Informationen hier einfügen]</p>
-      <h3>Kontakt</h3>
-      <p>Bei Fragen zum Datenschutz: [E-Mail-Adresse]</p>
+      <h3>1. Verantwortlicher</h3>
+      <p>Kairos Origin GmbH<br>Franz-Singer-Stra&szlig;e 5, 6091 G&ouml;tzens, Austria<br>
+      Tel.: <a href="tel:+436811019378" style="color:var(--orange);text-decoration:none">+43 681 101 937 80</a><br>
+      E-Mail: <a href="mailto:office@kairos-origin.com" style="color:var(--orange);text-decoration:none">office@kairos-origin.com</a></p>
+
+      <h3>2. Erhebung technischer Daten</h3>
+      <p>Beim Aufruf unserer Website werden automatisch technische Zugriffsdaten &uuml;bertragen (IP-Adresse, Browsertyp, Betriebssystem, Referrer-URL, Datum und Uhrzeit des Zugriffs). Diese Daten dienen ausschlie&szlig;lich dem sicheren technischen Betrieb der Website und werden nicht zur Identifikation einzelner Personen verwendet. Rechtsgrundlage: Art.&thinsp;6 Abs.&thinsp;1 lit.&thinsp;f DSGVO (berechtigtes Interesse).</p>
+
+      <h3>3. Kontaktformular</h3>
+      <p>Wenn Sie uns &uuml;ber das Kontaktformular eine Nachricht senden, werden Ihre Angaben (Name, E-Mail-Adresse, Nachricht) zur Bearbeitung Ihrer Anfrage gespeichert. Eine Weitergabe an Dritte erfolgt nicht. Rechtsgrundlage: Art.&thinsp;6 Abs.&thinsp;1 lit.&thinsp;b DSGVO. Ihre Daten werden nach vollst&auml;ndiger Bearbeitung gel&ouml;scht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+
+      <h3>4. Notwendige Cookies</h3>
+      <p>Technisch notwendige Cookies sichern den ordnungsgem&auml;&szlig;en Betrieb der Website &mdash; darunter die Speicherung Ihrer Cookie-Pr&auml;ferenzen. Diese Cookies sind f&uuml;r die Nutzung der Website erforderlich und k&ouml;nnen nicht deaktiviert werden. Rechtsgrundlage: Art.&thinsp;6 Abs.&thinsp;1 lit.&thinsp;f DSGVO.</p>
+
+      <h3>5. Analyse-Cookies (Matomo)</h3>
+      <p>Mit Ihrer Einwilligung verwenden wir Matomo, ein datenschutzkonformes Web-Analyse-Tool. Matomo setzt Cookies ein, die eine anonymisierte Analyse der Website-Nutzung erm&ouml;glichen. Ihre IP-Adresse wird vor der Speicherung gek&uuml;rzt; eine pers&ouml;nliche Identifikation ist nicht m&ouml;glich. Die Daten verbleiben ausschlie&szlig;lich auf Servern innerhalb der EU und werden nicht an Dritte weitergegeben.<br>
+      Sie k&ouml;nnen Ihre Einwilligung jederzeit widerrufen, indem Sie in den Cookie-Einstellungen (erreichbar &uuml;ber den Link im Fu&szlig;bereich) Analyse-Cookies deaktivieren. Rechtsgrundlage: Art.&thinsp;6 Abs.&thinsp;1 lit.&thinsp;a DSGVO.</p>
+
+      <h3>6. Ihre Rechte gem&auml;&szlig; DSGVO</h3>
+      <p>Sie haben das Recht auf Auskunft (Art.&thinsp;15), Berichtigung (Art.&thinsp;16), L&ouml;schung (Art.&thinsp;17), Einschr&auml;nkung der Verarbeitung (Art.&thinsp;18), Daten&uuml;bertragbarkeit (Art.&thinsp;20) sowie Widerspruch gegen die Verarbeitung (Art.&thinsp;21 DSGVO). Eine erteilte Einwilligung k&ouml;nnen Sie jederzeit mit Wirkung f&uuml;r die Zukunft widerrufen (Art.&thinsp;7 Abs.&thinsp;3 DSGVO).<br>
+      Zur Aus&uuml;bung Ihrer Rechte: <a href="mailto:office@kairos-origin.com" style="color:var(--orange);text-decoration:none">office@kairos-origin.com</a></p>
+
+      <h3>7. Beschwerderecht</h3>
+      <p>Sie haben das Recht, sich bei der zust&auml;ndigen Aufsichtsbeh&ouml;rde zu beschweren:<br>
+      &Ouml;sterreichische Datenschutzbeh&ouml;rde, Barichgasse 40&ndash;42, 1030 Wien<br>
+      <a href="mailto:dsb@dsb.gv.at" style="color:var(--orange);text-decoration:none">dsb@dsb.gv.at</a> &mdash; <a href="https://www.dsb.gv.at" target="_blank" rel="noopener" style="color:var(--orange);text-decoration:none">www.dsb.gv.at</a></p>
+
+      <h3>8. Hosting &amp; Sicherheit</h3>
+      <p>Die Website wird auf Servern innerhalb der EU betrieben. Die &Uuml;bertragung erfolgt verschl&uuml;sselt via HTTPS. Es gelten die Datenschutzbestimmungen unseres Hosting-Anbieters.</p>
+
+      <h3>9. Aktualit&auml;t</h3>
+      <p>Diese Datenschutzerkl&auml;rung kann bei &Auml;nderungen der Rechtslage oder des Dienstes aktualisiert werden. Stand: M&auml;rz 2026.</p>
     </div>
   </div>
 </div>
