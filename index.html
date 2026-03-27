@@ -224,12 +224,11 @@ section{padding:52px 48px}
 .fb-arrow:hover{border-color:var(--orange);color:var(--orange)}
 .fb-arrow:active{background:rgba(255,77,0,.08)}
 .fb-arrow svg{width:15px;height:15px}
-.fb-segs{display:flex;align-items:center;gap:6px;flex:1;justify-content:center}
-.fb-seg{width:26px;height:2px;background:rgba(240,235,227,.12);border:none;padding:0;cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .45s,height .45s;outline:none;box-shadow:none;flex-shrink:0;-webkit-appearance:none;appearance:none}
-.fb-seg::before{content:'';position:absolute;top:-10px;bottom:-10px;left:0;right:0}
-.fb-seg:hover{background:rgba(255,77,0,.45)}
-.fb-seg:focus,.fb-seg:focus-visible{outline:none;box-shadow:none}
-.fb-seg.on{background:var(--orange);width:44px;height:3px}
+.fb-segs{display:flex;align-items:center;gap:8px;flex:1;justify-content:center}
+.fb-seg{width:28px;height:2px;background:rgba(255,255,255,.1);cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .4s,height .4s;flex-shrink:0}
+.fb-seg::before{content:'';position:absolute;top:-12px;bottom:-12px;left:-2px;right:-2px}
+.fb-seg:hover{background:rgba(255,77,0,.5)}
+.fb-seg.on{background:var(--orange);width:46px;height:3px}
 .fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:46px;text-align:right}
 .fb-count em{color:var(--cream);font-style:normal}
 /* MOBILE */
@@ -730,12 +729,12 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div class="fb-segs" id="fbSegs">
-        <button class="fb-seg on" data-i="0" aria-label="Seite 1"></button>
-        <button class="fb-seg"    data-i="1" aria-label="Seite 2"></button>
-        <button class="fb-seg"    data-i="2" aria-label="Seite 3"></button>
-        <button class="fb-seg"    data-i="3" aria-label="Seite 4"></button>
-        <button class="fb-seg"    data-i="4" aria-label="Seite 5"></button>
-        <button class="fb-seg"    data-i="5" aria-label="Seite 6"></button>
+        <div class="fb-seg on" data-i="0"></div>
+        <div class="fb-seg"    data-i="1"></div>
+        <div class="fb-seg"    data-i="2"></div>
+        <div class="fb-seg"    data-i="3"></div>
+        <div class="fb-seg"    data-i="4"></div>
+        <div class="fb-seg"    data-i="5"></div>
       </div>
       <div class="fb-count"><em id="fbCur">01</em>&thinsp;/&thinsp;06</div>
       <button class="fb-arrow" id="fbNext" aria-label="N&auml;chste Seite">
