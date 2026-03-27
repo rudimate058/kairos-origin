@@ -70,6 +70,7 @@ nav.scrolled{background:rgba(13,13,31,.95);backdrop-filter:blur(12px);padding:16
 .hero-sweep{position:absolute;top:50%;left:-100%;width:100%;height:1.5px;background:linear-gradient(to right,transparent,var(--orange),transparent);animation:sweep .9s var(--ease) .1s forwards;pointer-events:none;z-index:2}
 .hero-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);text-align:center;display:flex;flex-direction:column;align-items:center;z-index:1;pointer-events:none;width:100%}
 .hero-mark{width:clamp(56px,6.5vw,90px);height:auto;margin-bottom:clamp(14px,2vw,28px);opacity:0;animation:fadeUp .8s var(--ease) .35s forwards}
+.hero-main-logo{width:clamp(260px,40vw,600px);height:auto;display:block;margin-bottom:clamp(16px,2.5vw,32px);opacity:0;animation:fadeUp .95s var(--ease) .4s forwards}
 .hero-wordmark{font-family:var(--fd);font-size:clamp(72px,13vw,190px);line-height:.88;letter-spacing:-.01em;color:var(--white);text-align:center}
 .hwl{display:block;overflow:hidden}
 .hwi{display:block;transform:translateY(105%);animation:slideUp .95s var(--ease) forwards}
@@ -177,62 +178,60 @@ section{padding:52px 48px}
 #portfolio{border-top:1px solid var(--border);background:radial-gradient(ellipse at 100% 0%,rgba(255,77,0,.05) 0%,transparent 50%),var(--black)}
 .port-head{max-width:1200px;margin:0 auto 20px;display:flex;justify-content:space-between;align-items:flex-end}
 .port-sub{max-width:260px;color:var(--muted);font-size:14px;line-height:1.6}
-.pgrid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;grid-template-rows:260px 260px;gap:10px}
-.ccard{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--border)}
-.ccard:first-child{grid-row:span 2}
-.cimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);opacity:.7}
-.ccard:hover .cimg{transform:scale(1.04);opacity:.85}
-/* EVENT COLLAGE – 2 Bilder 50/50 */
-.cimg-collage{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:2px;transition:transform .6s var(--ease)}
-.ccard:hover .cimg-collage{transform:scale(1.03)}
-.cimg-collage img{width:100%;height:100%;object-fit:cover;opacity:.7;transition:opacity .4s}
-.ccard:hover .cimg-collage img{opacity:.88}
-.cglow{position:absolute;inset:0;opacity:0;transition:opacity .4s;pointer-events:none}
-.ccard:hover .cglow{opacity:1}
-.cidx{position:absolute;top:20px;right:20px;font-family:var(--fd);font-size:13px;color:rgba(240,235,227,.3);letter-spacing:.1em;z-index:2}
-.clabel{position:absolute;bottom:28px;left:28px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);transition:opacity .3s;z-index:2}
-.ccard:hover .clabel{opacity:0}
-.ccontent{position:absolute;bottom:0;left:0;right:0;padding:28px;background:linear-gradient(to top,rgba(12,9,5,.97) 0%,transparent 100%);transform:translateY(16px);opacity:0;transition:transform .4s var(--ease),opacity .4s;z-index:2}
-.ccard:hover .ccontent{transform:translateY(0);opacity:1}
-.ctitle{font-family:var(--fd);font-size:28px;color:var(--white);letter-spacing:.05em;margin-bottom:6px}
-.cdesc{font-size:13px;color:rgba(240,235,227,.55);line-height:1.55}
-.ctags{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.ctag{font-size:11px;padding:4px 10px;background:rgba(255,77,0,.14);color:var(--orange);letter-spacing:.05em}
-/* PORTFOLIO CAROUSEL */
-.pcombo-wrap{position:relative;max-width:1200px;margin:0 auto;overflow:hidden}
-.pcombo{display:flex;overflow:visible;gap:0;cursor:grab;user-select:none;will-change:transform}
-.pcombo.dragging{cursor:grabbing}
-.pcombo-panel{flex:0 0 calc((100% - 40px) / 2.15);min-width:0;height:420px;position:relative;overflow:hidden;cursor:pointer;display:block;text-decoration:none;margin-right:2px}
-.pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.9}
-.pcombo-img{width:100%;height:100%;object-fit:cover;opacity:.55;transition:transform .7s var(--ease),opacity .5s}
-.pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.75}
-.pcombo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,31,.98) 0%,rgba(13,13,31,.55) 45%,rgba(13,13,31,.1) 100%)}
-.pcombo-lbl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;z-index:2;transition:padding .4s var(--ease)}
-.pcombo-panel:hover .pcombo-lbl{padding-bottom:28px}
-.pcombo-accent{display:block;width:28px;height:2px;background:var(--orange);margin-bottom:12px;transition:width .4s var(--ease)}
-.pcombo-panel:hover .pcombo-accent{width:48px}
-.pcombo-title{display:block;font-family:var(--fd);font-size:clamp(22px,2.5vw,42px);letter-spacing:.04em;text-transform:uppercase;color:var(--orange);line-height:.95;margin-bottom:10px;text-shadow:0 2px 30px rgba(255,77,0,.35)}
-.pcombo-cat{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,.5);margin-bottom:0}
-.pcombo-line{position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,77,0,.35),transparent)}
-/* CAROUSEL CONTROLS */
-.pc-nav{display:flex;align-items:center;gap:16px;max-width:1200px;margin:18px auto 0}
-.pc-btn{width:44px;height:44px;border:1px solid var(--border);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s var(--ease);flex-shrink:0}
-.pc-btn:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
-.pc-btn:disabled{opacity:.25;cursor:not-allowed}
-.pc-btn svg{width:16px;height:16px}
-.pc-progress{flex:1;height:1.5px;background:var(--border);position:relative;overflow:hidden}
-.pc-bar{position:absolute;left:0;top:0;height:100%;background:var(--orange);transition:width .45s var(--ease);width:0%}
-.pc-count{font-family:var(--fd);font-size:12px;color:var(--muted);letter-spacing:.15em;flex-shrink:0;min-width:48px;text-align:right}
-.pc-count span{color:var(--cream)}
+/* PORTFOLIO BOOK-FLIP */
+.book-stage{max-width:1100px;margin:0 auto;padding-bottom:48px}
+.book-wrap{position:relative;width:100%;height:540px;perspective:3000px;perspective-origin:50% 40%;cursor:pointer}
+.book-wrap::before,.book-wrap::after{content:'';position:absolute;bottom:-6px;left:2%;width:96%;height:100%;background:var(--card);border:1px solid var(--border);z-index:-1;transform:rotate(.4deg)}
+.book-wrap::after{bottom:-12px;left:4%;width:92%;transform:rotate(-.5deg);opacity:.55}
+.book{width:100%;height:100%;display:flex;position:relative;transform-style:preserve-3d}
+.bpage-l{flex:0 0 46%;height:100%;background:var(--dark);border:1px solid var(--border);border-right:none;padding:48px 44px 44px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.bpage-l::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,.04) 0%,transparent 60%);pointer-events:none}
+.bspine{width:8px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.4),rgba(255,77,0,.12),rgba(0,0,0,.25));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.bpage-r{flex:1;height:100%;position:relative;overflow:hidden;transform-style:preserve-3d}
+.bpage-r::after{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 40px 40px;border-color:transparent transparent rgba(255,77,0,.18) transparent;z-index:5;pointer-events:none}
+.bpage-r-hint{position:absolute;bottom:14px;right:52px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,.35);z-index:5;pointer-events:none;transition:opacity .4s}
+.book-wrap:hover .bpage-r-hint{opacity:0}
+.bpage-r-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65;transition:transform .8s var(--ease),opacity .5s}
+.book-wrap:hover .bpage-r-bg{transform:scale(1.04);opacity:.75}
+.bpage-r-ov{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.6) 0%,rgba(13,13,31,.1) 100%)}
+.bflip{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:left center;transition:transform .9s cubic-bezier(0.16,1,0.3,1)}
+.bflip.flipping{transform:rotateY(-180deg)}
+.bflip-f,.bflip-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.bflip-f img{width:100%;height:100%;object-fit:cover;opacity:.65}
+.bflip-b{background:var(--dark);border-left:1px solid var(--border);transform:rotateY(180deg)}
+.bpg-num{font-family:var(--fd);font-size:120px;line-height:1;color:rgba(255,77,0,.06);position:absolute;top:20px;right:24px;letter-spacing:-.02em;transition:color .5s;pointer-events:none}
+.book-wrap:hover .bpg-num{color:rgba(255,77,0,.1)}
+.bpg-cat{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);margin:0 0 14px;opacity:.8}
+.bpg-title{font-family:var(--fd);font-size:clamp(28px,3.2vw,48px);letter-spacing:.04em;text-transform:uppercase;color:var(--white);line-height:.95;margin:0 0 20px}
+.bpg-div{width:32px;height:1.5px;background:var(--orange);margin-bottom:18px}
+.bpg-desc{font-size:13px;color:rgba(240,235,227,.6);line-height:1.75;margin:0 0 20px;max-width:300px}
+.bpg-tags{display:flex;flex-wrap:wrap;gap:6px}
+.bpg-tag{font-size:8px;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,77,0,.25);color:rgba(255,77,0,.7)}
+.book-nav-row{display:flex;align-items:center;max-width:1100px;margin:16px auto 0;gap:16px}
+.bnav{width:44px;height:44px;border:1px solid var(--border);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s var(--ease);flex-shrink:0}
+.bnav:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
+.bnav:disabled{opacity:.25;cursor:not-allowed}
+.bnav svg{width:16px;height:16px}
+.bpdots{display:flex;gap:8px;align-items:center;flex:1;justify-content:center}
+.bdot{width:6px;height:6px;background:var(--border);transition:all .35s var(--ease);cursor:pointer}
+.bdot.active{background:var(--orange);width:20px}
+.book-pg-info{font-family:var(--fd);font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:48px;text-align:right}
+.book-pg-info span{color:var(--cream)}
+@media(max-width:900px){
+  .book-wrap{height:auto;perspective:none;display:block;cursor:default}
+  .book{flex-direction:column;height:auto}
+  .bpage-l{flex:none;width:100%;padding:32px 24px 28px;border-right:1px solid var(--border);border-bottom:none;box-sizing:border-box}
+  .bspine{width:100%;height:6px;background:linear-gradient(to bottom,rgba(0,0,0,.4),rgba(255,77,0,.12),rgba(0,0,0,.25));border-left:1px solid var(--border);border-right:1px solid var(--border)}
+  .bpage-r{flex:none;width:100%;height:280px}
+  .bpg-num{font-size:80px;top:12px;right:16px}
+  .bpg-title{font-size:28px}
+  .bflip{display:none}
+  .bpage-r-hint{display:none}
+  .book-wrap::before,.book-wrap::after{display:none}
+}
 @media(max-width:768px){
   .port-head{flex-direction:column;gap:8px;align-items:flex-start}
   .port-sub{display:none}
-  .pcombo-panel{flex:0 0 88%;height:260px}
-  .pcombo-lbl{padding:16px}
-  .pcombo-title{font-size:22px;margin-bottom:6px}
-  .pcombo-accent{width:20px;margin-bottom:8px}
-  .pcombo-cat{font-size:8px}
-  .pc-nav{margin:14px 0 0}
 }
 
 /* PARTNERS */
@@ -253,9 +252,8 @@ section{padding:52px 48px}
 .plogo:hover{background:rgba(255,77,0,.06)}
 .pname{font-family:var(--fd);font-size:17px;letter-spacing:.18em;color:rgba(240,235,227,.45);transition:color .2s;white-space:nowrap;text-decoration:none}
 .plogo:hover .pname{color:rgba(240,235,227,.85)}
-.plogo-img{height:48px;width:160px;object-fit:contain;opacity:.75;transition:opacity .3s;filter:brightness(0) invert(1)}
+.plogo-img{height:44px;width:140px;object-fit:contain;object-position:center;opacity:.72;transition:opacity .3s;filter:brightness(0) invert(1)}
 .plogo:hover .plogo-img{opacity:1}
-.plogo-img[alt="Innsbruck"],.plogo-img[alt="Blumen Calovini"],.plogo-img[alt="Physio 1.0"]{height:64px;width:190px}
 .ptip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(8px);background:var(--card);border:1px solid var(--border);border-top:1px solid rgba(255,77,0,.4);padding:10px 14px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:100;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 .plogo:hover .ptip{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
 .ptip-favicon{width:18px;height:18px;border-radius:3px;object-fit:contain}
@@ -309,12 +307,15 @@ section{padding:52px 48px}
 .cdet-v{font-size:17px;color:var(--cream);text-decoration:none;transition:color .2s;font-style:normal}
 a.cdet-v:hover{color:var(--orange)}
 .fcheck{display:flex;align-items:flex-start;gap:10px;margin-top:12px;margin-bottom:6px}
-.fcheck input[type="checkbox"]{appearance:none;width:16px;height:16px;border:1px solid var(--border);background:transparent;flex-shrink:0;margin-top:2px;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+.fcheck input[type="checkbox"]{appearance:none;width:20px;height:20px;min-width:20px;border:2px solid rgba(255,77,0,.6);background:rgba(255,77,0,.06);flex-shrink:0;margin-top:1px;cursor:pointer;transition:border-color .2s,background .2s,box-shadow .2s;position:relative;border-radius:2px}
+.fcheck input[type="checkbox"]:hover{border-color:var(--orange);background:rgba(255,77,0,.12);box-shadow:0 0 0 3px rgba(255,77,0,.15)}
 .fcheck input[type="checkbox"]:checked{background:var(--orange);border-color:var(--orange)}
-.fcheck input[type="checkbox"]:checked::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:10px;line-height:1}
+.fcheck input[type="checkbox"]:checked::after{content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:12px;line-height:1;font-weight:700}
+@media(max-width:768px){.fcheck input[type="checkbox"]{width:22px;height:22px;min-width:22px}}
 .fcheck label{font-size:12px;color:rgba(240,235,227,.5);line-height:1.6;cursor:pointer}
-.fcheck label a{color:var(--orange);text-decoration:none}
-.fcheck label a:hover{text-decoration:underline}
+.fcheck label a{color:var(--orange);text-decoration:none;font-weight:600;border-bottom:1px solid rgba(255,77,0,.4);padding-bottom:1px;transition:border-color .2s,color .2s}
+.fcheck label a:hover{border-bottom-color:var(--orange);color:#ff6a2a}
+@media(max-width:768px){.fcheck label{font-size:13px}.fcheck label a{border-bottom-width:2px}}
 .cont-form{padding-top:48px}
 .fg{margin-bottom:20px}
 .fl{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
@@ -337,9 +338,9 @@ a.cdet-v:hover{color:var(--orange)}
 }
 
 /* LEGAL MODAL */
-.legal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;opacity:0;pointer-events:none;transition:opacity .35s var(--ease);backdrop-filter:blur(4px)}
+.legal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9200;opacity:0;pointer-events:none;transition:opacity .35s var(--ease);backdrop-filter:blur(4px)}
 .legal-overlay.open{opacity:1;pointer-events:auto}
-.legal-panel{position:fixed;bottom:0;left:0;right:0;max-height:80vh;background:var(--dark);border-top:1px solid var(--border);z-index:9001;transform:translateY(100%);transition:transform .45s var(--ease);overflow-y:auto}
+.legal-panel{position:fixed;bottom:0;left:0;right:0;max-height:80vh;background:var(--dark);border-top:1px solid var(--border);z-index:9201;transform:translateY(100%);transition:transform .45s var(--ease);overflow-y:auto}
 .legal-panel.open{transform:translateY(0)}
 .legal-panel-inner{max-width:860px;margin:0 auto;padding:48px 48px 60px}
 .legal-panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;border-bottom:1px solid var(--border);padding-bottom:20px}
@@ -406,10 +407,11 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 .social-link svg{width:16px;height:16px;fill:currentColor}
 
 /* ORANGE TICKER */
-.ticker{background:var(--orange);padding:22px 0;overflow:hidden;position:relative}
-.ticker-track{display:flex;width:max-content;animation:mq 20s linear infinite}
-.tick-item{font-family:var(--fd);font-size:32px;letter-spacing:.2em;color:var(--white);padding:0 48px;white-space:nowrap;opacity:1}
-.tick-sep{color:rgba(255,255,255,.4);padding:0 8px}
+.ticker{background:var(--orange);padding:14px 0;overflow:hidden;position:relative}
+.ticker-track{display:flex;width:max-content;animation:mq 40s linear infinite}
+.tick-item{font-family:var(--fd);font-size:22px;letter-spacing:.16em;color:var(--white);padding:0 32px;white-space:nowrap;opacity:1}
+.tick-sep{color:rgba(255,255,255,.4);padding:0 6px}
+@media(max-width:768px){.ticker{padding:10px 0}.tick-item{font-size:15px;letter-spacing:.1em;padding:0 20px}}
 
 /* LEAFLET CUSTOM STYLES */
 .leaflet-tooltip.map-tip{background:rgba(13,13,31,.9);border:1px solid rgba(255,77,0,.35);border-radius:0;padding:5px 12px;box-shadow:0 4px 16px rgba(0,0,0,.5);font-family:'Bebas Neue',cursive;font-size:13px;letter-spacing:.14em;color:#fff;white-space:nowrap;backdrop-filter:blur(4px)}
@@ -423,6 +425,41 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 .popup-route:hover{background:#FF7A35}
 .leaflet-control-attribution{background:rgba(12,9,5,.8)!important;color:rgba(240,235,227,.3)!important}
 .leaflet-control-attribution a{color:rgba(255,77,0,.6)!important}
+
+/* COOKIE BANNER */
+.cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(3px)}
+.cookie-overlay.open{opacity:1;pointer-events:auto}
+.cookie-box{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(24px);width:min(560px,calc(100vw - 32px));background:var(--dark);border:1px solid var(--border);border-top:2px solid var(--orange);z-index:9101;padding:28px 28px 24px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.cookie-box.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.cookie-title{font-family:var(--fd);font-size:22px;letter-spacing:.06em;color:var(--white);margin-bottom:12px}
+.cookie-text{font-size:13px;line-height:1.75;color:rgba(240,235,227,.6);margin-bottom:20px}
+.cookie-text a{color:var(--orange);text-decoration:none}
+.cookie-text a:hover{text-decoration:underline}
+.cookie-btns{display:flex;gap:8px;flex-wrap:wrap}
+.cookie-btn{flex:1;min-width:120px;padding:12px 16px;font-family:var(--fb);font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;transition:all .22s var(--ease)}
+.cookie-btn:hover{border-color:var(--orange);color:var(--orange)}
+.cookie-btn.primary{background:var(--orange);border-color:var(--orange);color:var(--white)}
+.cookie-btn.primary:hover{background:var(--orange2);border-color:var(--orange2)}
+/* COOKIE SETTINGS PANEL */
+.cookie-settings{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(24px);width:min(560px,calc(100vw - 32px));background:var(--dark);border:1px solid var(--border);border-top:2px solid var(--orange);z-index:9102;padding:28px 28px 24px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease),transform .4s var(--ease);display:none}
+.cookie-settings.open{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);display:block}
+.cookie-settings-title{font-family:var(--fd);font-size:20px;letter-spacing:.06em;color:var(--white);margin-bottom:18px;display:flex;justify-content:space-between;align-items:center}
+.cookie-toggle-row{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border)}
+.cookie-toggle-row:last-of-type{border-bottom:none;margin-bottom:16px}
+.cookie-toggle-label{font-size:13px;color:var(--cream);font-weight:600;margin-bottom:3px;letter-spacing:.04em}
+.cookie-toggle-desc{font-size:11px;color:var(--muted);line-height:1.55;max-width:340px}
+.cookie-toggle{position:relative;width:40px;height:22px;flex-shrink:0;margin-left:16px;margin-top:2px}
+.cookie-toggle input{opacity:0;width:0;height:0;position:absolute}
+.cookie-toggle-track{position:absolute;inset:0;background:var(--border);border-radius:11px;transition:background .25s var(--ease);cursor:pointer}
+.cookie-toggle input:checked+.cookie-toggle-track{background:var(--orange)}
+.cookie-toggle-track::after{content:'';position:absolute;left:3px;top:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:transform .25s var(--ease)}
+.cookie-toggle input:checked+.cookie-toggle-track::after{transform:translateX(18px)}
+.cookie-toggle-track.disabled{opacity:.35;cursor:not-allowed}
+@media(max-width:480px){
+  .cookie-box,.cookie-settings{bottom:16px;padding:20px 18px 18px}
+  .cookie-btns{flex-direction:column}
+  .cookie-btn{min-width:0}
+}
 </style>
 </head>
 <body>
@@ -484,11 +521,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
   <div class="hero-glow2"></div>
   <div class="hero-sweep"></div>
   <div class="hero-center">
-    <img src="Icon-KairosOrginsRGB-White.png" alt="Kairos Origin" class="hero-mark" style="height:80px;width:auto;margin-bottom:18px;display:block">
-    <h1 class="hero-wordmark">
-      <span class="hwl"><span class="hwi">KAIROS</span></span>
-      <span class="hwl"><span class="hwi">ORIGIN</span></span>
-    </h1>
+    <img src="Logo/logowebsiteneu/Kairos-Origin Logo Weiß.png" alt="Kairos Origin" class="hero-main-logo">
     <p class="hero-slogan">Seize the Moment</p>
   </div>
   <div class="hero-badge">
@@ -648,90 +681,45 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     </div>
     <p class="port-sub rv d2">Projekte, die bewegen. Momente, die bleiben.</p>
   </div>
-  <div class="pcombo-wrap rv">
-    <div class="pcombo" id="pcombo">
-
-      <!-- PANEL 01: PROJECT MANAGEMENT -->
-      <a class="pcombo-panel" href="#leistungen">
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=700&q=85&auto=format&fit=crop" alt="Project Management" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PROJECT<br>MANAGEMENT</span>
-          <span class="pcombo-cat">01 — Planung mit Präzision</span>
+  <div class="book-stage rv d2">
+    <div class="book-wrap" id="bookWrap">
+      <div class="book">
+        <div class="bpage-l" id="bLeft">
+          <div class="bpg-num" id="bNum">01</div>
+          <p class="bpg-cat" id="bCat"></p>
+          <h3 class="bpg-title" id="bTitle"></h3>
+          <div class="bpg-div"></div>
+          <p class="bpg-desc" id="bDesc"></p>
+          <div class="bpg-tags" id="bTags"></div>
         </div>
-      </a>
-
-      <!-- PANEL 02: EVENTS -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="SommerEvent.png" alt="Events" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">EVENTS &amp;<br>EVENT SUPPORT</span>
-          <span class="pcombo-cat">02 — Momente, die bewegen</span>
+        <div class="bspine"></div>
+        <div class="bpage-r" id="bRight">
+          <img class="bpage-r-bg" id="bRightBg" src="" alt="">
+          <div class="bpage-r-ov"></div>
+          <span class="bpage-r-hint">Klicken zum Bl&auml;ttern</span>
+          <div class="bflip" id="bFlip">
+            <div class="bflip-f"><img id="bFlipImg" src="" alt=""></div>
+            <div class="bflip-b"></div>
+          </div>
         </div>
-      </a>
-
-      <!-- PANEL 03: PROMOTION -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=85&auto=format&fit=crop" alt="Promotion" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PROMOTION</span>
-          <span class="pcombo-cat">03 — Am Puls der Marke</span>
-        </div>
-      </a>
-
-      <!-- PANEL 04: CLOTHING -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&q=85&auto=format&fit=crop" alt="Clothing" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">CLOTHING</span>
-          <span class="pcombo-cat">04 — Marke zum Anziehen</span>
-        </div>
-      </a>
-
-      <!-- PANEL 05: PARTNERSHIPS -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=85&auto=format&fit=crop" alt="Partnerships" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PARTNERSHIPS<br>&amp; BRAND</span>
-          <span class="pcombo-cat">05 — Starke Allianzen</span>
-        </div>
-      </a>
-
-      <!-- PANEL 06: BRANDING -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=700&q=85&auto=format&fit=crop" alt="Branding" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">BRANDING</span>
-          <span class="pcombo-cat">06 — Visuelle Markenpräsenz</span>
-        </div>
-      </a>
-
+      </div>
     </div>
-    <div class="pc-nav">
-      <button class="pc-btn" id="pc-prev" aria-label="Vorheriges Projekt" disabled>
+    <div class="book-nav-row">
+      <button class="bnav" id="bPrev" aria-label="Vorheriges Projekt" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="pc-progress"><div class="pc-bar" id="pc-bar"></div></div>
-      <button class="pc-btn" id="pc-next" aria-label="Nächstes Projekt">
+      <div class="bpdots" id="bDots">
+        <div class="bdot active" data-i="0"></div>
+        <div class="bdot" data-i="1"></div>
+        <div class="bdot" data-i="2"></div>
+        <div class="bdot" data-i="3"></div>
+        <div class="bdot" data-i="4"></div>
+        <div class="bdot" data-i="5"></div>
+      </div>
+      <div class="book-pg-info"><span id="bCur">01</span>&thinsp;/&thinsp;06</div>
+      <button class="bnav" id="bNext" aria-label="N&auml;chstes Projekt">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
-      <span class="pc-count"><span id="pc-cur">01</span> / 06</span>
     </div>
   </div>
 </section>
@@ -743,29 +731,33 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
   </div>
   <div class="mwrap">
     <div class="mtrack">
-      <a class="plogo" href="https://www.tirolwerbung.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Tirol.png" alt="Tirol"><span class="ptip"><span class="ptip-url">tirolwerbung.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.innsbruck-tourismus.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Innsbruck.png" alt="Innsbruck"><span class="ptip"><span class="ptip-url">innsbruck-tourismus.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.redbull.com/at-de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Red Bull.png" alt="Red Bull"><span class="ptip"><span class="ptip-url">redbull.com</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.asvoe.tirol/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/ASVÖ.png" alt="ASVÖ"><span class="ptip"><span class="ptip-url">asvoe.tirol</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://edelstenbikes.com/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Edelsten.png" alt="Edelsten"><span class="ptip"><span class="ptip-url">edelstenbikes.com</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.chaka2.com/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Chaka.png" alt="Chaka"><span class="ptip"><span class="ptip-url">chaka2.com</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://blumen-calovini.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Blumen Calovini.png" alt="Blumen Calovini"><span class="ptip"><span class="ptip-url">blumen-calovini.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.tzaphysio.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Physio 1.0.png" alt="Physio 1.0"><span class="ptip"><span class="ptip-url">tzaphysio.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.physio-in-telfs.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Physio Telfs.png" alt="Physio Telfs"><span class="ptip"><span class="ptip-url">physio-in-telfs.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://kaino.io/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Kaino.png" alt="Kaino"><span class="ptip"><span class="ptip-url">kaino.io</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://tdm-marketing.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/TDM.png" alt="TDM"><span class="ptip"><span class="ptip-url">tdm-marketing.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.tirolwerbung.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Tirol logo Weiß.png" alt="Tirol"><span class="ptip"><span class="ptip-url">tirolwerbung.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.innsbruck-tourismus.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Innsbruck-Logo-Weiß.png" alt="Innsbruck"><span class="ptip"><span class="ptip-url">innsbruck-tourismus.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.redbull.com/at-de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Red Bull Logo Weiß.png" alt="Red Bull"><span class="ptip"><span class="ptip-url">redbull.com</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.asvoe.tirol/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/ASVÖ-Logo-Weiß.png" alt="ASVÖ"><span class="ptip"><span class="ptip-url">asvoe.tirol</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://edelstenbikes.com/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Edelstein-Logo-Weiß.png" alt="Edelsten"><span class="ptip"><span class="ptip-url">edelstenbikes.com</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.chaka2.com/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/chaka2-Logo-Weiß.png" alt="Chaka"><span class="ptip"><span class="ptip-url">chaka2.com</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://blumen-calovini.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Blumen-Calovini-Logo-Weiß.png" alt="Blumen Calovini"><span class="ptip"><span class="ptip-url">blumen-calovini.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.tzaphysio.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/EinsPunktNull-Logo-Weiß.png" alt="Physio 1.0"><span class="ptip"><span class="ptip-url">tzaphysio.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.physio-in-telfs.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Physio-Telfs-Logo-Weiß.png" alt="Physio Telfs"><span class="ptip"><span class="ptip-url">physio-in-telfs.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://kaino.io/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Kaino Logo Weiß.png" alt="Kaino"><span class="ptip"><span class="ptip-url">kaino.io</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://tdm-marketing.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/TDM-Logo-Weiß.png" alt="TDM"><span class="ptip"><span class="ptip-url">tdm-marketing.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.chasa-patria.at" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Chasa-Patria Logo Weiß.png" alt="Chasa Patria"><span class="ptip"><span class="ptip-url">chasa-patria.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.apart-ischgl.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Landhaus-Daham Logo Weiß.png" alt="Landhaus Daham"><span class="ptip"><span class="ptip-url">apart-ischgl.at</span><span class="ptip-arrow">↗</span></span></a>
       <!-- Kopie für nahtlosen Loop -->
-      <a class="plogo" href="https://www.tirolwerbung.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Tirol.png" alt="Tirol"><span class="ptip"><span class="ptip-url">tirolwerbung.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.innsbruck-tourismus.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Innsbruck.png" alt="Innsbruck"><span class="ptip"><span class="ptip-url">innsbruck-tourismus.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.redbull.com/at-de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Red Bull.png" alt="Red Bull"><span class="ptip"><span class="ptip-url">redbull.com</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.asvoe.tirol/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/ASVÖ.png" alt="ASVÖ"><span class="ptip"><span class="ptip-url">asvoe.tirol</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://edelstenbikes.com/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Edelsten.png" alt="Edelsten"><span class="ptip"><span class="ptip-url">edelstenbikes.com</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.chaka2.com/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Chaka.png" alt="Chaka"><span class="ptip"><span class="ptip-url">chaka2.com</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://blumen-calovini.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Blumen Calovini.png" alt="Blumen Calovini"><span class="ptip"><span class="ptip-url">blumen-calovini.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.tzaphysio.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Physio 1.0.png" alt="Physio 1.0"><span class="ptip"><span class="ptip-url">tzaphysio.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://www.physio-in-telfs.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Physio Telfs.png" alt="Physio Telfs"><span class="ptip"><span class="ptip-url">physio-in-telfs.at</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://kaino.io/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/Kaino.png" alt="Kaino"><span class="ptip"><span class="ptip-url">kaino.io</span><span class="ptip-arrow">↗</span></span></a>
-      <a class="plogo" href="https://tdm-marketing.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/Partner/TDM.png" alt="TDM"><span class="ptip"><span class="ptip-url">tdm-marketing.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.tirolwerbung.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Tirol logo Weiß.png" alt="Tirol"><span class="ptip"><span class="ptip-url">tirolwerbung.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.innsbruck-tourismus.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Innsbruck-Logo-Weiß.png" alt="Innsbruck"><span class="ptip"><span class="ptip-url">innsbruck-tourismus.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.redbull.com/at-de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Red Bull Logo Weiß.png" alt="Red Bull"><span class="ptip"><span class="ptip-url">redbull.com</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.asvoe.tirol/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/ASVÖ-Logo-Weiß.png" alt="ASVÖ"><span class="ptip"><span class="ptip-url">asvoe.tirol</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://edelstenbikes.com/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Edelstein-Logo-Weiß.png" alt="Edelsten"><span class="ptip"><span class="ptip-url">edelstenbikes.com</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.chaka2.com/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/chaka2-Logo-Weiß.png" alt="Chaka"><span class="ptip"><span class="ptip-url">chaka2.com</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://blumen-calovini.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Blumen-Calovini-Logo-Weiß.png" alt="Blumen Calovini"><span class="ptip"><span class="ptip-url">blumen-calovini.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.tzaphysio.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/EinsPunktNull-Logo-Weiß.png" alt="Physio 1.0"><span class="ptip"><span class="ptip-url">tzaphysio.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.physio-in-telfs.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Physio-Telfs-Logo-Weiß.png" alt="Physio Telfs"><span class="ptip"><span class="ptip-url">physio-in-telfs.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://kaino.io/de/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Kaino Logo Weiß.png" alt="Kaino"><span class="ptip"><span class="ptip-url">kaino.io</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://tdm-marketing.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/TDM-Logo-Weiß.png" alt="TDM"><span class="ptip"><span class="ptip-url">tdm-marketing.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.chasa-patria.at" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Chasa-Patria Logo Weiß.png" alt="Chasa Patria"><span class="ptip"><span class="ptip-url">chasa-patria.at</span><span class="ptip-arrow">↗</span></span></a>
+      <a class="plogo" href="https://www.apart-ischgl.at/" target="_blank" rel="noopener"><img class="plogo-img" src="Logo/logowebsiteneu/Landhaus-Daham Logo Weiß.png" alt="Landhaus Daham"><span class="ptip"><span class="ptip-url">apart-ischgl.at</span><span class="ptip-arrow">↗</span></span></a>
     </div>
   </div>
 </section>
@@ -1029,6 +1021,94 @@ document.getElementById('cform').addEventListener('submit',e=>{
   setTimeout(()=>{btn.textContent='Nachricht senden →';btn.style.background='';e.target.reset()},3000);
 });
 
+// PORTFOLIO BOOK-FLIP
+(function(){
+  const projects=[
+    {num:'01',cat:'Planung mit Pr\u00e4zision',title:'PROJECT\nMANAGEMENT',desc:'Strukturierte Projektplanung von der Idee bis zur Umsetzung. Wir koordinieren Teams, Ressourcen und Timelines mit Pr\u00e4zision.',tags:['Planung','Koordination','Timelines'],img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=85&auto=format&fit=crop'},
+    {num:'02',cat:'Momente, die bewegen',title:'EVENTS &\nEVENT SUPPORT',desc:'Von Firmenevents bis zu gro\u00dfen Publikumsveranstaltungen \u2013 wir schaffen unvergessliche Erlebnisse mit Liebe zum Detail.',tags:['Events','Live','Experience'],img:'SommerEvent.png'},
+    {num:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=85&auto=format&fit=crop'},
+    {num:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar machen.',tags:['Fashion','Merch','Branding'],img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=85&auto=format&fit=crop'},
+    {num:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS\n& BRAND',desc:'Strategische Partnerschaften und Markenkollaborationen, die Mehrwert schaffen und neue Reichweiten \u00f6ffnen.',tags:['Partnerships','Strategy','Brand'],img:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=85&auto=format&fit=crop'},
+    {num:'06',cat:'Visuelle Markenpr\u00e4senz',title:'BRANDING',desc:'Konsistente Markenidentit\u00e4t \u00fcber alle Kan\u00e4le. Von der Strategie bis zum finalen Design \u2013 alles aus einer Hand.',tags:['Design','Identity','Strategy'],img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=85&auto=format&fit=crop'}
+  ];
+  const total=projects.length;
+  let idx=0,isAnimating=false;
+
+  const wrap=document.getElementById('bookWrap');
+  if(!wrap)return;
+  const bNum=document.getElementById('bNum');
+  const bCat=document.getElementById('bCat');
+  const bTitle=document.getElementById('bTitle');
+  const bDesc=document.getElementById('bDesc');
+  const bTags=document.getElementById('bTags');
+  const bRightBg=document.getElementById('bRightBg');
+  const bFlip=document.getElementById('bFlip');
+  const bFlipImg=document.getElementById('bFlipImg');
+  const bPrev=document.getElementById('bPrev');
+  const bNext=document.getElementById('bNext');
+  const bCur=document.getElementById('bCur');
+  const dots=document.querySelectorAll('.bdot');
+
+  function setPage(p){
+    const d=projects[p];
+    bNum.textContent=d.num;
+    bCat.textContent=d.cat;
+    bTitle.innerHTML=d.title.replace('\n','<br>');
+    bDesc.textContent=d.desc;
+    bTags.innerHTML=d.tags.map(t=>'<span class="bpg-tag">'+t+'</span>').join('');
+    bRightBg.src=d.img;
+    bRightBg.alt=d.title.replace('\n',' ');
+    bCur.textContent=d.num;
+    bPrev.disabled=p===0;
+    bNext.disabled=p===total-1;
+    dots.forEach(function(dot,i){dot.classList.toggle('active',i===p);});
+  }
+
+  function flipTo(next){
+    if(isAnimating||next<0||next>=total)return;
+    isAnimating=true;
+    bFlipImg.src=projects[next].img;
+    bFlipImg.alt=projects[next].title;
+    bFlip.classList.add('flipping');
+    setTimeout(function(){
+      setPage(next);
+      bFlip.style.transition='none';
+      bFlip.classList.remove('flipping');
+      void bFlip.offsetWidth;
+      bFlip.style.transition='';
+      idx=next;
+      isAnimating=false;
+    },900);
+  }
+
+  bNext.addEventListener('click',function(){flipTo(idx+1);});
+  bPrev.addEventListener('click',function(){flipTo(idx-1);});
+  wrap.addEventListener('click',function(){if(idx<total-1)flipTo(idx+1);});
+  dots.forEach(function(dot){dot.addEventListener('click',function(){
+    var i=parseInt(dot.dataset.i);
+    if(i!==idx)flipTo(i);
+  });});
+
+  var touchStartX=0;
+  wrap.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;},{passive:true});
+  wrap.addEventListener('touchend',function(e){
+    var diff=e.changedTouches[0].clientX-touchStartX;
+    if(Math.abs(diff)>40){if(diff<0)flipTo(idx+1);else flipTo(idx-1);}
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
+    var sec=document.getElementById('portfolio');
+    if(!sec)return;
+    var r=sec.getBoundingClientRect();
+    if(r.top>window.innerHeight||r.bottom<0)return;
+    if(e.key==='ArrowRight')flipTo(idx+1);
+    if(e.key==='ArrowLeft')flipTo(idx-1);
+  });
+
+  setPage(0);
+})();
+
 // PARALLAX HERO GLOW
 window.addEventListener('scroll',()=>{
   const g=document.querySelector('.hero-glow');
@@ -1098,65 +1178,94 @@ window.addEventListener('scroll',()=>{
   });
 })();
 
-// PORTFOLIO CAROUSEL
-(function(){
-  const track=document.getElementById('pcombo');
-  if(!track)return;
-  const panels=track.querySelectorAll('.pcombo-panel');
-  const total=panels.length;
-  const prevBtn=document.getElementById('pc-prev');
-  const nextBtn=document.getElementById('pc-next');
-  const bar=document.getElementById('pc-bar');
-  const cur=document.getElementById('pc-cur');
-  let idx=0;
 
-  function getSlideWidth(){
-    return panels[0].offsetWidth+2;
+// COOKIE CONSENT
+document.addEventListener('DOMContentLoaded',function(){
+  if(localStorage.getItem('kairos_cookie_consent'))return;
+
+  const overlay=document.getElementById('cookieOverlay');
+  const box=document.getElementById('cookieBox');
+  const settings=document.getElementById('cookieSettings');
+
+  function showBanner(){
+    overlay.classList.add('open');
+    box.classList.add('open');
   }
 
-  function goTo(n){
-    idx=Math.max(0,Math.min(n,total-1));
-    track.style.transform='translateX(-'+(idx*getSlideWidth())+'px)';
-    track.style.transition='transform .55s cubic-bezier(0.16,1,0.3,1)';
-    prevBtn.disabled=idx===0;
-    nextBtn.disabled=idx===total-1;
-    bar.style.width=((idx/(total-1))*100)+'%';
-    cur.textContent=String(idx+1).padStart(2,'0');
+  function hideBanner(){
+    overlay.classList.remove('open');
+    box.classList.remove('open');
+    settings.classList.remove('open');
+    settings.style.display='none';
   }
 
-  prevBtn.addEventListener('click',()=>goTo(idx-1));
-  nextBtn.addEventListener('click',()=>goTo(idx+1));
+  function accept(type){
+    localStorage.setItem('kairos_cookie_consent',type);
+    hideBanner();
+  }
 
-  // Keyboard
-  document.addEventListener('keydown',e=>{
-    const sec=document.getElementById('portfolio');
-    if(!sec)return;
-    const r=sec.getBoundingClientRect();
-    if(r.top>window.innerHeight||r.bottom<0)return;
-    if(e.key==='ArrowRight')goTo(idx+1);
-    if(e.key==='ArrowLeft')goTo(idx-1);
+  document.getElementById('cookieBtnAll').addEventListener('click',()=>accept('all'));
+  document.getElementById('cookieBtnNecessary').addEventListener('click',()=>accept('necessary'));
+  document.getElementById('cookieBtnSettings').addEventListener('click',()=>{
+    box.classList.remove('open');
+    settings.style.display='block';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>settings.classList.add('open')));
+  });
+  document.getElementById('cookieSettingsSave').addEventListener('click',()=>{
+    const analytics=document.getElementById('cookieToggleAnalytics').checked;
+    accept(analytics?'all':'necessary');
+  });
+  document.getElementById('cookieSettingsBack').addEventListener('click',()=>{
+    settings.classList.remove('open');
+    setTimeout(()=>{settings.style.display='none';box.classList.add('open');},350);
   });
 
-  // Mouse drag
-  let startX=0,isDragging=false;
-  track.addEventListener('mousedown',e=>{startX=e.clientX;isDragging=true;track.classList.add('dragging');});
-  track.addEventListener('mouseup',e=>{
-    if(!isDragging)return;
-    isDragging=false;track.classList.remove('dragging');
-    const diff=e.clientX-startX;
-    if(Math.abs(diff)>50)goTo(diff<0?idx+1:idx-1);
-  });
-  track.addEventListener('mouseleave',()=>{isDragging=false;track.classList.remove('dragging');});
-
-  // Touch swipe
-  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});
-  track.addEventListener('touchend',e=>{
-    const diff=e.changedTouches[0].clientX-startX;
-    if(Math.abs(diff)>40)goTo(diff<0?idx+1:idx-1);
-  });
-
-  goTo(0);
-})();
+  setTimeout(showBanner,800);
+});
 </script>
+
+<!-- COOKIE BANNER -->
+<div class="cookie-overlay" id="cookieOverlay"></div>
+<div class="cookie-box" id="cookieBox">
+  <p class="cookie-title">Cookie-Einstellungen</p>
+  <p class="cookie-text">Wir verwenden technisch notwendige Cookies sowie Analyse-Cookies (Matomo) zur Verbesserung unserer Website. Analyse-Cookies werden nur mit deiner Einwilligung gesetzt. Mehr Informationen findest du in unserer <a href="#" onclick="openLegal('datenschutz');return false;">Datenschutzerklärung</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-btn" id="cookieBtnSettings">Einstellungen</button>
+    <button class="cookie-btn" id="cookieBtnNecessary">Nur notwendige</button>
+    <button class="cookie-btn primary" id="cookieBtnAll">Alle akzeptieren</button>
+  </div>
+</div>
+
+<!-- COOKIE SETTINGS PANEL -->
+<div class="cookie-settings" id="cookieSettings">
+  <div class="cookie-settings-title">
+    <span>Cookie-Einstellungen</span>
+    <button id="cookieSettingsBack" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1;transition:color .2s" onmouseover="this.style.color='var(--orange)'" onmouseout="this.style.color='var(--muted)'">←</button>
+  </div>
+  <div class="cookie-toggle-row">
+    <div>
+      <p class="cookie-toggle-label">Notwendige Cookies</p>
+      <p class="cookie-toggle-desc">Technisch erforderlich für den Betrieb der Website. Können nicht deaktiviert werden.</p>
+    </div>
+    <label class="cookie-toggle">
+      <input type="checkbox" checked disabled>
+      <span class="cookie-toggle-track disabled"></span>
+    </label>
+  </div>
+  <div class="cookie-toggle-row">
+    <div>
+      <p class="cookie-toggle-label">Analyse-Cookies (Matomo)</p>
+      <p class="cookie-toggle-desc">Helfen uns, die Nutzung der Website zu verstehen und zu verbessern. Alle Daten werden anonymisiert.</p>
+    </div>
+    <label class="cookie-toggle">
+      <input type="checkbox" id="cookieToggleAnalytics">
+      <span class="cookie-toggle-track"></span>
+    </label>
+  </div>
+  <div class="cookie-btns">
+    <button class="cookie-btn primary" id="cookieSettingsSave" style="flex:none;width:100%">Auswahl speichern</button>
+  </div>
+</div>
+
 </body>
 </html>
