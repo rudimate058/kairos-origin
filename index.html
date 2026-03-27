@@ -178,41 +178,60 @@ section{padding:52px 48px}
 #portfolio{border-top:1px solid var(--border);background:radial-gradient(ellipse at 100% 0%,rgba(255,77,0,.05) 0%,transparent 50%),var(--black)}
 .port-head{max-width:1200px;margin:0 auto 20px;display:flex;justify-content:space-between;align-items:flex-end}
 .port-sub{max-width:260px;color:var(--muted);font-size:14px;line-height:1.6}
-/* PORTFOLIO CAROUSEL */
-.pcombo-wrap{position:relative;max-width:1200px;margin:0 auto;overflow:hidden}
-.pcombo{display:flex;overflow:visible;gap:0;cursor:grab;user-select:none;will-change:transform}
-.pcombo.dragging{cursor:grabbing}
-.pcombo-panel{flex:0 0 calc((100% - 40px) / 2.15);min-width:0;height:420px;position:relative;overflow:hidden;cursor:pointer;display:block;text-decoration:none;margin-right:2px}
-.pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.9}
-.pcombo-img{width:100%;height:100%;object-fit:cover;opacity:.55;transition:transform .7s var(--ease),opacity .5s}
-.pcombo-panel:hover .pcombo-img{transform:scale(1.06);opacity:.75}
-.pcombo-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(13,13,31,.98) 0%,rgba(13,13,31,.55) 45%,rgba(13,13,31,.1) 100%)}
-.pcombo-lbl{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;z-index:2;transition:padding .4s var(--ease)}
-.pcombo-panel:hover .pcombo-lbl{padding-bottom:28px}
-.pcombo-accent{display:block;width:28px;height:2px;background:var(--orange);margin-bottom:12px;transition:width .4s var(--ease)}
-.pcombo-panel:hover .pcombo-accent{width:48px}
-.pcombo-title{display:block;font-family:var(--fd);font-size:clamp(22px,2.5vw,42px);letter-spacing:.04em;text-transform:uppercase;color:var(--orange);line-height:.95;margin-bottom:10px;text-shadow:0 2px 30px rgba(255,77,0,.35)}
-.pcombo-cat{display:inline-flex;align-items:center;gap:6px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,.5);margin-bottom:0}
-.pcombo-line{position:absolute;top:0;left:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,77,0,.35),transparent)}
-/* CAROUSEL CONTROLS */
-.pc-nav{display:flex;align-items:center;gap:16px;max-width:1200px;margin:18px auto 0}
-.pc-btn{width:44px;height:44px;border:1px solid var(--border);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s var(--ease);flex-shrink:0}
-.pc-btn:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
-.pc-btn:disabled{opacity:.25;cursor:not-allowed}
-.pc-btn svg{width:16px;height:16px}
-.pc-progress{flex:1;height:1.5px;background:var(--border);position:relative;overflow:hidden}
-.pc-bar{position:absolute;left:0;top:0;height:100%;background:var(--orange);transition:width .45s var(--ease);width:0%}
-.pc-count{font-family:var(--fd);font-size:12px;color:var(--muted);letter-spacing:.15em;flex-shrink:0;min-width:48px;text-align:right}
-.pc-count span{color:var(--cream)}
+/* PORTFOLIO BOOK-FLIP */
+.book-stage{max-width:1100px;margin:0 auto;padding-bottom:48px}
+.book-wrap{position:relative;width:100%;height:540px;perspective:3000px;perspective-origin:50% 40%;cursor:pointer}
+.book-wrap::before,.book-wrap::after{content:'';position:absolute;bottom:-6px;left:2%;width:96%;height:100%;background:var(--card);border:1px solid var(--border);z-index:-1;transform:rotate(.4deg)}
+.book-wrap::after{bottom:-12px;left:4%;width:92%;transform:rotate(-.5deg);opacity:.55}
+.book{width:100%;height:100%;display:flex;position:relative;transform-style:preserve-3d}
+.bpage-l{flex:0 0 46%;height:100%;background:var(--dark);border:1px solid var(--border);border-right:none;padding:48px 44px 44px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.bpage-l::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,.04) 0%,transparent 60%);pointer-events:none}
+.bspine{width:8px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.4),rgba(255,77,0,.12),rgba(0,0,0,.25));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.bpage-r{flex:1;height:100%;position:relative;overflow:hidden;transform-style:preserve-3d}
+.bpage-r::after{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 40px 40px;border-color:transparent transparent rgba(255,77,0,.18) transparent;z-index:5;pointer-events:none}
+.bpage-r-hint{position:absolute;bottom:14px;right:52px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,227,.35);z-index:5;pointer-events:none;transition:opacity .4s}
+.book-wrap:hover .bpage-r-hint{opacity:0}
+.bpage-r-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.65;transition:transform .8s var(--ease),opacity .5s}
+.book-wrap:hover .bpage-r-bg{transform:scale(1.04);opacity:.75}
+.bpage-r-ov{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.6) 0%,rgba(13,13,31,.1) 100%)}
+.bflip{position:absolute;inset:0;transform-style:preserve-3d;transform-origin:left center;transition:transform .9s cubic-bezier(0.16,1,0.3,1)}
+.bflip.flipping{transform:rotateY(-180deg)}
+.bflip-f,.bflip-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.bflip-f img{width:100%;height:100%;object-fit:cover;opacity:.65}
+.bflip-b{background:var(--dark);border-left:1px solid var(--border);transform:rotateY(180deg)}
+.bpg-num{font-family:var(--fd);font-size:120px;line-height:1;color:rgba(255,77,0,.06);position:absolute;top:20px;right:24px;letter-spacing:-.02em;transition:color .5s;pointer-events:none}
+.book-wrap:hover .bpg-num{color:rgba(255,77,0,.1)}
+.bpg-cat{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);margin:0 0 14px;opacity:.8}
+.bpg-title{font-family:var(--fd);font-size:clamp(28px,3.2vw,48px);letter-spacing:.04em;text-transform:uppercase;color:var(--white);line-height:.95;margin:0 0 20px}
+.bpg-div{width:32px;height:1.5px;background:var(--orange);margin-bottom:18px}
+.bpg-desc{font-size:13px;color:rgba(240,235,227,.6);line-height:1.75;margin:0 0 20px;max-width:300px}
+.bpg-tags{display:flex;flex-wrap:wrap;gap:6px}
+.bpg-tag{font-size:8px;letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,77,0,.25);color:rgba(255,77,0,.7)}
+.book-nav-row{display:flex;align-items:center;max-width:1100px;margin:16px auto 0;gap:16px}
+.bnav{width:44px;height:44px;border:1px solid var(--border);background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s var(--ease);flex-shrink:0}
+.bnav:hover:not(:disabled){border-color:var(--orange);color:var(--orange)}
+.bnav:disabled{opacity:.25;cursor:not-allowed}
+.bnav svg{width:16px;height:16px}
+.bpdots{display:flex;gap:8px;align-items:center;flex:1;justify-content:center}
+.bdot{width:6px;height:6px;background:var(--border);transition:all .35s var(--ease);cursor:pointer}
+.bdot.active{background:var(--orange);width:20px}
+.book-pg-info{font-family:var(--fd);font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:48px;text-align:right}
+.book-pg-info span{color:var(--cream)}
+@media(max-width:900px){
+  .book-wrap{height:auto;perspective:none;display:block;cursor:default}
+  .book{flex-direction:column;height:auto}
+  .bpage-l{flex:none;width:100%;padding:32px 24px 28px;border-right:1px solid var(--border);border-bottom:none;box-sizing:border-box}
+  .bspine{width:100%;height:6px;background:linear-gradient(to bottom,rgba(0,0,0,.4),rgba(255,77,0,.12),rgba(0,0,0,.25));border-left:1px solid var(--border);border-right:1px solid var(--border)}
+  .bpage-r{flex:none;width:100%;height:280px}
+  .bpg-num{font-size:80px;top:12px;right:16px}
+  .bpg-title{font-size:28px}
+  .bflip{display:none}
+  .bpage-r-hint{display:none}
+  .book-wrap::before,.book-wrap::after{display:none}
+}
 @media(max-width:768px){
   .port-head{flex-direction:column;gap:8px;align-items:flex-start}
   .port-sub{display:none}
-  .pcombo-panel{flex:0 0 88%;height:260px}
-  .pcombo-lbl{padding:16px}
-  .pcombo-title{font-size:22px;margin-bottom:6px}
-  .pcombo-accent{width:20px;margin-bottom:8px}
-  .pcombo-cat{font-size:8px}
-  .pc-nav{margin:14px 0 0}
 }
 
 /* PARTNERS */
@@ -319,9 +338,9 @@ a.cdet-v:hover{color:var(--orange)}
 }
 
 /* LEGAL MODAL */
-.legal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;opacity:0;pointer-events:none;transition:opacity .35s var(--ease);backdrop-filter:blur(4px)}
+.legal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9200;opacity:0;pointer-events:none;transition:opacity .35s var(--ease);backdrop-filter:blur(4px)}
 .legal-overlay.open{opacity:1;pointer-events:auto}
-.legal-panel{position:fixed;bottom:0;left:0;right:0;max-height:80vh;background:var(--dark);border-top:1px solid var(--border);z-index:9001;transform:translateY(100%);transition:transform .45s var(--ease);overflow-y:auto}
+.legal-panel{position:fixed;bottom:0;left:0;right:0;max-height:80vh;background:var(--dark);border-top:1px solid var(--border);z-index:9201;transform:translateY(100%);transition:transform .45s var(--ease);overflow-y:auto}
 .legal-panel.open{transform:translateY(0)}
 .legal-panel-inner{max-width:860px;margin:0 auto;padding:48px 48px 60px}
 .legal-panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;border-bottom:1px solid var(--border);padding-bottom:20px}
@@ -662,90 +681,45 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     </div>
     <p class="port-sub rv d2">Projekte, die bewegen. Momente, die bleiben.</p>
   </div>
-  <div class="pcombo-wrap rv d2">
-    <div class="pcombo" id="pcombo">
-
-      <!-- PANEL 01: PROJECT MANAGEMENT -->
-      <a class="pcombo-panel" href="#leistungen">
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=700&q=85&auto=format&fit=crop" alt="Project Management" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PROJECT<br>MANAGEMENT</span>
-          <span class="pcombo-cat">01 — Planung mit Präzision</span>
+  <div class="book-stage rv d2">
+    <div class="book-wrap" id="bookWrap">
+      <div class="book">
+        <div class="bpage-l" id="bLeft">
+          <div class="bpg-num" id="bNum">01</div>
+          <p class="bpg-cat" id="bCat"></p>
+          <h3 class="bpg-title" id="bTitle"></h3>
+          <div class="bpg-div"></div>
+          <p class="bpg-desc" id="bDesc"></p>
+          <div class="bpg-tags" id="bTags"></div>
         </div>
-      </a>
-
-      <!-- PANEL 02: EVENTS -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="SommerEvent.png" alt="Events" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">EVENTS &amp;<br>EVENT SUPPORT</span>
-          <span class="pcombo-cat">02 — Momente, die bewegen</span>
+        <div class="bspine"></div>
+        <div class="bpage-r" id="bRight">
+          <img class="bpage-r-bg" id="bRightBg" src="" alt="">
+          <div class="bpage-r-ov"></div>
+          <span class="bpage-r-hint">Klicken zum Bl&auml;ttern</span>
+          <div class="bflip" id="bFlip">
+            <div class="bflip-f"><img id="bFlipImg" src="" alt=""></div>
+            <div class="bflip-b"></div>
+          </div>
         </div>
-      </a>
-
-      <!-- PANEL 03: PROMOTION -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=85&auto=format&fit=crop" alt="Promotion" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PROMOTION</span>
-          <span class="pcombo-cat">03 — Am Puls der Marke</span>
-        </div>
-      </a>
-
-      <!-- PANEL 04: CLOTHING -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=700&q=85&auto=format&fit=crop" alt="Clothing" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">CLOTHING</span>
-          <span class="pcombo-cat">04 — Marke zum Anziehen</span>
-        </div>
-      </a>
-
-      <!-- PANEL 05: PARTNERSHIPS -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=700&q=85&auto=format&fit=crop" alt="Partnerships" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">PARTNERSHIPS<br>&amp; BRAND</span>
-          <span class="pcombo-cat">05 — Starke Allianzen</span>
-        </div>
-      </a>
-
-      <!-- PANEL 06: BRANDING -->
-      <a class="pcombo-panel" href="#leistungen">
-        <div class="pcombo-line"></div>
-        <img class="pcombo-img" src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=700&q=85&auto=format&fit=crop" alt="Branding" loading="lazy">
-        <div class="pcombo-overlay"></div>
-        <div class="pcombo-lbl">
-          <span class="pcombo-accent"></span>
-          <span class="pcombo-title">BRANDING</span>
-          <span class="pcombo-cat">06 — Visuelle Markenpräsenz</span>
-        </div>
-      </a>
-
+      </div>
     </div>
-    <div class="pc-nav">
-      <button class="pc-btn" id="pc-prev" aria-label="Vorheriges Projekt" disabled>
+    <div class="book-nav-row">
+      <button class="bnav" id="bPrev" aria-label="Vorheriges Projekt" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <div class="pc-progress"><div class="pc-bar" id="pc-bar"></div></div>
-      <button class="pc-btn" id="pc-next" aria-label="Nächstes Projekt">
+      <div class="bpdots" id="bDots">
+        <div class="bdot active" data-i="0"></div>
+        <div class="bdot" data-i="1"></div>
+        <div class="bdot" data-i="2"></div>
+        <div class="bdot" data-i="3"></div>
+        <div class="bdot" data-i="4"></div>
+        <div class="bdot" data-i="5"></div>
+      </div>
+      <div class="book-pg-info"><span id="bCur">01</span>&thinsp;/&thinsp;06</div>
+      <button class="bnav" id="bNext" aria-label="N&auml;chstes Projekt">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
-      <span class="pc-count"><span id="pc-cur">01</span> / 06</span>
     </div>
   </div>
 </section>
@@ -1047,59 +1021,92 @@ document.getElementById('cform').addEventListener('submit',e=>{
   setTimeout(()=>{btn.textContent='Nachricht senden →';btn.style.background='';e.target.reset()},3000);
 });
 
-// PORTFOLIO CAROUSEL
+// PORTFOLIO BOOK-FLIP
 (function(){
-  const track=document.getElementById('pcombo');
-  if(!track)return;
-  const panels=track.querySelectorAll('.pcombo-panel');
-  const total=panels.length;
-  const prevBtn=document.getElementById('pc-prev');
-  const nextBtn=document.getElementById('pc-next');
-  const bar=document.getElementById('pc-bar');
-  const cur=document.getElementById('pc-cur');
-  let idx=0;
+  const projects=[
+    {num:'01',cat:'Planung mit Pr\u00e4zision',title:'PROJECT\nMANAGEMENT',desc:'Strukturierte Projektplanung von der Idee bis zur Umsetzung. Wir koordinieren Teams, Ressourcen und Timelines mit Pr\u00e4zision.',tags:['Planung','Koordination','Timelines'],img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=85&auto=format&fit=crop'},
+    {num:'02',cat:'Momente, die bewegen',title:'EVENTS &\nEVENT SUPPORT',desc:'Von Firmenevents bis zu gro\u00dfen Publikumsveranstaltungen \u2013 wir schaffen unvergessliche Erlebnisse mit Liebe zum Detail.',tags:['Events','Live','Experience'],img:'SommerEvent.png'},
+    {num:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],img:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&q=85&auto=format&fit=crop'},
+    {num:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar machen.',tags:['Fashion','Merch','Branding'],img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=85&auto=format&fit=crop'},
+    {num:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS\n& BRAND',desc:'Strategische Partnerschaften und Markenkollaborationen, die Mehrwert schaffen und neue Reichweiten \u00f6ffnen.',tags:['Partnerships','Strategy','Brand'],img:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=85&auto=format&fit=crop'},
+    {num:'06',cat:'Visuelle Markenpr\u00e4senz',title:'BRANDING',desc:'Konsistente Markenidentit\u00e4t \u00fcber alle Kan\u00e4le. Von der Strategie bis zum finalen Design \u2013 alles aus einer Hand.',tags:['Design','Identity','Strategy'],img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=85&auto=format&fit=crop'}
+  ];
+  const total=projects.length;
+  let idx=0,isAnimating=false;
 
-  function getSlideWidth(){return panels[0].offsetWidth+2;}
+  const wrap=document.getElementById('bookWrap');
+  if(!wrap)return;
+  const bNum=document.getElementById('bNum');
+  const bCat=document.getElementById('bCat');
+  const bTitle=document.getElementById('bTitle');
+  const bDesc=document.getElementById('bDesc');
+  const bTags=document.getElementById('bTags');
+  const bRightBg=document.getElementById('bRightBg');
+  const bFlip=document.getElementById('bFlip');
+  const bFlipImg=document.getElementById('bFlipImg');
+  const bPrev=document.getElementById('bPrev');
+  const bNext=document.getElementById('bNext');
+  const bCur=document.getElementById('bCur');
+  const dots=document.querySelectorAll('.bdot');
 
-  function goTo(n){
-    idx=Math.max(0,Math.min(n,total-1));
-    track.style.transform='translateX(-'+(idx*getSlideWidth())+'px)';
-    track.style.transition='transform .55s cubic-bezier(0.16,1,0.3,1)';
-    prevBtn.disabled=idx===0;
-    nextBtn.disabled=idx===total-1;
-    bar.style.width=((idx/(total-1))*100)+'%';
-    cur.textContent=String(idx+1).padStart(2,'0');
+  function setPage(p){
+    const d=projects[p];
+    bNum.textContent=d.num;
+    bCat.textContent=d.cat;
+    bTitle.innerHTML=d.title.replace('\n','<br>');
+    bDesc.textContent=d.desc;
+    bTags.innerHTML=d.tags.map(t=>'<span class="bpg-tag">'+t+'</span>').join('');
+    bRightBg.src=d.img;
+    bRightBg.alt=d.title.replace('\n',' ');
+    bCur.textContent=d.num;
+    bPrev.disabled=p===0;
+    bNext.disabled=p===total-1;
+    dots.forEach(function(dot,i){dot.classList.toggle('active',i===p);});
   }
 
-  prevBtn.addEventListener('click',()=>goTo(idx-1));
-  nextBtn.addEventListener('click',()=>goTo(idx+1));
+  function flipTo(next){
+    if(isAnimating||next<0||next>=total)return;
+    isAnimating=true;
+    bFlipImg.src=projects[next].img;
+    bFlipImg.alt=projects[next].title;
+    bFlip.classList.add('flipping');
+    setTimeout(function(){
+      setPage(next);
+      bFlip.style.transition='none';
+      bFlip.classList.remove('flipping');
+      void bFlip.offsetWidth;
+      bFlip.style.transition='';
+      idx=next;
+      isAnimating=false;
+    },900);
+  }
 
-  document.addEventListener('keydown',e=>{
+  bNext.addEventListener('click',function(){flipTo(idx+1);});
+  bPrev.addEventListener('click',function(){flipTo(idx-1);});
+  wrap.addEventListener('click',function(){if(idx<total-1)flipTo(idx+1);});
+  dots.forEach(function(dot){dot.addEventListener('click',function(){
+    var i=parseInt(dot.dataset.i);
+    if(i!==idx)flipTo(i);
+  });});
+
+  var touchStartX=0;
+  wrap.addEventListener('touchstart',function(e){touchStartX=e.touches[0].clientX;},{passive:true});
+  wrap.addEventListener('touchend',function(e){
+    var diff=e.changedTouches[0].clientX-touchStartX;
+    if(Math.abs(diff)>40){if(diff<0)flipTo(idx+1);else flipTo(idx-1);}
+  });
+
+  document.addEventListener('keydown',function(e){
     if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
-    const sec=document.getElementById('portfolio');
+    var sec=document.getElementById('portfolio');
     if(!sec)return;
-    const r=sec.getBoundingClientRect();
+    var r=sec.getBoundingClientRect();
     if(r.top>window.innerHeight||r.bottom<0)return;
-    if(e.key==='ArrowRight')goTo(idx+1);
-    if(e.key==='ArrowLeft')goTo(idx-1);
+    if(e.key==='ArrowRight')flipTo(idx+1);
+    if(e.key==='ArrowLeft')flipTo(idx-1);
   });
 
-  let startX=0,isDragging=false;
-  track.addEventListener('mousedown',e=>{startX=e.clientX;isDragging=true;track.classList.add('dragging');});
-  track.addEventListener('mouseup',e=>{
-    if(!isDragging)return;
-    isDragging=false;track.classList.remove('dragging');
-    const diff=e.clientX-startX;
-    if(Math.abs(diff)>50)goTo(diff<0?idx+1:idx-1);
-  });
-  track.addEventListener('mouseleave',()=>{isDragging=false;track.classList.remove('dragging');});
-  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;},{passive:true});
-  track.addEventListener('touchend',e=>{
-    const diff=e.changedTouches[0].clientX-startX;
-    if(Math.abs(diff)>40)goTo(diff<0?idx+1:idx-1);
-  });
-
-  goTo(0);
+  setPage(0);
 })();
 
 // PARALLAX HERO GLOW
