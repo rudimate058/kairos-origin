@@ -15,6 +15,7 @@
   --border:#252545;
   --orange:#FF4D00;
   --orange2:#FF7A35;
+  --green:#bcd7b9;
   --cream:#F0EBE3;
   --muted:#6B6B95;
   --white:#FFFFFF;
@@ -43,8 +44,10 @@ nav.scrolled{background:rgba(13,13,31,.95);backdrop-filter:blur(12px);padding:16
 .nav-logo-text{font-family:var(--fd);font-size:22px;letter-spacing:.08em;color:var(--white)}
 .nav-logo-text span{color:var(--orange)}
 .nav-links{display:flex;gap:36px;list-style:none;align-items:center}
-.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
-.nav-links a:hover{color:var(--cream)}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:color .35s var(--ease);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:50%;width:0;height:1px;background:var(--green);box-shadow:0 0 8px rgba(188,215,185,.7);transform:translateX(-50%);transition:width .4s var(--ease)}
+.nav-links a:hover{color:var(--green)}
+.nav-links a:hover::after{width:100%}
 .nav-cta{background:var(--orange)!important;color:var(--white)!important;padding:10px 22px!important;transition:background .2s,transform .2s!important}
 .nav-cta:hover{background:var(--orange2)!important;transform:translateY(-1px)!important}
 .nav-burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
@@ -469,6 +472,13 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 .pl-icon{width:90px;height:90px;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 0 12px rgba(255,77,0,0))}
 .pl-name{margin-top:22px;font-family:'Palatino Linotype',Palatino,serif;font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:rgba(240,235,227,.22);position:relative;z-index:2}
 .pl-bar{position:absolute;bottom:0;left:0;height:1.5px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
+
+/* GREEN ZONE — ab WER WIR SIND alles --orange → --green */
+#about,#leistungen,#portfolio,#partners,#contact,footer{--orange:var(--green);--orange2:#a8c8a5}
+#leistungen .lcard:hover,#leistungen .lcard.open{border-color:rgba(188,215,185,.3);box-shadow:0 0 0 1px rgba(188,215,185,.2),0 8px 32px rgba(188,215,185,.06)}
+#leistungen .lcard:hover .lcard-num{color:rgba(188,215,185,.8)}
+#leistungen .lcard-icon{filter:brightness(0) invert(1);opacity:.7}
+#leistungen .lcard:hover .lcard-icon,#leistungen .lcard.open .lcard-icon{opacity:1;filter:invert(88%) sepia(12%) saturate(350%) hue-rotate(82deg) brightness(102%)}
 
 /* COOKIE BANNER */
 .cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(3px)}
