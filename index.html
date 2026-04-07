@@ -170,6 +170,12 @@ section{padding:52px 48px}
 .lcard.open::before,.lcard:hover::before{transform:scaleX(1)}
 .lcard-icon{width:40px;height:40px;margin-bottom:14px;opacity:.7;filter:brightness(0) invert(1);transition:opacity .3s,filter .3s}
 .lcard:hover .lcard-icon,.lcard.open .lcard-icon{opacity:1;filter:brightness(0) saturate(100%) invert(45%) sepia(95%) saturate(1800%) hue-rotate(349deg) brightness(105%)}
+.lcard-icon-row{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.lcard-icon-row .lcard-icon{margin-bottom:0;flex-shrink:0}
+.showroom-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(188,215,185,.1);border:1px solid rgba(188,215,185,.3);color:#bcd7b9;font-family:var(--fb);font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;text-decoration:none;padding:6px 11px;transition:all .35s var(--ease);white-space:nowrap}
+.showroom-btn svg{width:9px;height:9px;flex-shrink:0;transition:transform .3s var(--ease)}
+.showroom-btn:hover{background:rgba(188,215,185,.2);border-color:#bcd7b9;color:#bcd7b9;box-shadow:0 0 16px rgba(188,215,185,.25);transform:translateY(-1px)}
+.showroom-btn:hover svg{transform:translate(1px,-1px)}
 .lcard-num{font-family:var(--fd);font-size:13px;color:rgba(255,77,0,.4);letter-spacing:.15em;margin-bottom:6px}
 .lcard-title{font-family:var(--fd);font-size:clamp(18px,2vw,26px);letter-spacing:.05em;color:var(--white);line-height:1.1;margin-bottom:0;transition:color .2s}
 .lcard:hover .lcard-title,.lcard.open .lcard-title{color:var(--cream)}
@@ -691,7 +697,13 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 
     <div class="lcard rv d1" data-idx="3">
       <div class="lcard-num">04</div>
-      <img class="lcard-icon" src="icons/clothing.png" alt="Clothing">
+      <div class="lcard-icon-row">
+        <img class="lcard-icon" src="icons/clothing.png" alt="Clothing">
+        <a class="showroom-btn" href="https://www.textileworld.eu/?customer=D020050" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+          Showroom
+          <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg>
+        </a>
+      </div>
       <div class="lcard-title">Clothing</div>
       <div class="lcard-arrow">+</div>
       <p class="lcard-desc">Merch, Teamwear oder Event-Bekleidung: maßgeschneiderte Textillösungen inklusive Branding, Produktion und Qualitätskontrolle – damit Ihre Marke sichtbar bleibt.</p>
