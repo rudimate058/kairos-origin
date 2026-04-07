@@ -468,12 +468,25 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 /* PAGE LOADER */
 #pg-loader{position:fixed;inset:0;background:var(--black);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .8s cubic-bezier(0.16,1,0.3,1),visibility .8s;overflow:hidden}
 #pg-loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
-.pl-glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,0,.12) 0%,transparent 70%);transform:scale(1);transition:none;pointer-events:none}
-.pl-ring{position:absolute;width:120px;height:120px;border-radius:50%;border:1px solid rgba(255,77,0,.18);animation:plRingPulse 2s ease-in-out infinite}
-.pl-ring2{position:absolute;width:170px;height:170px;border-radius:50%;border:1px solid rgba(255,77,0,.08);animation:plRingPulse 2s ease-in-out .5s infinite}
-@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.15);opacity:.4}}
-.pl-icon{width:90px;height:90px;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 0 12px rgba(255,77,0,0))}
-.pl-name{margin-top:22px;font-family:'Palatino Linotype',Palatino,serif;font-size:11px;letter-spacing:.45em;text-transform:uppercase;color:rgba(240,235,227,.22);position:relative;z-index:2}
+.pl-glow{position:absolute;width:520px;height:240px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,77,0,.12) 0%,transparent 70%);pointer-events:none}
+.pl-ring{position:absolute;width:390px;height:145px;border-radius:50%;border:1px solid rgba(255,77,0,.18);animation:plRingPulse 2s ease-in-out infinite}
+.pl-ring2{position:absolute;width:490px;height:185px;border-radius:50%;border:1px solid rgba(255,77,0,.07);animation:plRingPulse 2s ease-in-out .5s infinite}
+.pl-ring3{position:absolute;width:600px;height:230px;border-radius:50%;border:1px solid rgba(255,77,0,.03);animation:plRingPulse 2.5s ease-in-out 1s infinite}
+@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.35}}
+.pl-icon-wrap{position:relative;z-index:2;perspective:700px}
+.pl-icon{width:280px;height:auto;object-fit:contain;display:block;filter:drop-shadow(0 0 0px rgba(255,77,0,0))}
+.pl-star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;pointer-events:none}
+.pl-star:nth-child(1){left:12%;top:18%;animation:plTwinkle 1.6s ease-in-out .0s infinite}
+.pl-star:nth-child(2){left:83%;top:14%;animation:plTwinkle 2.1s ease-in-out .3s infinite}
+.pl-star:nth-child(3){left:90%;top:62%;animation:plTwinkle 1.8s ease-in-out .7s infinite}
+.pl-star:nth-child(4){left:7%;top:70%;animation:plTwinkle 2.3s ease-in-out .2s infinite}
+.pl-star:nth-child(5){left:48%;top:6%;animation:plTwinkle 1.5s ease-in-out .9s infinite}
+.pl-star:nth-child(6){left:22%;top:88%;animation:plTwinkle 2s ease-in-out .5s infinite}
+.pl-star:nth-child(7){left:74%;top:90%;animation:plTwinkle 1.7s ease-in-out 1.1s infinite}
+.pl-star:nth-child(8){left:60%;top:9%;animation:plTwinkle 2.2s ease-in-out .4s infinite}
+.pl-star:nth-child(9){left:3%;top:40%;animation:plTwinkle 1.9s ease-in-out .8s infinite}
+.pl-star:nth-child(10){left:95%;top:38%;animation:plTwinkle 1.6s ease-in-out 1.3s infinite}
+@keyframes plTwinkle{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.9;transform:scale(2)}}
 .pl-bar{position:absolute;bottom:0;left:0;height:1.5px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
 
 /* COOKIE BANNER */
@@ -1404,11 +1417,17 @@ document.addEventListener('DOMContentLoaded',function(){
 
 <!-- PAGE LOADER -->
 <div id="pg-loader">
+  <div class="pl-star"></div><div class="pl-star"></div><div class="pl-star"></div>
+  <div class="pl-star"></div><div class="pl-star"></div><div class="pl-star"></div>
+  <div class="pl-star"></div><div class="pl-star"></div><div class="pl-star"></div>
+  <div class="pl-star"></div>
   <div class="pl-glow" id="plGlow"></div>
   <div class="pl-ring"></div>
   <div class="pl-ring2"></div>
-  <img src="Icon-KairosOrginsRGB-White.png" class="pl-icon" id="plIcon" alt="">
-  <span class="pl-name">Kairos Origin</span>
+  <div class="pl-ring3"></div>
+  <div class="pl-icon-wrap">
+    <img src="Logo/logowebsiteneu/Kairos-Origin Logo Weiß.png" class="pl-icon" id="plIcon" alt="Kairos Origin">
+  </div>
   <div class="pl-bar" id="plBar"></div>
 </div>
 
@@ -1422,34 +1441,31 @@ document.addEventListener('DOMContentLoaded',function(){
 
   document.body.style.overflow='hidden';
 
-  var angle=0, speed=0.15, maxSpeed=30, raf, isDone=false;
-  var startTime=Date.now(), minDuration=1400;
+  var angle=0, speed=0.12, maxSpeed=28, raf, isDone=false;
+  var startTime=Date.now(), minDuration=1600;
 
   function frame(){
     if(isDone)return;
-    speed=Math.min(speed*1.042, maxSpeed);
+    speed=Math.min(speed*1.04, maxSpeed);
     angle+=speed;
     var t=speed/maxSpeed;
 
-    // Motion blur + scale pulse at high speed
-    var blurPx=(t*2.2).toFixed(2);
-    var scalePulse=t>0.55?1+0.04*Math.sin(angle*Math.PI/90):1;
-    var shadowBlur=Math.round(t*36);
-    var shadowAlpha=(t*0.85).toFixed(2);
-    icon.style.transform='rotate('+angle+'deg) scale('+scalePulse.toFixed(4)+')';
+    // Motion blur + 3D wobble + scale pulse
+    var blurPx=(t*1.8).toFixed(2);
+    var scalePulse=t>0.5?1+0.03*Math.sin(angle*Math.PI/90):1;
+    var wobble=t>0.4?(5*Math.sin(angle*Math.PI/110)*(t-0.4)/0.6).toFixed(2):0;
+    var shadowBlur=Math.round(t*48);
+    var shadowAlpha=(t*0.9).toFixed(2);
+    icon.style.transform='rotate('+angle+'deg) scale('+scalePulse.toFixed(4)+') rotateY('+wobble+'deg)';
     icon.style.filter='blur('+blurPx+'px) drop-shadow(0 0 '+shadowBlur+'px rgba(255,77,0,'+shadowAlpha+'))';
 
-    // Glow grows and intensifies with speed
-    var glowSize=180+t*300;
-    var glowAlpha=(0.06+t*0.49).toFixed(3);
-    var glowAlpha2=(0.03+t*0.18).toFixed(3);
-    glow.style.width=glowSize+'px';
-    glow.style.height=glowSize+'px';
-    glow.style.background='radial-gradient(circle,rgba(255,77,0,'+glowAlpha+') 0%,rgba(255,77,0,'+glowAlpha2+') 35%,transparent 70%)';
+    // Elliptical glow grows with speed
+    var gw=(420+t*280)+'px', gh=(180+t*130)+'px';
+    var ga=(0.05+t*0.45).toFixed(3), ga2=(0.02+t*0.15).toFixed(3);
+    glow.style.width=gw; glow.style.height=gh;
+    glow.style.background='radial-gradient(ellipse,rgba(255,77,0,'+ga+') 0%,rgba(255,77,0,'+ga2+') 40%,transparent 70%)';
 
-    // Progress bar
     bar.style.width=Math.min((Date.now()-startTime)/minDuration*90,90)+'%';
-
     raf=requestAnimationFrame(frame);
   }
   frame();
@@ -1464,60 +1480,38 @@ document.addEventListener('DOMContentLoaded',function(){
     var logoRect=navLogo?navLogo.getBoundingClientRect():null;
     var iconRect=icon.getBoundingClientRect();
 
-    if(logoRect){
-      // Detach icon as free fixed element so loader can animate independently
-      var fly=document.createElement('img');
-      fly.src=icon.src;
-      fly.style.cssText='position:fixed;z-index:100000;pointer-events:none;'
-        +'left:'+iconRect.left+'px;top:'+iconRect.top+'px;'
-        +'width:'+iconRect.width+'px;height:'+iconRect.height+'px;'
-        +'object-fit:contain;margin:0;padding:0;'
-        +'transform:rotate('+angle+'deg);'
-        +'filter:'+icon.style.filter+';';
-      document.body.appendChild(fly);
-      icon.style.opacity='0';
-
-      // Short burst spin on the free icon
-      var burst=angle, burstSpeed=Math.max(speed,22), bFrames=0;
-      function burstSpin(){
-        burst+=burstSpeed*1.07; burstSpeed*=1.07;
-        fly.style.transform='rotate('+burst+'deg)';
-        bFrames++;
-        if(bFrames<12){
-          requestAnimationFrame(burstSpin);
-        } else {
-          // Loader background collapses toward logo (clip-path circle shrinks to logo point)
+    // Burst spin frames
+    var burst=angle, burstSpeed=Math.max(speed,20), bFrames=0;
+    function burstSpin(){
+      burst+=burstSpeed*1.08; burstSpeed*=1.08;
+      icon.style.transform='rotate('+burst+'deg)';
+      bFrames++;
+      if(bFrames<14){ requestAnimationFrame(burstSpin); }
+      else {
+        // clip-path collapses toward nav logo
+        if(logoRect){
           var cpX=Math.round(logoRect.left+logoRect.width/2)+'px';
           var cpY=Math.round(logoRect.top+logoRect.height/2)+'px';
-          loader.style.transition='clip-path .85s cubic-bezier(0.4,0,0.2,1)';
+          loader.style.transition='clip-path .9s cubic-bezier(0.4,0,0.2,1)';
           loader.style.clipPath='circle(0% at '+cpX+' '+cpY+')';
-          // Trigger hero cinematic reveal in sync with clip-path
-          document.body.classList.add('page-loaded');
-
-          // Icon flies to logo position and shrinks
-          var dx=(logoRect.left+logoRect.width/2)-(iconRect.left+iconRect.width/2);
-          var dy=(logoRect.top+logoRect.height/2)-(iconRect.top+iconRect.height/2);
-          var sc=(logoRect.height/iconRect.height).toFixed(4);
-          fly.style.transition='transform .75s cubic-bezier(0.16,1,0.3,1),filter .4s ease,opacity .15s ease .7s';
-          fly.style.transform='translate('+dx+'px,'+dy+'px) rotate('+burst+'deg) scale('+sc+')';
-          fly.style.filter='drop-shadow(0 0 5px rgba(255,77,0,.35))';
-
-          document.body.style.overflow='';
-
-          setTimeout(function(){
-            loader.style.display='none';
-            if(fly.parentNode)fly.parentNode.removeChild(fly);
-          },920);
+        } else {
+          loader.style.transition='opacity .7s ease';
+          loader.style.opacity='0';
         }
-      }
-      requestAnimationFrame(burstSpin);
+        // Logo shrinks and spirals into nav position
+        var dx=logoRect?(logoRect.left+logoRect.width/2)-(iconRect.left+iconRect.width/2):0;
+        var dy=logoRect?(logoRect.top+logoRect.height/2)-(iconRect.top+iconRect.height/2):0;
+        icon.style.transition='transform .8s cubic-bezier(0.4,0,0.2,1),opacity .35s ease .45s,filter .4s ease';
+        icon.style.transform='translate('+dx+'px,'+dy+'px) rotate('+(burst+540)+'deg) scale(0.08)';
+        icon.style.opacity='0';
+        icon.style.filter='drop-shadow(0 0 4px rgba(255,77,0,.3))';
 
-    } else {
-      // Fallback: simple fade
-      document.body.classList.add('page-loaded');
-      loader.classList.add('hidden');
-      setTimeout(function(){loader.style.display='none';document.body.style.overflow='';},900);
+        document.body.classList.add('page-loaded');
+        document.body.style.overflow='';
+        setTimeout(function(){ loader.style.display='none'; },950);
+      }
     }
+    requestAnimationFrame(burstSpin);
   }
 
   var pageLoaded=false;
