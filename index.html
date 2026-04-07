@@ -1445,6 +1445,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var bar=document.getElementById('plBar');
   if(!loader||!icon)return;
 
+  window.scrollTo(0,0);
   document.body.style.overflow='hidden';
 
   var angle=0, speed=0.1, maxSpeed=26, raf, isDone=false;
