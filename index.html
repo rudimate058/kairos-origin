@@ -183,6 +183,9 @@ section{padding:52px 48px}
 .lcard:hover .lcard-arrow,.lcard.open .lcard-arrow{border-color:var(--orange);background:var(--orange);color:var(--white);transform:rotate(45deg)}
 .lcard-desc{font-size:14px;color:rgba(240,235,227,.6);line-height:1.7;max-height:0;overflow:hidden;opacity:0;margin-top:0;transform:translateY(12px);transition:max-height .5s var(--ease),opacity .4s var(--ease),margin .4s var(--ease),transform .4s var(--ease)}
 .lcard.open .lcard-desc,.lcard:hover .lcard-desc{max-height:300px;opacity:1;margin-top:14px;transform:translateY(0)}
+.lcard-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:var(--fb);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);opacity:.75;cursor:pointer;transition:opacity .2s,gap .2s;background:none;border:none;padding:0}
+.lcard-link:hover{opacity:1;gap:9px}
+.lcard-link svg{width:10px;height:10px;flex-shrink:0}
 .lcard:hover .lcard-num{color:rgba(255,77,0,.8)}
 @media(max-width:900px){.lcard-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){
@@ -224,31 +227,22 @@ section{padding:52px 48px}
 .fb-tag:hover{border-color:var(--orange);color:var(--orange)}
 /* SPINE */
 .fb-spine{width:10px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.5) 0%,rgba(255,77,0,.18) 45%,rgba(0,0,0,.38) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
-/* RIGHT IMAGE GRID */
+/* RIGHT IMAGE PANEL */
 .fb-right{flex:1;position:relative;overflow:hidden;border:1px solid var(--border);border-left:none}
-.fb-grid{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,77,0,.12);opacity:1;transition:opacity .32s ease}
-.fb-grid.out{opacity:0;pointer-events:none}
-.fb-gi{overflow:hidden;cursor:zoom-in;position:relative;background:var(--black)}
-.fb-gi.hero{grid-row:1 / -1}
-.fb-gi img{width:100%;height:100%;display:block;transition:transform .45s cubic-bezier(0.16,1,0.3,1)}
-.fb-gi:hover img{transform:scale(1.06)}
-.fb-gi::after{content:'';position:absolute;inset:0;background:rgba(255,77,0,0);transition:background .3s;pointer-events:none}
-.fb-gi:hover::after{background:rgba(255,77,0,.07)}
-/* photo mode: fill frame; product mode: show full item */
-.fb-gi.photo img{object-fit:cover}
-.fb-gi.product img{object-fit:contain;padding:10%;background:var(--black)}
-/* LIGHTBOX */
-#fbLightbox{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .3s ease}
-#fbLightbox.open{background:rgba(0,0,0,.94);pointer-events:all}
-#fbLightbox img{max-width:88vw;max-height:86vh;object-fit:contain;opacity:0;transform:scale(.94);transition:opacity .3s ease,transform .3s ease;display:block}
-#fbLightbox.open img{opacity:1;transform:scale(1)}
-.lb-close{position:absolute;top:22px;right:28px;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s;line-height:1}
-.lb-close:hover{border-color:var(--orange);color:var(--orange)}
-.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);width:44px;height:44px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
-.lb-nav:hover{border-color:var(--orange);color:var(--orange)}
-#lbPrev{left:20px}
-#lbNext{right:20px}
-.lb-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;text-transform:uppercase}
+.fb-img-wrap{position:absolute;inset:0}
+.fb-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .28s ease}
+.fb-img-wrap img.fading{opacity:0}
+.fb-img-ov{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.38) 0%,transparent 55%);pointer-events:none}
+/* Overlay prev/next within category */
+.fb-iprev,.fb-inext{position:absolute;top:50%;transform:translateY(-50%);z-index:6;background:rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.8);width:36px;height:54px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,color .2s;line-height:1}
+.fb-iprev{left:0;border-left:none}
+.fb-inext{right:0;border-right:none}
+.fb-iprev:hover,.fb-inext:hover{background:rgba(255,77,0,.7);border-color:var(--orange);color:#fff}
+.fb-iprev.hidden,.fb-inext.hidden{display:none}
+.fb-ictr{position:absolute;bottom:10px;right:12px;font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.42);background:rgba(0,0,0,.36);padding:3px 8px;z-index:6;font-family:var(--fb);pointer-events:none}
+/* Product mode */
+.fb-right.product-mode .fb-img-wrap img{object-fit:contain;background:var(--black);padding:6%}
+.fb-right.product-mode .fb-img-ov{display:none}
 /* NAV */
 .fb-nav{display:flex;align-items:center;max-width:1100px;margin:18px auto 0;gap:14px}
 .fb-arrow{width:44px;height:44px;border:1px solid var(--border);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,color .25s,background .25s}
@@ -268,6 +262,7 @@ section{padding:52px 48px}
   .fb-left{flex:none;width:100%;box-sizing:border-box;border-right:1px solid var(--border);border-bottom:none;padding:28px 20px 24px}
   .fb-spine{width:100%;height:8px;background:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(255,77,0,.15),rgba(0,0,0,.35));border-left:1px solid var(--border);border-right:1px solid var(--border)}
   .fb-right{flex:none;width:100%;box-sizing:border-box;height:300px;border-left:1px solid var(--border)}
+  .fb-iprev,.fb-inext{width:28px;height:40px;font-size:16px}
   .fb-num{font-size:72px;top:10px;right:12px}
   .fb-title{font-size:26px}
   .fb-scene::before,.fb-scene::after{display:none}
@@ -696,7 +691,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <img class="lcard-icon" src="icons/project-management.png" alt="Project Management">
       <div class="lcard-title">Project<br>Management</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Wir übernehmen die komplette Projektsteuerung – von der ersten Idee bis zur erfolgreichen Umsetzung. Effizient organisiert, lösungsorientiert geführt und immer auf Ihr Ziel ausgerichtet.</p>
+      <p class="lcard-desc">Wir übernehmen die komplette Projektsteuerung – von der ersten Idee bis zur erfolgreichen Umsetzung. Effizient organisiert, lösungsorientiert geführt und immer auf Ihr Ziel ausgerichtet.<br><button class="lcard-link" data-cat="0">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
     </div>
 
     <div class="lcard rv d1" data-idx="1">
@@ -704,7 +699,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <img class="lcard-icon" src="icons/event.png" alt="Events & Event Support">
       <div class="lcard-title">Events &<br>Event Support</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Messe, Firmenveranstaltung oder POS-Aktivierung: Wir unterstützen Marken dort, wo sie erlebbar werden – mit Planung, Organisation, Logistik und Material aus einer Hand.</p>
+      <p class="lcard-desc">Messe, Firmenveranstaltung oder POS-Aktivierung: Wir unterstützen Marken dort, wo sie erlebbar werden – mit Planung, Organisation, Logistik und Material aus einer Hand.<br><button class="lcard-link" data-cat="1">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
     </div>
 
     <div class="lcard rv d2" data-idx="2">
@@ -712,7 +707,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <img class="lcard-icon" src="icons/promotion.png" alt="Promotion">
       <div class="lcard-title">Promotion</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Von klassischen Werbemitteln bis hin zu individuellen Sonderanfertigungen: Wir entwickeln, sourcen und produzieren Promotionartikel, die Marken sichtbar machen – glaubwürdig, hochwertig und effizient.</p>
+      <p class="lcard-desc">Von klassischen Werbemitteln bis hin zu individuellen Sonderanfertigungen: Wir entwickeln, sourcen und produzieren Promotionartikel, die Marken sichtbar machen – glaubwürdig, hochwertig und effizient.<br><button class="lcard-link" data-cat="2">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
     </div>
 
     <div class="lcard rv d1" data-idx="3">
@@ -726,7 +721,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       </div>
       <div class="lcard-title">Clothing</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Merch, Teamwear oder Event-Bekleidung: maßgeschneiderte Textillösungen inklusive Branding, Produktion und Qualitätskontrolle – damit Ihre Marke sichtbar bleibt.</p>
+      <p class="lcard-desc">Merch, Teamwear oder Event-Bekleidung: maßgeschneiderte Textillösungen inklusive Branding, Produktion und Qualitätskontrolle – damit Ihre Marke sichtbar bleibt.<br><button class="lcard-link" data-cat="3">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
     </div>
 
     <div class="lcard rv d2" data-idx="4">
@@ -734,7 +729,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <img class="lcard-icon" src="icons/partnership.png" alt="Partnerships">
       <div class="lcard-title">Partnerships<br>& Brand</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Wir bringen Marken zusammen und entwickeln Partnerschaften mit echtem Mehrwert – auf Basis von Identität, Positionierung und langfristiger Zusammenarbeit.</p>
+      <p class="lcard-desc">Wir bringen Marken zusammen und entwickeln Partnerschaften mit echtem Mehrwert – auf Basis von Identität, Positionierung und langfristiger Zusammenarbeit.<br><button class="lcard-link" data-cat="4">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
     </div>
 
     <div class="lcard rv d3" data-idx="5">
@@ -742,7 +737,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       <img class="lcard-icon" src="icons/branding.png" alt="Branding">
       <div class="lcard-title">Branding</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Werbebanner, Displays, Blow-Ups, Aufsteller und Sonderproduktionen – perfekt abgestimmt auf Ihren Markenauftritt, hochwertig, präsent und sofort einsatzbereit.</p>
+      <p class="lcard-desc">Werbebanner, Displays, Blow-Ups, Aufsteller und Sonderproduktionen – perfekt abgestimmt auf Ihren Markenauftritt, hochwertig, präsent und sofort einsatzbereit.<br><button class="lcard-link" data-cat="5">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
     </div>
 
   </div>
@@ -772,9 +767,15 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       </div>
       <!-- SPINE -->
       <div class="fb-spine"></div>
-      <!-- RIGHT: image grid -->
+      <!-- RIGHT: single image with in-category navigation -->
       <div class="fb-right" id="fbRight">
-        <div class="fb-grid" id="fbGrid"></div>
+        <div class="fb-img-wrap">
+          <img id="fbMainImg" src="" alt="">
+          <div class="fb-img-ov"></div>
+        </div>
+        <button class="fb-iprev hidden" id="fbImgPrev">&#8249;</button>
+        <button class="fb-inext hidden" id="fbImgNext">&#8250;</button>
+        <span class="fb-ictr" id="fbImgCtr"></span>
       </div>
     </div>
     <!-- NAV -->
@@ -1168,7 +1169,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
       'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=900&q=85&auto=format&fit=crop'
     ]}
   ];
-  var N=P.length, cur=0, busy=false;
+  var N=P.length, cur=0, imgIdx=0, busy=false;
 
   var content=document.getElementById('fbContent');
   var numEl=document.getElementById('fbNum');
@@ -1178,55 +1179,63 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var tagsEl=document.getElementById('fbTags');
   var curEl=document.getElementById('fbCur');
   var dots=document.querySelectorAll('.fb-seg');
-  var gridEl=document.getElementById('fbGrid');
+  var mainImg=document.getElementById('fbMainImg');
+  var rightEl=document.getElementById('fbRight');
+  var iPrev=document.getElementById('fbImgPrev');
+  var iNext=document.getElementById('fbImgNext');
+  var iCtr=document.getElementById('fbImgCtr');
 
-  /* Lightbox state */
-  var lbImgs=[], lbIdx=0;
+  /* Lightbox */
   var lb=document.getElementById('fbLightbox');
   var lbImg=document.getElementById('lbImg');
   var lbCtr=document.getElementById('lbCounter');
-
-  function openLb(imgs,idx){
-    lbImgs=imgs; lbIdx=idx;
-    lbImg.src=lbImgs[lbIdx];
-    lbCtr.textContent=(lbIdx+1)+' / '+lbImgs.length;
-    lb.classList.add('open');
-    document.body.style.overflow='hidden';
-  }
+  var lbImgs=[],lbIdx=0;
+  function openLb(imgs,idx){lbImgs=imgs;lbIdx=idx;lbImg.src=lbImgs[lbIdx];lbCtr.textContent=(lbIdx+1)+' / '+lbImgs.length;lb.classList.add('open');document.body.style.overflow='hidden';}
   function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
-  function lbStep(d){
-    lbIdx=((lbIdx+d)+lbImgs.length)%lbImgs.length;
-    lbImg.style.opacity='0';
-    setTimeout(function(){lbImg.src=lbImgs[lbIdx];lbImg.style.opacity='';lbCtr.textContent=(lbIdx+1)+' / '+lbImgs.length;},160);
-  }
+  function lbStep(d){lbIdx=((lbIdx+d)+lbImgs.length)%lbImgs.length;lbImg.style.opacity='0';setTimeout(function(){lbImg.src=lbImgs[lbIdx];lbImg.style.opacity='';lbCtr.textContent=(lbIdx+1)+' / '+lbImgs.length;},160);}
   document.getElementById('lbClose').addEventListener('click',closeLb);
   document.getElementById('lbPrev').addEventListener('click',function(){lbStep(-1);});
   document.getElementById('lbNext').addEventListener('click',function(){lbStep(1);});
   lb.addEventListener('click',function(e){if(e.target===lb)closeLb();});
-  document.addEventListener('keydown',function(e){
-    if(!lb.classList.contains('open'))return;
-    if(e.key==='Escape')closeLb();
-    if(e.key==='ArrowRight')lbStep(1);
-    if(e.key==='ArrowLeft')lbStep(-1);
-  });
 
   function mod(n){return((n%N)+N)%N;}
 
-  function buildGrid(d){
-    var isProduct=d.mode==='product';
-    var rows=Math.max(d.imgs.length-1,1);
-    gridEl.style.gridTemplateRows='repeat('+rows+',1fr)';
-    gridEl.innerHTML=d.imgs.map(function(src,idx){
-      var cls='fb-gi '+(idx===0?'hero ':'')+( isProduct?'product':'photo');
-      return'<div class="'+cls+'" data-idx="'+idx+'"><img src="'+src+'" alt="" loading="'+(idx===0?'eager':'lazy')+'"></div>';
-    }).join('');
-    gridEl.querySelectorAll('.fb-gi').forEach(function(item){
-      item.addEventListener('click',function(){openLb(d.imgs,parseInt(item.dataset.idx));});
-    });
+  /* Update image panel — fade swap */
+  function showImg(src,isProduct){
+    mainImg.classList.add('fading');
+    setTimeout(function(){
+      mainImg.src=src;
+      mainImg.classList.remove('fading');
+    },230);
+    rightEl.classList.toggle('product-mode',isProduct);
   }
 
-  function render(i){
+  /* Update in-category nav controls */
+  function updateImgNav(){
+    var d=P[cur];
+    var multi=d.imgs.length>1;
+    iPrev.classList.toggle('hidden',!multi);
+    iNext.classList.toggle('hidden',!multi);
+    iCtr.textContent=multi?(imgIdx+1)+' / '+d.imgs.length:'';
+  }
+
+  /* Navigate within category */
+  function goImg(dir){
+    var d=P[cur];
+    imgIdx=((imgIdx+dir)+d.imgs.length)%d.imgs.length;
+    showImg(d.imgs[imgIdx],d.mode==='product');
+    updateImgNav();
+  }
+  iPrev.addEventListener('click',function(e){e.stopPropagation();goImg(-1);});
+  iNext.addEventListener('click',function(e){e.stopPropagation();goImg(1);});
+
+  /* Click image → lightbox */
+  mainImg.addEventListener('click',function(){openLb(P[cur].imgs,imgIdx);});
+
+  /* Render category */
+  function render(i,noFade){
     var d=P[i];
+    imgIdx=0;
     numEl.textContent=d.n;
     catEl.textContent=d.cat;
     titleEl.innerHTML=d.title;
@@ -1234,25 +1243,34 @@ document.getElementById('cform').addEventListener('submit',e=>{
     tagsEl.innerHTML=d.tags.map(function(t){return'<span class="fb-tag">'+t+'</span>';}).join('');
     curEl.textContent=d.n;
     dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
-    buildGrid(d);
+    if(noFade){mainImg.src=d.imgs[0];rightEl.classList.toggle('product-mode',d.mode==='product');}
+    else{showImg(d.imgs[0],d.mode==='product');}
+    updateImgNav();
   }
 
+  /* Navigate categories */
   function go(nextIdx){
     if(busy)return;
     busy=true;
     var next=mod(nextIdx);
     content.classList.add('out');
-    gridEl.classList.add('out');
     setTimeout(function(){
       cur=next;
       render(cur);
       content.classList.remove('out');
-      gridEl.classList.remove('out');
       busy=false;
-    },340);
+    },320);
   }
 
-  /* Controls */
+  /* External deep-link: go to category without animation */
+  window.fbGoTo=function(idx){
+    cur=mod(idx);
+    render(cur,true);
+    content.classList.remove('out');
+    busy=false;
+  };
+
+  /* Category controls */
   document.getElementById('fbNext').addEventListener('click',function(){go(cur+1);});
   document.getElementById('fbPrev').addEventListener('click',function(){go(cur-1);});
   dots.forEach(function(dot){
@@ -1263,29 +1281,48 @@ document.getElementById('cform').addEventListener('submit',e=>{
     });
   });
 
-  /* Touch swipe on right panel */
-  var tsx=0;
-  var rightEl=document.getElementById('fbRight');
-  rightEl.addEventListener('touchstart',function(e){tsx=e.touches[0].clientX;},{passive:true});
+  /* Touch swipe on right panel — horizontal: category, vertical: nothing */
+  var tsx=0,tsy=0;
+  rightEl.addEventListener('touchstart',function(e){tsx=e.touches[0].clientX;tsy=e.touches[0].clientY;},{passive:true});
   rightEl.addEventListener('touchend',function(e){
     var dx=e.changedTouches[0].clientX-tsx;
-    if(Math.abs(dx)>40){if(dx<0)go(cur+1);else go(cur-1);}
+    var dy=e.changedTouches[0].clientY-tsy;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40){
+      if(dx<0)goImg(1);else goImg(-1);
+    }
   });
 
   /* Keyboard */
   document.addEventListener('keydown',function(e){
-    if(lb.classList.contains('open'))return;
+    if(lb.classList.contains('open')){
+      if(e.key==='Escape')closeLb();
+      if(e.key==='ArrowRight')lbStep(1);
+      if(e.key==='ArrowLeft')lbStep(-1);
+      return;
+    }
     if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
     var sec=document.getElementById('portfolio');
     if(!sec)return;
     var r=sec.getBoundingClientRect();
     if(r.top>window.innerHeight*1.2||r.bottom<-100)return;
-    if(e.key==='ArrowRight')go(cur+1);
-    if(e.key==='ArrowLeft')go(cur-1);
+    if(e.key==='ArrowRight')goImg(1);
+    if(e.key==='ArrowLeft')goImg(-1);
+    if(e.key==='ArrowDown')go(cur+1);
+    if(e.key==='ArrowUp')go(cur-1);
+  });
+
+  /* lcard deep-links */
+  document.querySelectorAll('.lcard-link').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var idx=parseInt(btn.dataset.cat);
+      document.getElementById('portfolio').scrollIntoView({behavior:'smooth'});
+      setTimeout(function(){window.fbGoTo(idx);},650);
+    });
   });
 
   /* Init */
-  render(0);
+  render(0,true);
 })();
 
 // PARALLAX HERO GLOW
