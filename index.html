@@ -222,10 +222,12 @@ section{padding:52px 48px}
 .fb-tags{display:flex;flex-wrap:wrap;gap:5px}
 .fb-tag{font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(255,77,0,.22);color:rgba(255,77,0,.65);transition:border-color .2s,color .2s}
 .fb-tag:hover{border-color:var(--orange);color:var(--orange)}
-.fb-subimgs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:16px;width:100%;max-width:290px}
-.fb-subimgs.hidden{display:none}
-.fb-subimgs img{width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(255,77,0,.18);display:block;transition:border-color .25s,opacity .25s;opacity:.85}
-.fb-subimgs img:hover{border-color:rgba(255,77,0,.55);opacity:1}
+/* GALLERY STRIP (inside right image panel) */
+.fb-gallery{position:absolute;bottom:0;left:0;right:0;z-index:10;display:flex;gap:5px;padding:10px 12px;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.3) 70%,transparent 100%)}
+.fb-gallery.hidden{display:none}
+.fb-gthumb{flex:1;aspect-ratio:4/3;object-fit:cover;cursor:pointer;border:1.5px solid rgba(255,77,0,.18);opacity:.55;transition:opacity .22s,border-color .22s,transform .22s}
+.fb-gthumb:hover{opacity:.85;border-color:rgba(255,77,0,.5);transform:translateY(-2px)}
+.fb-gthumb.active{opacity:1;border-color:var(--orange);transform:translateY(-2px)}
 /* SPINE */
 .fb-spine{width:10px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.5) 0%,rgba(255,77,0,.18) 45%,rgba(0,0,0,.38) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
 /* RIGHT IMAGE PAGE */
@@ -767,7 +769,6 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
           <div class="fb-rule"></div>
           <p class="fb-desc" id="fbDesc"></p>
           <div class="fb-tags" id="fbTags"></div>
-          <div class="fb-subimgs hidden" id="fbSubImgs"></div>
         </div>
       </div>
       <!-- SPINE -->
@@ -780,6 +781,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
           <div class="fb-card-f"><img id="fbFront" src="" alt=""></div>
           <div class="fb-card-b"><img id="fbBack" src="" alt=""></div>
         </div>
+        <div class="fb-gallery hidden" id="fbGallery"></div>
         <div class="fb-edge"></div>
         <span class="fb-hint">Klicken zum Bl&auml;ttern &rarr;</span>
       </div>
@@ -1155,7 +1157,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var tagsEl=document.getElementById('fbTags');
   var curEl=document.getElementById('fbCur');
   var dots=document.querySelectorAll('.fb-seg');
-  var subImgsEl=document.getElementById('fbSubImgs');
+  var galleryEl=document.getElementById('fbGallery');
 
   function mod(n){return((n%N)+N)%N;}
 
@@ -1168,12 +1170,25 @@ document.getElementById('cform').addEventListener('submit',e=>{
     tagsEl.innerHTML=d.tags.map(function(t){return'<span class="fb-tag">'+t+'</span>';}).join('');
     curEl.textContent=d.n;
     dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
+    /* Gallery strip */
     if(d.subImgs&&d.subImgs.length){
-      subImgsEl.innerHTML=d.subImgs.map(function(src){return'<img src="'+src+'" alt="" loading="lazy">';}).join('');
-      subImgsEl.classList.remove('hidden');
+      var allImgs=[d.img].concat(d.subImgs);
+      galleryEl.innerHTML=allImgs.map(function(src,idx){
+        return'<img class="fb-gthumb'+(idx===0?' active':'')+'" src="'+src+'" data-src="'+src+'" alt="" loading="lazy">';
+      }).join('');
+      galleryEl.classList.remove('hidden');
+      galleryEl.querySelectorAll('.fb-gthumb').forEach(function(thumb){
+        thumb.addEventListener('click',function(e){
+          e.stopPropagation();
+          var src=thumb.dataset.src;
+          front.src=src; bg.src=src;
+          galleryEl.querySelectorAll('.fb-gthumb').forEach(function(t){t.classList.remove('active');});
+          thumb.classList.add('active');
+        });
+      });
     } else {
-      subImgsEl.innerHTML='';
-      subImgsEl.classList.add('hidden');
+      galleryEl.innerHTML='';
+      galleryEl.classList.add('hidden');
     }
   }
 
