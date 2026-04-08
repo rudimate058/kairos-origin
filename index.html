@@ -248,6 +248,15 @@ section{padding:52px 48px}
 .fb-edge{position:absolute;top:0;right:0;bottom:0;width:3px;background:linear-gradient(to right,rgba(255,255,255,.04),rgba(255,255,255,.1),rgba(255,255,255,.04));z-index:9;pointer-events:none}
 .fb-hint{position:absolute;bottom:13px;right:48px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,.28);z-index:7;pointer-events:none;transition:opacity .5s;white-space:nowrap}
 .fb-scene:hover .fb-hint{opacity:0}
+/* PRODUCT MODE — for categories with product/promo images */
+.fb-right.product-mode .fb-bg{object-fit:cover;opacity:.08;filter:blur(28px)}
+.fb-right.product-mode .fb-bg-ov{background:linear-gradient(135deg,rgba(13,13,31,.92) 0%,rgba(13,13,31,.75) 100%)}
+.fb-right.product-mode .fb-card-f img,.fb-right.product-mode .fb-card-b img{object-fit:contain;opacity:1;background:transparent;padding:8%}
+.fb-right.product-mode .fb-card-f::after,.fb-right.product-mode .fb-card-b::after{background:none}
+.fb-right.product-mode .fb-card-f::before{display:none}
+.fb-right.product-mode .fb-hint{display:none}
+/* GALLERY STRIP PRODUCT MODE */
+.fb-right.product-mode .fb-gthumb{object-fit:contain;background:rgba(13,13,31,.75)}
 /* NAV */
 .fb-nav{display:flex;align-items:center;max-width:1100px;margin:18px auto 0;gap:14px}
 .fb-arrow{width:44px;height:44px;border:1px solid var(--border);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,color .25s,background .25s}
@@ -1143,14 +1152,14 @@ document.getElementById('cform').addEventListener('submit',e=>{
       'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=85&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1511578314322-379afb476865?w=900&q=85&auto=format&fit=crop'
     ]},
-    {n:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],imgs:[
+    {n:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],mode:'product',imgs:[
       'werbemittel/Werbemittel8.png',
       'werbemittel/Werbemittel.png',
       'werbemittel/Werbemittel1.png',
       'werbemittel/Werbemittel2.png',
       'werbemittel/Werbemittel3.png'
     ]},
-    {n:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar und erlebbar machen.',tags:['Fashion','Merch','Branding'],imgs:[
+    {n:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar und erlebbar machen.',tags:['Fashion','Merch','Branding'],mode:'product',imgs:[
       'werbemittel/Bekleidung.png',
       'werbemittel/Bekleidung1.png',
       'werbemittel/Bekleidung2.png',
@@ -1178,6 +1187,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var front=document.getElementById('fbFront');
   var back=document.getElementById('fbBack');
   var content=document.getElementById('fbContent');
+  var rightPanel=document.getElementById('fbRight');
   var numEl=document.getElementById('fbNum');
   var catEl=document.getElementById('fbCat');
   var titleEl=document.getElementById('fbTitle');
@@ -1198,7 +1208,9 @@ document.getElementById('cform').addEventListener('submit',e=>{
     tagsEl.innerHTML=d.tags.map(function(t){return'<span class="fb-tag">'+t+'</span>';}).join('');
     curEl.textContent=d.n;
     dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
-    /* Gallery strip — always shown, one thumb per image */
+    /* Product vs photo mode */
+    rightPanel.classList.toggle('product-mode', d.mode==='product');
+    /* Gallery strip */
     galleryEl.innerHTML=d.imgs.map(function(src,idx){
       return'<img class="fb-gthumb'+(idx===0?' active':'')+'" src="'+src+'" data-src="'+src+'" alt="" loading="lazy">';
     }).join('');
