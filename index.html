@@ -1062,6 +1062,15 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
   </div>
 </div>
 
+<!-- LIGHTBOX -->
+<div id="fbLightbox">
+  <button class="lb-close" id="lbClose">&times;</button>
+  <button class="lb-nav" id="lbPrev">&#8249;</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-nav" id="lbNext">&#8250;</button>
+  <span class="lb-counter" id="lbCounter"></span>
+</div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 // CURSOR
@@ -1583,13 +1592,5 @@ document.addEventListener('DOMContentLoaded',function(){
 })();
 </script>
 
-<!-- LIGHTBOX -->
-<div id="fbLightbox">
-  <button class="lb-close" id="lbClose">&times;</button>
-  <button class="lb-nav" id="lbPrev">&#8249;</button>
-  <img id="lbImg" src="" alt="">
-  <button class="lb-nav" id="lbNext">&#8250;</button>
-  <span class="lb-counter" id="lbCounter"></span>
-</div>
 </body>
 </html>
