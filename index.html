@@ -329,14 +329,12 @@ section{padding:52px 48px}
 .leaflet-tile{filter:brightness(.82) hue-rotate(210deg) saturate(.55)}
 .leaflet-container{background:#0D0D1F !important}
 .map-sidebar{display:flex;flex-direction:column;background:var(--dark);border-left:1px solid var(--border);height:400px}
-.map-loc-item{display:flex;flex-direction:column;justify-content:center;padding:14px 22px;border-bottom:1px solid var(--border);gap:2px;transition:background .25s;flex:1;position:relative;overflow:hidden}
+.map-loc-item{display:flex;flex-direction:column;justify-content:center;padding:12px 22px;border-bottom:1px solid var(--border);gap:2px;transition:background .25s;flex:1;position:relative;overflow:hidden}
 .map-loc-item:last-child{border-bottom:none}
 .map-loc-item:hover{background:rgba(255,77,0,.04)}
 .map-loc-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--orange);transform:scaleY(0);transform-origin:bottom;transition:transform .4s var(--ease)}
 .map-loc-item:hover::before{transform:scaleY(1)}
-.map-loc-num{font-family:var(--fd);font-size:11px;color:rgba(255,77,0,.35);letter-spacing:.2em}
-.map-loc-tag{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);display:block;margin-bottom:1px}
-.map-loc-city{font-family:var(--fd);font-size:clamp(16px,1.5vw,21px);color:var(--white);letter-spacing:.04em;line-height:1;margin:2px 0 4px}
+.map-loc-city{font-family:var(--fd);font-size:clamp(16px,1.5vw,21px);color:var(--white);letter-spacing:.04em;line-height:1;margin:0 0 4px}
 .map-loc-addr{font-size:11px;color:rgba(240,235,227,.38);line-height:1.5}
 .map-loc-btn{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange);text-decoration:none;margin-top:8px;opacity:.7;transition:gap .2s,opacity .2s}
 .map-loc-btn:hover{gap:10px;opacity:1}
@@ -888,8 +886,6 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     <!-- SIDEBAR LOCATIONS -->
     <div class="map-sidebar">
       <div class="map-loc-item rv">
-        <span class="map-loc-num">01</span>
-        <span class="map-loc-tag">Hauptsitz</span>
         <h3 class="map-loc-city">GÖTZENS</h3>
         <p class="map-loc-addr">Franz-Singer-Straße 5<br>6091 Götzens, Österreich</p>
         <a class="map-loc-btn" href="https://www.google.com/maps/dir/?api=1&destination=Franz-Singer-Stra%C3%9Fe+5,+6091+G%C3%B6tzens,+Austria" target="_blank" rel="noopener">
@@ -898,8 +894,6 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
         </a>
       </div>
       <div class="map-loc-item rv d1">
-        <span class="map-loc-num">02</span>
-        <span class="map-loc-tag">Büro</span>
         <h3 class="map-loc-city">INNSBRUCK</h3>
         <p class="map-loc-addr">Resselstraße 33<br>6020 Innsbruck, Österreich</p>
         <a class="map-loc-btn" href="https://www.google.com/maps/dir/?api=1&destination=Resselsstra%C3%9Fe+33,+6020+Innsbruck,+Austria" target="_blank" rel="noopener">
@@ -908,8 +902,6 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
         </a>
       </div>
       <div class="map-loc-item rv d2">
-        <span class="map-loc-num">03</span>
-        <span class="map-loc-tag">Standort</span>
         <h3 class="map-loc-city">ISCHGL</h3>
         <p class="map-loc-addr">Waldhofweg 37<br>6561 Ischgl, Österreich</p>
         <a class="map-loc-btn" href="https://www.google.com/maps/dir/?api=1&destination=Waldhofweg+37,+6561+Ischgl,+Austria" target="_blank" rel="noopener">
