@@ -489,29 +489,14 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 
 /* PAGE LOADER */
 #pg-loader{position:fixed;inset:0;background:var(--black);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.pl-glow{position:absolute;width:560px;height:260px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,77,0,.14) 0%,transparent 70%);pointer-events:none}
-.pl-glow2{position:absolute;width:320px;height:150px;border-radius:50%;background:radial-gradient(ellipse,rgba(255,77,0,.22) 0%,transparent 65%);pointer-events:none;animation:plGlow2Pulse 1.8s ease-in-out infinite}
-@keyframes plGlow2Pulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
-.pl-ring{position:absolute;width:390px;height:145px;border-radius:50%;border:1px solid rgba(255,77,0,.2);animation:plRingPulse 2s ease-in-out infinite}
-.pl-ring2{position:absolute;width:510px;height:192px;border-radius:50%;border:1px solid rgba(255,77,0,.08);animation:plRingPulse 2.2s ease-in-out .5s infinite}
-.pl-ring3{position:absolute;width:650px;height:245px;border-radius:50%;border:1px solid rgba(255,77,0,.03);animation:plRingPulse 2.8s ease-in-out 1s infinite}
-@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.07);opacity:.3}}
-.pl-lens{position:absolute;width:700px;height:1.5px;background:linear-gradient(to right,transparent 0%,rgba(255,77,0,.15) 20%,rgba(255,255,255,.75) 50%,rgba(255,77,0,.15) 80%,transparent 100%);opacity:0;pointer-events:none;z-index:3;border-radius:2px;box-shadow:0 0 8px rgba(255,255,255,.3)}
+.pl-glow{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(188,215,185,.09) 0%,transparent 70%);pointer-events:none}
+.pl-ring{position:absolute;width:160px;height:160px;border-radius:50%;border:1px solid rgba(188,215,185,.28);animation:plRingPulse 2.2s ease-in-out infinite}
+.pl-ring2{position:absolute;width:250px;height:250px;border-radius:50%;border:1px solid rgba(188,215,185,.13);animation:plRingPulse 2.2s ease-in-out .55s infinite}
+.pl-ring3{position:absolute;width:350px;height:350px;border-radius:50%;border:1px solid rgba(188,215,185,.05);animation:plRingPulse 2.2s ease-in-out 1.1s infinite}
+@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.07);opacity:.2}}
 .pl-icon-wrap{position:relative;z-index:2}
-.pl-icon{width:280px;height:auto;object-fit:contain;display:block;transform:scale(0.28);opacity:0}
-.pl-star{position:absolute;border-radius:50%;pointer-events:none;background:#fff}
-.pl-star:nth-child(1){width:2px;height:2px;left:11%;top:17%;box-shadow:0 0 4px rgba(255,255,255,.6);animation:plTwinkle 1.6s ease-in-out .0s infinite}
-.pl-star:nth-child(2){width:3px;height:3px;left:83%;top:14%;box-shadow:0 0 6px rgba(255,220,180,.8);animation:plTwinkle 2.1s ease-in-out .3s infinite}
-.pl-star:nth-child(3){width:2px;height:2px;left:90%;top:62%;box-shadow:0 0 4px rgba(255,255,255,.5);animation:plTwinkle 1.8s ease-in-out .7s infinite}
-.pl-star:nth-child(4){width:2px;height:2px;left:7%;top:70%;box-shadow:0 0 4px rgba(255,255,255,.6);animation:plTwinkle 2.3s ease-in-out .2s infinite}
-.pl-star:nth-child(5){width:3px;height:3px;left:48%;top:6%;box-shadow:0 0 6px rgba(255,200,150,.7);animation:plTwinkle 1.5s ease-in-out .9s infinite}
-.pl-star:nth-child(6){width:2px;height:2px;left:22%;top:88%;box-shadow:0 0 3px rgba(255,255,255,.5);animation:plTwinkle 2s ease-in-out .5s infinite}
-.pl-star:nth-child(7){width:4px;height:4px;left:74%;top:90%;box-shadow:0 0 8px rgba(255,180,100,.9);animation:plTwinkle 1.7s ease-in-out 1.1s infinite}
-.pl-star:nth-child(8){width:2px;height:2px;left:60%;top:9%;box-shadow:0 0 4px rgba(255,255,255,.6);animation:plTwinkle 2.2s ease-in-out .4s infinite}
-.pl-star:nth-child(9){width:2px;height:2px;left:3%;top:40%;box-shadow:0 0 3px rgba(255,255,255,.4);animation:plTwinkle 1.9s ease-in-out .8s infinite}
-.pl-star:nth-child(10){width:3px;height:3px;left:95%;top:38%;box-shadow:0 0 5px rgba(255,220,180,.7);animation:plTwinkle 1.6s ease-in-out 1.3s infinite}
-@keyframes plTwinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(2.5)}}
-.pl-bar{position:absolute;bottom:0;left:0;height:2px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
+.pl-icon{width:88px;height:88px;object-fit:contain;display:block;transform:scale(0.3);opacity:0}
+.pl-bar{position:absolute;bottom:0;left:0;height:2px;width:0%;background:linear-gradient(to right,transparent,#bcd7b9,transparent);transition:none}
 
 /* COOKIE BANNER */
 .cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(3px)}
@@ -1567,18 +1552,12 @@ document.addEventListener('DOMContentLoaded',function(){
 
 <!-- PAGE LOADER -->
 <div id="pg-loader">
-  <div class="pl-star"></div><div class="pl-star"></div><div class="pl-star"></div>
-  <div class="pl-star"></div><div class="pl-star"></div><div class="pl-star"></div>
-  <div class="pl-star"></div><div class="pl-star"></div><div class="pl-star"></div>
-  <div class="pl-star"></div>
   <div class="pl-glow" id="plGlow"></div>
-  <div class="pl-glow2"></div>
   <div class="pl-ring"></div>
   <div class="pl-ring2"></div>
   <div class="pl-ring3"></div>
-  <div class="pl-lens" id="plLens"></div>
-  <div class="pl-icon-wrap" id="plIconWrap">
-    <img src="Logo/logowebsiteneu/Kairos-Origin Logo Weiß.png" class="pl-icon" id="plIcon" alt="Kairos Origin">
+  <div class="pl-icon-wrap">
+    <img src="Icon-KairosOrginsRGB-White.png" class="pl-icon" id="plIcon" alt="Kairos Origin">
   </div>
   <div class="pl-bar" id="plBar"></div>
 </div>
@@ -1587,51 +1566,37 @@ document.addEventListener('DOMContentLoaded',function(){
 (function(){
   var loader=document.getElementById('pg-loader');
   var icon=document.getElementById('plIcon');
-  var wrap=document.getElementById('plIconWrap');
   var glow=document.getElementById('plGlow');
-  var lens=document.getElementById('plLens');
   var bar=document.getElementById('plBar');
   if(!loader||!icon)return;
 
   window.scrollTo(0,0);
   document.body.style.overflow='hidden';
 
-  var angle=0, speed=0, maxSpeed=20, raf, isDone=false;
+  var angle=0, speed=0, maxSpeed=18, raf, isDone=false;
   var startTime=Date.now(), minDuration=2000;
 
-  // Fade icon in on first frame
   icon.style.opacity='1';
-  icon.style.transition='opacity .35s ease';
+  icon.style.transition='opacity .4s ease';
 
   function frame(){
     if(isDone)return;
-    // Smooth ease-in acceleration
-    speed=Math.min(speed+0.18, maxSpeed);
+    speed=Math.min(speed+0.16, maxSpeed);
     angle+=speed;
-    // t: 0 = just started, 1 = full speed
     var t=Math.min(speed/maxSpeed,1);
 
-    // Scale grows from 0.28 → 1.0, eased
-    var scale=0.28+0.72*(t<0.5?2*t*t:(1-Math.pow(-2*t+2,2)/2));
-
-    // Glow on shadow — subtle, no blur on logo itself
-    var shadowBlur=Math.round(t*38);
-    var shadowAlpha=(t*0.7).toFixed(2);
-
+    // Scale: 0.3 → 1.0, smooth ease-in-out
+    var scale=0.3+0.7*(t<0.5?2*t*t:(1-Math.pow(-2*t+2,2)/2));
     icon.style.transform='rotate('+angle+'deg) scale('+scale.toFixed(4)+')';
-    icon.style.filter='drop-shadow(0 0 '+shadowBlur+'px rgba(255,77,0,'+shadowAlpha+'))';
 
-    // Glow grows
-    var gw=(430+t*260)+'px', gh=(190+t*110)+'px';
-    var ga=(0.05+t*0.42).toFixed(3), ga2=(0.02+t*0.14).toFixed(3);
-    glow.style.width=gw; glow.style.height=gh;
-    glow.style.background='radial-gradient(ellipse,rgba(255,77,0,'+ga+') 0%,rgba(255,77,0,'+ga2+') 40%,transparent 70%)';
+    // Mint glow builds up as speed increases
+    var shadowBlur=Math.round(t*22);
+    var shadowAlpha=(t*0.55).toFixed(2);
+    icon.style.filter='drop-shadow(0 0 '+shadowBlur+'px rgba(188,215,185,'+shadowAlpha+'))';
 
-    // Lens flare sweeps opposite direction, fades in at high speed
-    if(lens){
-      lens.style.transform='rotate('+(angle*-0.38)+'deg)';
-      lens.style.opacity=t>0.42?Math.min((t-0.42)*1.6,0.9).toFixed(2):'0';
-    }
+    // Central halo brightens
+    var ga=(0.07+t*0.22).toFixed(3);
+    glow.style.background='radial-gradient(circle,rgba(188,215,185,'+ga+') 0%,transparent 70%)';
 
     bar.style.width=Math.min((Date.now()-startTime)/minDuration*90,90)+'%';
     raf=requestAnimationFrame(frame);
@@ -1642,79 +1607,35 @@ document.addEventListener('DOMContentLoaded',function(){
     if(isDone)return;
     isDone=true;
     cancelAnimationFrame(raf);
-    bar.style.transition='width .25s ease'; bar.style.width='100%';
+    bar.style.transition='width .25s ease';
+    bar.style.width='100%';
 
-    // Target: hero main logo position (logo FLOWS INTO hero section)
-    var heroLogo=document.querySelector('.hero-main-logo');
-    var heroRect=heroLogo?heroLogo.getBoundingClientRect():null;
-    var iconRect=icon.getBoundingClientRect();
-
-    // Scatter stars outward
-    loader.querySelectorAll('.pl-star').forEach(function(s,i){
-      var a=(i/10)*Math.PI*2;
-      var d=100+Math.random()*160;
-      s.style.transition='transform .9s cubic-bezier(0.2,0,0,1),opacity .6s ease .15s';
-      s.style.transform='translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px) scale(0)';
-      s.style.opacity='0';
-    });
-    // Fade lens
-    if(lens){lens.style.transition='opacity .3s ease';lens.style.opacity='0';}
-
-    var burst=angle, burstSpeed=Math.max(speed,14), bFrames=0;
-    function burstSpin(){
-      burstSpeed*=0.92; burst+=burstSpeed;
-      icon.style.transform='rotate('+burst+'deg) scale(1)';
-      bFrames++;
-      if(bFrames<22){ requestAnimationFrame(burstSpin); }
-      else {
-        // Loader background fades away revealing hero underneath
-        loader.style.transition='opacity 1.1s cubic-bezier(0.4,0,0.2,1)';
+    // Decelerate spin then fade the whole loader
+    var decSpeed=speed, decAngle=angle;
+    function decel(){
+      decSpeed*=0.87;
+      decAngle+=decSpeed;
+      icon.style.transform='rotate('+decAngle+'deg) scale(1)';
+      if(decSpeed>0.4){
+        requestAnimationFrame(decel);
+      } else {
+        loader.style.transition='opacity .9s cubic-bezier(0.4,0,0.2,1)';
         loader.style.opacity='0';
-
-        if(heroRect){
-          // Calculate move from loader center to hero logo center
-          var dx=(heroRect.left+heroRect.width/2)-(iconRect.left+iconRect.width/2);
-          var dy=(heroRect.top+heroRect.height/2)-(iconRect.top+iconRect.height/2);
-          var sc=(heroRect.width/iconRect.width).toFixed(4);
-          // Round burst to nearest 360 for clean face-forward landing
-          var landAngle=Math.ceil(burst/360)*360+360;
-          // Logo flies + grows into hero position, decelerates, settles
-          icon.style.transition='transform 1.1s cubic-bezier(0.15,0.05,0.1,1),filter .5s ease,opacity .3s ease .82s';
-          icon.style.transform='translate('+dx+'px,'+dy+'px) rotate('+landAngle+'deg) scale('+sc+')';
-          icon.style.filter='drop-shadow(0 0 32px rgba(255,77,0,.55))';
-          icon.style.opacity='0';
-        }
-
-        // Hero reveals as loader fades — one continuous flow
         document.body.classList.add('page-loaded');
         document.body.style.overflow='';
-
-        // Brief light bloom at landing moment
-        setTimeout(function(){
-          var flash=document.createElement('div');
-          flash.style.cssText='position:fixed;inset:0;background:radial-gradient(ellipse at 50% 48%,rgba(255,77,0,.06) 0%,transparent 60%);pointer-events:none;z-index:99998;opacity:1;transition:opacity .8s ease';
-          document.body.appendChild(flash);
-          requestAnimationFrame(function(){ requestAnimationFrame(function(){
-            flash.style.opacity='0';
-            setTimeout(function(){flash.parentNode&&flash.parentNode.removeChild(flash);},900);
-          });});
-        },900);
-
-        setTimeout(function(){ loader.style.display='none'; },1150);
+        setTimeout(function(){ loader.style.display='none'; }, 950);
       }
     }
-    requestAnimationFrame(burstSpin);
+    requestAnimationFrame(decel);
   }
 
   var pageLoaded=false;
   window.addEventListener('load',function(){
     pageLoaded=true;
     var elapsed=Date.now()-startTime;
-    var wait=Math.max(0,minDuration-elapsed);
-    setTimeout(hide,wait);
+    setTimeout(hide, Math.max(0, minDuration-elapsed));
   });
-  // Hard fallback
-  setTimeout(function(){if(!pageLoaded)hide();},3500);
+  setTimeout(function(){if(!pageLoaded)hide();}, 3500);
 })();
 </script>
 
