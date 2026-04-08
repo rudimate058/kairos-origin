@@ -217,8 +217,9 @@ section{padding:52px 48px}
 .fb-left::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,77,0,.035) 0%,transparent 55%);pointer-events:none}
 .fb-num{font-family:'Palatino Linotype',Palatino,serif;font-size:110px;line-height:1;color:rgba(255,77,0,.065);position:absolute;top:18px;right:18px;letter-spacing:-.02em;pointer-events:none;user-select:none;transition:color .6s ease}
 .fb-scene:hover .fb-num{color:rgba(255,77,0,.11)}
-.fb-content{position:relative;z-index:2;transition:opacity .3s ease,transform .3s ease}
-.fb-content.out{opacity:0;transform:translateY(7px)}
+.fb-content{position:relative;z-index:2;transition:opacity .38s cubic-bezier(0.16,1,0.3,1),transform .38s cubic-bezier(0.16,1,0.3,1)}
+.fb-content.out-fwd{opacity:0;transform:translateY(-10px)}
+.fb-content.out-back{opacity:0;transform:translateY(10px)}
 .fb-cat{display:block;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange);opacity:.85;margin:0 0 15px}
 .fb-title{font-family:'Palatino Linotype',Palatino,serif;font-size:clamp(26px,3vw,48px);letter-spacing:.04em;text-transform:uppercase;color:var(--cream);line-height:.92;margin:0 0 20px}
 .fb-rule{width:28px;height:1.5px;background:var(--orange);margin-bottom:18px}
@@ -231,32 +232,52 @@ section{padding:52px 48px}
 /* RIGHT IMAGE PANEL */
 .fb-right{flex:1;position:relative;overflow:hidden;border:1px solid var(--border);border-left:none}
 .fb-img-wrap{position:absolute;inset:0}
-.fb-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .28s ease}
-.fb-img-wrap img.fading{opacity:0}
+.fb-img-wrap{cursor:zoom-in}
+.fb-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .32s ease,transform .32s ease}
+.fb-img-wrap img.fading-fwd{opacity:0;transform:scale(1.04)}
+.fb-img-wrap img.fading-back{opacity:0;transform:scale(.97)}
 .fb-img-ov{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.38) 0%,transparent 55%);pointer-events:none}
-/* Overlay prev/next within category */
-.fb-iprev,.fb-inext{position:absolute;top:50%;transform:translateY(-50%);z-index:6;background:rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.8);width:36px;height:54px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,border-color .2s,color .2s;line-height:1}
-.fb-iprev{left:0;border-left:none}
-.fb-inext{right:0;border-right:none}
-.fb-iprev:hover,.fb-inext:hover{background:rgba(255,77,0,.7);border-color:var(--orange);color:#fff}
+/* Overlay prev/next within category — fade in on hover */
+.fb-iprev,.fb-inext{position:absolute;top:50%;transform:translateY(-50%);z-index:6;background:rgba(0,0,0,.52);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.85);width:34px;height:72px;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .22s,color .22s,opacity .25s;line-height:1;opacity:0}
+.fb-right:hover .fb-iprev,.fb-right:hover .fb-inext{opacity:1}
+.fb-iprev{left:0;border-left:none;border-radius:0 3px 3px 0}
+.fb-inext{right:0;border-right:none;border-radius:3px 0 0 3px}
+.fb-iprev:hover,.fb-inext:hover{background:rgba(255,77,0,.8);color:#fff}
 .fb-iprev.hidden,.fb-inext.hidden{display:none}
-.fb-ictr{position:absolute;bottom:10px;right:12px;font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.42);background:rgba(0,0,0,.36);padding:3px 8px;z-index:6;font-family:var(--fb);pointer-events:none}
+/* Image position dots */
+.fb-img-dots{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:7;pointer-events:all}
+.fb-img-dots.hidden{display:none}
+.fb-img-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;border:none;padding:0;transition:background .22s,transform .22s}
+.fb-img-dot.on{background:#fff;transform:scale(1.3)}
+.fb-img-dot:hover{background:rgba(255,255,255,.65)}
 /* Product mode */
 .fb-right.product-mode .fb-img-wrap img{object-fit:contain;background:var(--black);padding:6%}
 .fb-right.product-mode .fb-img-ov{display:none}
-/* NAV */
-.fb-nav{display:flex;align-items:center;max-width:1100px;margin:18px auto 0;gap:14px}
-.fb-arrow{width:44px;height:44px;border:1px solid var(--border);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,color .25s,background .25s}
+.fb-right.product-mode{cursor:default}
+/* NAV — two-row: image track + category track */
+.fb-nav{display:flex;flex-direction:column;align-items:center;max-width:1100px;margin:14px auto 0;gap:8px}
+.fb-nav-track{display:flex;align-items:center;gap:12px;width:100%}
+.fb-nav-track.imgs-track{justify-content:center;min-height:22px}
+.fb-nav-track.cats-track{justify-content:center}
+.fb-nav-label{font-size:7.5px;letter-spacing:.32em;text-transform:uppercase;color:rgba(255,255,255,.18);font-family:var(--fb);white-space:nowrap;min-width:80px}
+.fb-nav-label.right{text-align:right}
+.fb-arrow{width:40px;height:40px;border:1px solid var(--border);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,color .25s,background .25s}
 .fb-arrow:hover{border-color:var(--orange);color:var(--orange)}
 .fb-arrow:active{background:rgba(255,77,0,.08)}
-.fb-arrow svg{width:15px;height:15px}
-.fb-segs{display:flex;align-items:center;gap:8px;flex:1;justify-content:center}
-.fb-seg{width:28px;height:2px;background:rgba(255,255,255,.22);cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .4s;flex-shrink:0}
+.fb-arrow svg{width:14px;height:14px}
+.fb-segs{display:flex;align-items:center;gap:8px;justify-content:center;flex:1}
+.fb-seg{width:26px;height:2px;background:rgba(255,255,255,.2);cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .4s;flex-shrink:0}
 .fb-seg::before{content:'';position:absolute;top:-12px;bottom:-12px;left:-2px;right:-2px}
 .fb-seg:hover{background:rgba(255,77,0,.6)}
-.fb-seg.on{background:var(--orange);width:46px;height:3px}
-.fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:46px;text-align:right}
+.fb-seg.on{background:var(--orange);width:44px;height:3px}
+.fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:var(--muted);letter-spacing:.15em;min-width:44px;text-align:right}
 .fb-count em{color:var(--cream);font-style:normal}
+/* image track segs */
+.fb-isegs{display:flex;align-items:center;gap:6px;justify-content:center}
+.fb-iseg{width:18px;height:2px;background:rgba(255,255,255,.18);cursor:pointer;border:none;padding:0;transition:width .3s,background .3s;flex-shrink:0;position:relative}
+.fb-iseg::before{content:'';position:absolute;top:-10px;bottom:-10px;left:-2px;right:-2px}
+.fb-iseg:hover{background:rgba(255,255,255,.5)}
+.fb-iseg.on{background:rgba(255,255,255,.75);width:26px}
 /* MOBILE */
 @media(max-width:880px){
   .fb-body{flex-direction:column;height:auto}
@@ -792,26 +813,36 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
         </div>
         <button class="fb-iprev hidden" id="fbImgPrev">&#8249;</button>
         <button class="fb-inext hidden" id="fbImgNext">&#8250;</button>
-        <span class="fb-ictr" id="fbImgCtr"></span>
+        <div class="fb-img-dots hidden" id="fbImgDots"></div>
       </div>
     </div>
     <!-- NAV -->
     <div class="fb-nav">
-      <button class="fb-arrow" id="fbPrev" aria-label="Vorherige Seite">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div class="fb-segs" id="fbSegs">
-        <div class="fb-seg on" data-i="0"></div>
-        <div class="fb-seg"    data-i="1"></div>
-        <div class="fb-seg"    data-i="2"></div>
-        <div class="fb-seg"    data-i="3"></div>
-        <div class="fb-seg"    data-i="4"></div>
-        <div class="fb-seg"    data-i="5"></div>
+      <!-- Row 1: image track (hidden when only 1 image) -->
+      <div class="fb-nav-track imgs-track" id="fbImgsTrack" style="display:none">
+        <span class="fb-nav-label right">Bild</span>
+        <div class="fb-isegs" id="fbIsegs"></div>
+        <span class="fb-nav-label">innerhalb</span>
       </div>
-      <div class="fb-count"><em id="fbCur">01</em>&thinsp;/&thinsp;06</div>
-      <button class="fb-arrow" id="fbNext" aria-label="N&auml;chste Seite">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+      <!-- Row 2: category track -->
+      <div class="fb-nav-track cats-track">
+        <button class="fb-arrow" id="fbPrev" aria-label="Vorherige Kategorie">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span class="fb-nav-label right">Kategorie</span>
+        <div class="fb-segs" id="fbSegs">
+          <div class="fb-seg on" data-i="0"></div>
+          <div class="fb-seg"    data-i="1"></div>
+          <div class="fb-seg"    data-i="2"></div>
+          <div class="fb-seg"    data-i="3"></div>
+          <div class="fb-seg"    data-i="4"></div>
+          <div class="fb-seg"    data-i="5"></div>
+        </div>
+        <div class="fb-count"><em id="fbCur">01</em>&thinsp;/&thinsp;06</div>
+        <button class="fb-arrow" id="fbNext" aria-label="N&auml;chste Kategorie">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -1200,7 +1231,9 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var rightEl=document.getElementById('fbRight');
   var iPrev=document.getElementById('fbImgPrev');
   var iNext=document.getElementById('fbImgNext');
-  var iCtr=document.getElementById('fbImgCtr');
+  var imgDotsEl=document.getElementById('fbImgDots');
+  var isegsEl=document.getElementById('fbIsegs');
+  var imgsTrack=document.getElementById('fbImgsTrack');
 
   /* Lightbox */
   var lb=document.getElementById('fbLightbox');
@@ -1217,31 +1250,62 @@ document.getElementById('cform').addEventListener('submit',e=>{
 
   function mod(n){return((n%N)+N)%N;}
 
-  /* Update image panel — fade swap */
-  function showImg(src,isProduct){
-    mainImg.classList.add('fading');
+  /* Directional image swap */
+  function showImg(src,isProduct,dir){
+    var cls=dir>0?'fading-fwd':'fading-back';
+    mainImg.classList.add(cls);
     setTimeout(function(){
       mainImg.src=src;
-      mainImg.classList.remove('fading');
-    },230);
+      mainImg.classList.remove(cls);
+    },280);
     rightEl.classList.toggle('product-mode',isProduct);
   }
 
-  /* Update in-category nav controls */
+  /* Build image dots + isegs track */
   function updateImgNav(){
     var d=P[cur];
-    var multi=d.imgs.length>1;
+    var total=d.imgs.length;
+    var multi=total>1;
     iPrev.classList.toggle('hidden',!multi);
     iNext.classList.toggle('hidden',!multi);
-    iCtr.textContent=multi?(imgIdx+1)+' / '+d.imgs.length:'';
+    imgsTrack.style.display=multi?'':'none';
+
+    /* dots inside image */
+    imgDotsEl.innerHTML='';
+    imgDotsEl.classList.toggle('hidden',!multi);
+    /* isegs in nav */
+    isegsEl.innerHTML='';
+    if(!multi)return;
+
+    for(var k=0;k<total;k++){
+      (function(k){
+        var dot=document.createElement('button');
+        dot.className='fb-img-dot'+(k===imgIdx?' on':'');
+        imgDotsEl.appendChild(dot);
+        dot.addEventListener('click',function(e){e.stopPropagation();if(k!==imgIdx){var dir=k>imgIdx?1:-1;imgIdx=k;showImg(d.imgs[k],d.mode==='product',dir);syncImgNav();}});
+
+        var seg=document.createElement('button');
+        seg.className='fb-iseg'+(k===imgIdx?' on':'');
+        isegsEl.appendChild(seg);
+        seg.addEventListener('click',function(){if(k!==imgIdx){var dir=k>imgIdx?1:-1;imgIdx=k;showImg(d.imgs[k],d.mode==='product',dir);syncImgNav();}});
+      })(k);
+    }
+  }
+
+  /* Sync dots + isegs active state */
+  function syncImgNav(){
+    var allDots=imgDotsEl.querySelectorAll('.fb-img-dot');
+    var allSegs=isegsEl.querySelectorAll('.fb-iseg');
+    allDots.forEach(function(d,i){d.classList.toggle('on',i===imgIdx);});
+    allSegs.forEach(function(s,i){s.classList.toggle('on',i===imgIdx);});
   }
 
   /* Navigate within category */
   function goImg(dir){
     var d=P[cur];
     imgIdx=((imgIdx+dir)+d.imgs.length)%d.imgs.length;
-    showImg(d.imgs[imgIdx],d.mode==='product');
-    updateImgNav();
+    showImg(d.imgs[imgIdx],d.mode==='product',dir);
+    syncImgNav();
   }
   iPrev.addEventListener('click',function(e){e.stopPropagation();goImg(-1);});
   iNext.addEventListener('click',function(e){e.stopPropagation();goImg(1);});
@@ -1250,7 +1314,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   mainImg.addEventListener('click',function(){openLb(P[cur].imgs,imgIdx);});
 
   /* Render category */
-  function render(i,noFade){
+  function render(i,noFade,dir){
     var d=P[i];
     imgIdx=0;
     numEl.textContent=d.n;
@@ -1261,7 +1325,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
     curEl.textContent=d.n;
     dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
     if(noFade){mainImg.src=d.imgs[0];rightEl.classList.toggle('product-mode',d.mode==='product');}
-    else{showImg(d.imgs[0],d.mode==='product');}
+    else{showImg(d.imgs[0],d.mode==='product',dir||1);}
     updateImgNav();
   }
 
@@ -1270,13 +1334,14 @@ document.getElementById('cform').addEventListener('submit',e=>{
     if(busy)return;
     busy=true;
     var next=mod(nextIdx);
-    content.classList.add('out');
+    var fwd=mod(next-cur)<=Math.floor(N/2);
+    content.classList.add(fwd?'out-fwd':'out-back');
     setTimeout(function(){
       cur=next;
-      render(cur);
-      content.classList.remove('out');
+      render(cur,false,fwd?1:-1);
+      content.classList.remove('out-fwd','out-back');
       busy=false;
-    },320);
+    },340);
   }
 
   /* External deep-link: go to category without animation */
