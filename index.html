@@ -222,6 +222,10 @@ section{padding:52px 48px}
 .fb-tags{display:flex;flex-wrap:wrap;gap:5px}
 .fb-tag{font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(255,77,0,.22);color:rgba(255,77,0,.65);transition:border-color .2s,color .2s}
 .fb-tag:hover{border-color:var(--orange);color:var(--orange)}
+.fb-subimgs{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:16px;width:100%;max-width:290px}
+.fb-subimgs.hidden{display:none}
+.fb-subimgs img{width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid rgba(255,77,0,.18);display:block;transition:border-color .25s,opacity .25s;opacity:.85}
+.fb-subimgs img:hover{border-color:rgba(255,77,0,.55);opacity:1}
 /* SPINE */
 .fb-spine{width:10px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.5) 0%,rgba(255,77,0,.18) 45%,rgba(0,0,0,.38) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
 /* RIGHT IMAGE PAGE */
@@ -763,6 +767,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
           <div class="fb-rule"></div>
           <p class="fb-desc" id="fbDesc"></p>
           <div class="fb-tags" id="fbTags"></div>
+          <div class="fb-subimgs hidden" id="fbSubImgs"></div>
         </div>
       </div>
       <!-- SPINE -->
@@ -1128,7 +1133,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var P=[
     {n:'01',cat:'Planung mit Pr\u00e4zision',title:'PROJECT<br>MANAGEMENT',desc:'Strukturierte Projektplanung von der Idee bis zur Umsetzung. Wir koordinieren Teams, Ressourcen und Timelines mit Pr\u00e4zision.',tags:['Planung','Koordination','Timelines'],img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=85&auto=format&fit=crop'},
     {n:'02',cat:'Momente, die bewegen',title:'EVENTS &amp;<br>EVENT SUPPORT',desc:'Von Firmenevents bis zu gro\u00dfen Publikumsveranstaltungen \u2013 wir schaffen unvergessliche Erlebnisse mit Liebe zum Detail.',tags:['Events','Live','Experience'],img:'SommerEvent.png'},
-    {n:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],img:'werbemittel/Werbemittel8.png'},
+    {n:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],img:'werbemittel/Werbemittel8.png',subImgs:['werbemittel/Werbemittel.png','werbemittel/Werbemittel1.png','werbemittel/Werbemittel2.png','werbemittel/Werbemittel3.png']},
     {n:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar und erlebbar machen.',tags:['Fashion','Merch','Branding'],img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=85&auto=format&fit=crop'},
     {n:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS<br>&amp; BRAND',desc:'Strategische Partnerschaften und Markenkollaborationen, die Mehrwert schaffen und neue Reichweiten \u00f6ffnen.',tags:['Partnerships','Strategy','Brand'],img:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=85&auto=format&fit=crop'},
     {n:'06',cat:'Visuelle Markenpr\u00e4senz',title:'BRANDING',desc:'Konsistente Markenidentit\u00e4t \u00fcber alle Kan\u00e4le. Von der Strategie bis zum finalen Design \u2013 alles aus einer Hand.',tags:['Design','Identity','Strategy'],img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=85&auto=format&fit=crop'}
@@ -1150,6 +1155,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var tagsEl=document.getElementById('fbTags');
   var curEl=document.getElementById('fbCur');
   var dots=document.querySelectorAll('.fb-seg');
+  var subImgsEl=document.getElementById('fbSubImgs');
 
   function mod(n){return((n%N)+N)%N;}
 
@@ -1162,6 +1168,13 @@ document.getElementById('cform').addEventListener('submit',e=>{
     tagsEl.innerHTML=d.tags.map(function(t){return'<span class="fb-tag">'+t+'</span>';}).join('');
     curEl.textContent=d.n;
     dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
+    if(d.subImgs&&d.subImgs.length){
+      subImgsEl.innerHTML=d.subImgs.map(function(src){return'<img src="'+src+'" alt="" loading="lazy">';}).join('');
+      subImgsEl.classList.remove('hidden');
+    } else {
+      subImgsEl.innerHTML='';
+      subImgsEl.classList.add('hidden');
+    }
   }
 
   /* Core flip: fwd=true flips forward (left pivot), fwd=false flips backward (right pivot) */
