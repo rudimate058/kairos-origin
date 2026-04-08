@@ -166,7 +166,7 @@ section{padding:52px 48px}
 .lcard{background:var(--card);border:1px solid var(--border);padding:20px 20px 18px;cursor:pointer;position:relative;overflow:hidden;transition:border-color .3s,background .3s,box-shadow .3s}
 .lcard::before{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#bcd7b9,#d4ead2);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
 .lcard:hover,.lcard.open{border-color:rgba(188,215,185,.45)}
-.lcard:hover{background:rgba(14,22,18,.96);box-shadow:0 0 0 1px rgba(188,215,185,.2),0 8px 40px rgba(188,215,185,.09),inset 0 0 60px rgba(188,215,185,.03)}
+.lcard:hover{background:rgba(14,22,18,.96);box-shadow:0 0 0 1px rgba(188,215,185,.35),0 8px 48px rgba(188,215,185,.18),inset 0 0 80px rgba(188,215,185,.07)}
 .lcard.open::before,.lcard:hover::before{transform:scaleX(1)}
 .lcard-icon{width:40px;height:40px;margin-bottom:14px;opacity:.55;filter:brightness(0) saturate(100%) invert(45%) sepia(95%) saturate(1800%) hue-rotate(349deg) brightness(105%);transition:opacity .3s,filter .3s,transform .3s}
 .lcard:hover .lcard-icon,.lcard.open .lcard-icon{opacity:1;filter:brightness(0) saturate(100%) invert(45%) sepia(95%) saturate(1800%) hue-rotate(349deg) brightness(115%);transform:scale(1.08)}
@@ -177,7 +177,7 @@ section{padding:52px 48px}
 .showroom-btn:hover{background:rgba(255,77,0,.18);border-color:#FF4D00;color:#FF4D00;box-shadow:0 0 18px rgba(255,77,0,.28);transform:translateY(-1px)}
 .showroom-btn:hover svg{transform:translate(1px,-1px)}
 .lcard-num{font-family:var(--fd);font-size:13px;color:rgba(188,215,185,.5);letter-spacing:.15em;margin-bottom:6px;transition:color .3s}
-.lcard-title{font-family:var(--fd);font-size:clamp(18px,2vw,26px);letter-spacing:.05em;color:#bcd7b9;line-height:1.1;margin-bottom:0;transition:color .25s}
+.lcard-title{font-family:var(--fd);font-size:clamp(18px,2vw,26px);letter-spacing:.05em;color:var(--white);line-height:1.1;margin-bottom:0;transition:color .25s}
 .lcard:hover .lcard-title,.lcard.open .lcard-title{color:#fff}
 .lcard-arrow{position:absolute;top:22px;right:20px;width:28px;height:28px;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;transition:all .3s}
 .lcard:hover .lcard-arrow,.lcard.open .lcard-arrow{border-color:var(--orange);background:var(--orange);color:var(--white);transform:rotate(45deg)}
