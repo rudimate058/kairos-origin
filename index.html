@@ -183,9 +183,10 @@ section{padding:52px 48px}
 .lcard:hover .lcard-arrow,.lcard.open .lcard-arrow{border-color:var(--orange);background:var(--orange);color:var(--white);transform:rotate(45deg)}
 .lcard-desc{font-size:14px;color:rgba(240,235,227,.6);line-height:1.7;max-height:0;overflow:hidden;opacity:0;margin-top:0;transform:translateY(12px);transition:max-height .5s var(--ease),opacity .4s var(--ease),margin .4s var(--ease),transform .4s var(--ease)}
 .lcard.open .lcard-desc,.lcard:hover .lcard-desc{max-height:300px;opacity:1;margin-top:14px;transform:translateY(0)}
-.lcard-link{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:var(--fb);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange);opacity:.75;cursor:pointer;transition:opacity .2s,gap .2s;background:none;border:none;padding:0}
-.lcard-link:hover{opacity:1;gap:9px}
-.lcard-link svg{width:10px;height:10px;flex-shrink:0}
+.lcard-link{display:inline-flex;align-items:center;gap:5px;background:rgba(188,215,185,.1);border:1px solid rgba(188,215,185,.3);color:#bcd7b9;font-family:var(--fb);font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;padding:6px 11px;transition:all .35s var(--ease);white-space:nowrap;cursor:pointer}
+.lcard-link:hover{background:rgba(188,215,185,.2);border-color:#bcd7b9;color:#bcd7b9;box-shadow:0 0 16px rgba(188,215,185,.25);transform:translateY(-1px)}
+.lcard-link svg{width:9px;height:9px;flex-shrink:0;transition:transform .3s var(--ease)}
+.lcard-link:hover svg{transform:translate(1px,-1px)}
 .lcard:hover .lcard-num{color:rgba(255,77,0,.8)}
 @media(max-width:900px){.lcard-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:600px){
@@ -688,32 +689,42 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 
     <div class="lcard rv" data-idx="0">
       <div class="lcard-num">01</div>
-      <img class="lcard-icon" src="icons/project-management.png" alt="Project Management">
+      <div class="lcard-icon-row">
+        <img class="lcard-icon" src="icons/project-management.png" alt="Project Management">
+        <button class="lcard-link" data-cat="0">Unsere Arbeit <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button>
+      </div>
       <div class="lcard-title">Project<br>Management</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Wir übernehmen die komplette Projektsteuerung – von der ersten Idee bis zur erfolgreichen Umsetzung. Effizient organisiert, lösungsorientiert geführt und immer auf Ihr Ziel ausgerichtet.<br><button class="lcard-link" data-cat="0">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
+      <p class="lcard-desc">Wir übernehmen die komplette Projektsteuerung – von der ersten Idee bis zur erfolgreichen Umsetzung. Effizient organisiert, lösungsorientiert geführt und immer auf Ihr Ziel ausgerichtet.</p>
     </div>
 
     <div class="lcard rv d1" data-idx="1">
       <div class="lcard-num">02</div>
-      <img class="lcard-icon" src="icons/event.png" alt="Events & Event Support">
+      <div class="lcard-icon-row">
+        <img class="lcard-icon" src="icons/event.png" alt="Events & Event Support">
+        <button class="lcard-link" data-cat="1">Unsere Arbeit <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button>
+      </div>
       <div class="lcard-title">Events &<br>Event Support</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Messe, Firmenveranstaltung oder POS-Aktivierung: Wir unterstützen Marken dort, wo sie erlebbar werden – mit Planung, Organisation, Logistik und Material aus einer Hand.<br><button class="lcard-link" data-cat="1">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
+      <p class="lcard-desc">Messe, Firmenveranstaltung oder POS-Aktivierung: Wir unterstützen Marken dort, wo sie erlebbar werden – mit Planung, Organisation, Logistik und Material aus einer Hand.</p>
     </div>
 
     <div class="lcard rv d2" data-idx="2">
       <div class="lcard-num">03</div>
-      <img class="lcard-icon" src="icons/promotion.png" alt="Promotion">
+      <div class="lcard-icon-row">
+        <img class="lcard-icon" src="icons/promotion.png" alt="Promotion">
+        <button class="lcard-link" data-cat="2">Unsere Arbeit <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button>
+      </div>
       <div class="lcard-title">Promotion</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Von klassischen Werbemitteln bis hin zu individuellen Sonderanfertigungen: Wir entwickeln, sourcen und produzieren Promotionartikel, die Marken sichtbar machen – glaubwürdig, hochwertig und effizient.<br><button class="lcard-link" data-cat="2">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
+      <p class="lcard-desc">Von klassischen Werbemitteln bis hin zu individuellen Sonderanfertigungen: Wir entwickeln, sourcen und produzieren Promotionartikel, die Marken sichtbar machen – glaubwürdig, hochwertig und effizient.</p>
     </div>
 
     <div class="lcard rv d1" data-idx="3">
       <div class="lcard-num">04</div>
       <div class="lcard-icon-row">
         <img class="lcard-icon" src="icons/clothing.png" alt="Clothing">
+        <button class="lcard-link" data-cat="3">Unsere Arbeit <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button>
         <a class="showroom-btn" href="https://www.textileworld.eu/?customer=D020050" target="_blank" rel="noopener" onclick="event.stopPropagation()">
           Showroom
           <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg>
@@ -721,23 +732,29 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       </div>
       <div class="lcard-title">Clothing</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Merch, Teamwear oder Event-Bekleidung: maßgeschneiderte Textillösungen inklusive Branding, Produktion und Qualitätskontrolle – damit Ihre Marke sichtbar bleibt.<br><button class="lcard-link" data-cat="3">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
+      <p class="lcard-desc">Merch, Teamwear oder Event-Bekleidung: maßgeschneiderte Textillösungen inklusive Branding, Produktion und Qualitätskontrolle – damit Ihre Marke sichtbar bleibt.</p>
     </div>
 
     <div class="lcard rv d2" data-idx="4">
       <div class="lcard-num">05</div>
-      <img class="lcard-icon" src="icons/partnership.png" alt="Partnerships">
+      <div class="lcard-icon-row">
+        <img class="lcard-icon" src="icons/partnership.png" alt="Partnerships">
+        <button class="lcard-link" data-cat="4">Unsere Arbeit <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button>
+      </div>
       <div class="lcard-title">Partnerships<br>& Brand</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Wir bringen Marken zusammen und entwickeln Partnerschaften mit echtem Mehrwert – auf Basis von Identität, Positionierung und langfristiger Zusammenarbeit.<br><button class="lcard-link" data-cat="4">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
+      <p class="lcard-desc">Wir bringen Marken zusammen und entwickeln Partnerschaften mit echtem Mehrwert – auf Basis von Identität, Positionierung und langfristiger Zusammenarbeit.</p>
     </div>
 
     <div class="lcard rv d3" data-idx="5">
       <div class="lcard-num">06</div>
-      <img class="lcard-icon" src="icons/branding.png" alt="Branding">
+      <div class="lcard-icon-row">
+        <img class="lcard-icon" src="icons/branding.png" alt="Branding">
+        <button class="lcard-link" data-cat="5">Unsere Arbeit <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button>
+      </div>
       <div class="lcard-title">Branding</div>
       <div class="lcard-arrow">+</div>
-      <p class="lcard-desc">Werbebanner, Displays, Blow-Ups, Aufsteller und Sonderproduktionen – perfekt abgestimmt auf Ihren Markenauftritt, hochwertig, präsent und sofort einsatzbereit.<br><button class="lcard-link" data-cat="5">Projekte ansehen <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8L8 2M4 2h4v4"/></svg></button></p>
+      <p class="lcard-desc">Werbebanner, Displays, Blow-Ups, Aufsteller und Sonderproduktionen – perfekt abgestimmt auf Ihren Markenauftritt, hochwertig, präsent und sofort einsatzbereit.</p>
     </div>
 
   </div>
