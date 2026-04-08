@@ -496,6 +496,10 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 @keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.07);opacity:.2}}
 .pl-icon-wrap{position:relative;z-index:2}
 .pl-icon{width:88px;height:88px;object-fit:contain;display:block;transform:scale(0.3);opacity:0}
+.pl-wordmark{position:relative;z-index:2;margin-top:20px;font-family:'Bebas Neue',cursive;font-size:13px;letter-spacing:.42em;color:#bcd7b9;white-space:nowrap;height:18px}
+.pl-wordmark span{opacity:0;display:inline-block;transform:translateY(5px);transition:opacity .18s ease,transform .22s ease}
+.pl-wordmark span.on{opacity:1;transform:translateY(0)}
+.pl-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(188,215,185,.35),transparent);opacity:0;pointer-events:none;z-index:3;transform:translateY(-50vh)}
 .pl-bar{position:absolute;bottom:0;left:0;height:2px;width:0%;background:linear-gradient(to right,transparent,#bcd7b9,transparent);transition:none}
 
 /* COOKIE BANNER */
@@ -1556,9 +1560,11 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="pl-ring"></div>
   <div class="pl-ring2"></div>
   <div class="pl-ring3"></div>
+  <div class="pl-scan" id="plScan"></div>
   <div class="pl-icon-wrap">
     <img src="Icon-KairosOrginsRGB-White.png" class="pl-icon" id="plIcon" alt="Kairos Origin">
   </div>
+  <div class="pl-wordmark" id="plWordmark"><span>K</span><span>A</span><span>I</span><span>R</span><span>O</span><span>S</span><span>&thinsp;</span><span>O</span><span>R</span><span>I</span><span>G</span><span>I</span><span>N</span></div>
   <div class="pl-bar" id="plBar"></div>
 </div>
 
@@ -1568,20 +1574,23 @@ document.addEventListener('DOMContentLoaded',function(){
   var icon=document.getElementById('plIcon');
   var glow=document.getElementById('plGlow');
   var bar=document.getElementById('plBar');
+  var scan=document.getElementById('plScan');
+  var wordmark=document.getElementById('plWordmark');
   if(!loader||!icon)return;
 
   window.scrollTo(0,0);
   document.body.style.overflow='hidden';
 
   var angle=0, speed=0, maxSpeed=18, raf, isDone=false;
-  var startTime=Date.now(), minDuration=2000;
+  var startTime=Date.now(), minDuration=1400;
+  var textTriggered=false, scanTriggered=false;
 
   icon.style.opacity='1';
-  icon.style.transition='opacity .4s ease';
+  icon.style.transition='opacity .35s ease';
 
   function frame(){
     if(isDone)return;
-    speed=Math.min(speed+0.16, maxSpeed);
+    speed=Math.min(speed+0.22, maxSpeed);
     angle+=speed;
     var t=Math.min(speed/maxSpeed,1);
 
@@ -1589,7 +1598,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var scale=0.3+0.7*(t<0.5?2*t*t:(1-Math.pow(-2*t+2,2)/2));
     icon.style.transform='rotate('+angle+'deg) scale('+scale.toFixed(4)+')';
 
-    // Mint glow builds up as speed increases
+    // Mint glow builds up
     var shadowBlur=Math.round(t*22);
     var shadowAlpha=(t*0.55).toFixed(2);
     icon.style.filter='drop-shadow(0 0 '+shadowBlur+'px rgba(188,215,185,'+shadowAlpha+'))';
@@ -1597,6 +1606,22 @@ document.addEventListener('DOMContentLoaded',function(){
     // Central halo brightens
     var ga=(0.07+t*0.22).toFixed(3);
     glow.style.background='radial-gradient(circle,rgba(188,215,185,'+ga+') 0%,transparent 70%)';
+
+    // Scan line sweeps down once at ~50% speed
+    if(!scanTriggered && t>0.5 && scan){
+      scanTriggered=true;
+      scan.style.opacity='1';
+      scan.style.transition='transform 0.55s cubic-bezier(0.4,0,0.6,1),opacity 0.15s ease';
+      scan.style.transform='translateY(50vh)';
+      setTimeout(function(){ scan.style.opacity='0'; scan.style.transition='opacity .3s ease'; },520);
+    }
+
+    // Typewriter text appears letter by letter at ~70% speed
+    if(!textTriggered && t>0.68 && wordmark){
+      textTriggered=true;
+      var letters=wordmark.querySelectorAll('span');
+      letters.forEach(function(l,i){ setTimeout(function(){ l.classList.add('on'); }, i*48); });
+    }
 
     bar.style.width=Math.min((Date.now()-startTime)/minDuration*90,90)+'%';
     raf=requestAnimationFrame(frame);
