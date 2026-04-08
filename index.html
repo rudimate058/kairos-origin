@@ -222,41 +222,33 @@ section{padding:52px 48px}
 .fb-tags{display:flex;flex-wrap:wrap;gap:5px}
 .fb-tag{font-size:8px;letter-spacing:.2em;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(255,77,0,.22);color:rgba(255,77,0,.65);transition:border-color .2s,color .2s}
 .fb-tag:hover{border-color:var(--orange);color:var(--orange)}
-/* GALLERY STRIP (inside right image panel) */
-.fb-gallery{position:absolute;bottom:0;left:0;right:0;z-index:10;display:flex;gap:5px;padding:10px 12px;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.3) 70%,transparent 100%)}
-.fb-gallery.hidden{display:none}
-.fb-gthumb{flex:1;aspect-ratio:4/3;object-fit:cover;cursor:pointer;border:1.5px solid rgba(255,77,0,.18);opacity:.55;transition:opacity .22s,border-color .22s,transform .22s}
-.fb-gthumb:hover{opacity:.85;border-color:rgba(255,77,0,.5);transform:translateY(-2px)}
-.fb-gthumb.active{opacity:1;border-color:var(--orange);transform:translateY(-2px)}
 /* SPINE */
 .fb-spine{width:10px;flex-shrink:0;background:linear-gradient(to right,rgba(0,0,0,.5) 0%,rgba(255,77,0,.18) 45%,rgba(0,0,0,.38) 100%);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:2}
-/* RIGHT IMAGE PAGE */
-.fb-right{flex:1;position:relative;overflow:hidden;border:1px solid var(--border);border-left:none;perspective:2200px}
-.fb-right::after{content:'';position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 36px 36px;border-color:transparent transparent rgba(255,77,0,.22) transparent;z-index:8;pointer-events:none}
-.fb-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.68;transition:none}
-.fb-bg-ov{position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.55) 0%,rgba(13,13,31,.05) 70%);z-index:1;pointer-events:none}
-/* THE FLIP CARD */
-.fb-card{position:absolute;inset:0;transform-style:preserve-3d;z-index:2;cursor:pointer}
-.fb-card-f,.fb-card-b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
-.fb-card-f img,.fb-card-b img{width:100%;height:100%;object-fit:cover;opacity:.68}
-.fb-card-f::after,.fb-card-b::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(13,13,31,.55) 0%,rgba(13,13,31,.05) 70%);pointer-events:none}
-/* Spine shadow on flip card — left edge */
-.fb-card-f::before{content:'';position:absolute;top:0;left:0;bottom:0;width:22px;background:linear-gradient(to right,rgba(0,0,0,.4),transparent);z-index:3;pointer-events:none}
-/* Back face — rotated 180deg */
-.fb-card-b{transform:rotateY(180deg)}
-/* Page-edge sheen — right edge */
-.fb-edge{position:absolute;top:0;right:0;bottom:0;width:3px;background:linear-gradient(to right,rgba(255,255,255,.04),rgba(255,255,255,.1),rgba(255,255,255,.04));z-index:9;pointer-events:none}
-.fb-hint{position:absolute;bottom:13px;right:48px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,227,.28);z-index:7;pointer-events:none;transition:opacity .5s;white-space:nowrap}
-.fb-scene:hover .fb-hint{opacity:0}
-/* PRODUCT MODE — for categories with product/promo images */
-.fb-right.product-mode .fb-bg{object-fit:cover;opacity:.08;filter:blur(28px)}
-.fb-right.product-mode .fb-bg-ov{background:linear-gradient(135deg,rgba(13,13,31,.92) 0%,rgba(13,13,31,.75) 100%)}
-.fb-right.product-mode .fb-card-f img,.fb-right.product-mode .fb-card-b img{object-fit:contain;opacity:1;background:transparent;padding:8%}
-.fb-right.product-mode .fb-card-f::after,.fb-right.product-mode .fb-card-b::after{background:none}
-.fb-right.product-mode .fb-card-f::before{display:none}
-.fb-right.product-mode .fb-hint{display:none}
-/* GALLERY STRIP PRODUCT MODE */
-.fb-right.product-mode .fb-gthumb{object-fit:contain;background:rgba(13,13,31,.75)}
+/* RIGHT IMAGE GRID */
+.fb-right{flex:1;position:relative;overflow:hidden;border:1px solid var(--border);border-left:none}
+.fb-grid{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,77,0,.12);opacity:1;transition:opacity .32s ease}
+.fb-grid.out{opacity:0;pointer-events:none}
+.fb-gi{overflow:hidden;cursor:zoom-in;position:relative;background:var(--black)}
+.fb-gi.hero{grid-row:1 / -1}
+.fb-gi img{width:100%;height:100%;display:block;transition:transform .45s cubic-bezier(0.16,1,0.3,1)}
+.fb-gi:hover img{transform:scale(1.06)}
+.fb-gi::after{content:'';position:absolute;inset:0;background:rgba(255,77,0,0);transition:background .3s;pointer-events:none}
+.fb-gi:hover::after{background:rgba(255,77,0,.07)}
+/* photo mode: fill frame; product mode: show full item */
+.fb-gi.photo img{object-fit:cover}
+.fb-gi.product img{object-fit:contain;padding:10%;background:var(--black)}
+/* LIGHTBOX */
+#fbLightbox{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .3s ease}
+#fbLightbox.open{background:rgba(0,0,0,.94);pointer-events:all}
+#fbLightbox img{max-width:88vw;max-height:86vh;object-fit:contain;opacity:0;transform:scale(.94);transition:opacity .3s ease,transform .3s ease;display:block}
+#fbLightbox.open img{opacity:1;transform:scale(1)}
+.lb-close{position:absolute;top:22px;right:28px;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);width:40px;height:40px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s;line-height:1}
+.lb-close:hover{border-color:var(--orange);color:var(--orange)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);width:44px;height:44px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
+.lb-nav:hover{border-color:var(--orange);color:var(--orange)}
+#lbPrev{left:20px}
+#lbNext{right:20px}
+.lb-counter{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;text-transform:uppercase}
 /* NAV */
 .fb-nav{display:flex;align-items:center;max-width:1100px;margin:18px auto 0;gap:14px}
 .fb-arrow{width:44px;height:44px;border:1px solid var(--border);background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,color .25s,background .25s}
@@ -275,12 +267,10 @@ section{padding:52px 48px}
   .fb-body{flex-direction:column;height:auto}
   .fb-left{flex:none;width:100%;box-sizing:border-box;border-right:1px solid var(--border);border-bottom:none;padding:28px 20px 24px}
   .fb-spine{width:100%;height:8px;background:linear-gradient(to bottom,rgba(0,0,0,.5),rgba(255,77,0,.15),rgba(0,0,0,.35));border-left:1px solid var(--border);border-right:1px solid var(--border)}
-  .fb-right{flex:none;width:100%;box-sizing:border-box;height:290px;border-left:1px solid var(--border);perspective:none}
-  .fb-card{display:none}
+  .fb-right{flex:none;width:100%;box-sizing:border-box;height:300px;border-left:1px solid var(--border)}
   .fb-num{font-size:72px;top:10px;right:12px}
   .fb-title{font-size:26px}
   .fb-scene::before,.fb-scene::after{display:none}
-  .fb-hint,.fb-right::after{display:none}
 }
 @media(max-width:768px){
   .port-head{flex-direction:column;gap:8px;align-items:flex-start}
@@ -782,17 +772,9 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
       </div>
       <!-- SPINE -->
       <div class="fb-spine"></div>
-      <!-- RIGHT: image page with flip card -->
+      <!-- RIGHT: image grid -->
       <div class="fb-right" id="fbRight">
-        <img class="fb-bg" id="fbBg" src="" alt="">
-        <div class="fb-bg-ov"></div>
-        <div class="fb-card" id="fbCard">
-          <div class="fb-card-f"><img id="fbFront" src="" alt=""></div>
-          <div class="fb-card-b"><img id="fbBack" src="" alt=""></div>
-        </div>
-        <div class="fb-gallery hidden" id="fbGallery"></div>
-        <div class="fb-edge"></div>
-        <span class="fb-hint">Klicken zum Bl&auml;ttern &rarr;</span>
+        <div class="fb-grid" id="fbGrid"></div>
       </div>
     </div>
     <!-- NAV -->
@@ -1178,16 +1160,8 @@ document.getElementById('cform').addEventListener('submit',e=>{
     ]}
   ];
   var N=P.length, cur=0, busy=false;
-  var EASE='cubic-bezier(0.645,0.045,0.355,1.000)';
-  var DUR=820;
 
-  var card=document.getElementById('fbCard');
-  if(!card)return;
-  var bg=document.getElementById('fbBg');
-  var front=document.getElementById('fbFront');
-  var back=document.getElementById('fbBack');
   var content=document.getElementById('fbContent');
-  var rightPanel=document.getElementById('fbRight');
   var numEl=document.getElementById('fbNum');
   var catEl=document.getElementById('fbCat');
   var titleEl=document.getElementById('fbTitle');
@@ -1195,11 +1169,54 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var tagsEl=document.getElementById('fbTags');
   var curEl=document.getElementById('fbCur');
   var dots=document.querySelectorAll('.fb-seg');
-  var galleryEl=document.getElementById('fbGallery');
+  var gridEl=document.getElementById('fbGrid');
+
+  /* Lightbox state */
+  var lbImgs=[], lbIdx=0;
+  var lb=document.getElementById('fbLightbox');
+  var lbImg=document.getElementById('lbImg');
+  var lbCtr=document.getElementById('lbCounter');
+
+  function openLb(imgs,idx){
+    lbImgs=imgs; lbIdx=idx;
+    lbImg.src=lbImgs[lbIdx];
+    lbCtr.textContent=(lbIdx+1)+' / '+lbImgs.length;
+    lb.classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeLb(){lb.classList.remove('open');document.body.style.overflow='';}
+  function lbStep(d){
+    lbIdx=((lbIdx+d)+lbImgs.length)%lbImgs.length;
+    lbImg.style.opacity='0';
+    setTimeout(function(){lbImg.src=lbImgs[lbIdx];lbImg.style.opacity='';lbCtr.textContent=(lbIdx+1)+' / '+lbImgs.length;},160);
+  }
+  document.getElementById('lbClose').addEventListener('click',closeLb);
+  document.getElementById('lbPrev').addEventListener('click',function(){lbStep(-1);});
+  document.getElementById('lbNext').addEventListener('click',function(){lbStep(1);});
+  lb.addEventListener('click',function(e){if(e.target===lb)closeLb();});
+  document.addEventListener('keydown',function(e){
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')closeLb();
+    if(e.key==='ArrowRight')lbStep(1);
+    if(e.key==='ArrowLeft')lbStep(-1);
+  });
 
   function mod(n){return((n%N)+N)%N;}
 
-  function renderText(i){
+  function buildGrid(d){
+    var isProduct=d.mode==='product';
+    var rows=Math.max(d.imgs.length-1,1);
+    gridEl.style.gridTemplateRows='repeat('+rows+',1fr)';
+    gridEl.innerHTML=d.imgs.map(function(src,idx){
+      var cls='fb-gi '+(idx===0?'hero ':'')+( isProduct?'product':'photo');
+      return'<div class="'+cls+'" data-idx="'+idx+'"><img src="'+src+'" alt="" loading="'+(idx===0?'eager':'lazy')+'"></div>';
+    }).join('');
+    gridEl.querySelectorAll('.fb-gi').forEach(function(item){
+      item.addEventListener('click',function(){openLb(d.imgs,parseInt(item.dataset.idx));});
+    });
+  }
+
+  function render(i){
     var d=P[i];
     numEl.textContent=d.n;
     catEl.textContent=d.cat;
@@ -1208,84 +1225,27 @@ document.getElementById('cform').addEventListener('submit',e=>{
     tagsEl.innerHTML=d.tags.map(function(t){return'<span class="fb-tag">'+t+'</span>';}).join('');
     curEl.textContent=d.n;
     dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
-    /* Product vs photo mode */
-    rightPanel.classList.toggle('product-mode', d.mode==='product');
-    /* Gallery strip */
-    galleryEl.innerHTML=d.imgs.map(function(src,idx){
-      return'<img class="fb-gthumb'+(idx===0?' active':'')+'" src="'+src+'" data-src="'+src+'" alt="" loading="lazy">';
-    }).join('');
-    galleryEl.classList.toggle('hidden', d.imgs.length<=1);
-    galleryEl.querySelectorAll('.fb-gthumb').forEach(function(thumb){
-      thumb.addEventListener('click',function(e){
-        e.stopPropagation();
-        var src=thumb.dataset.src;
-        front.src=src; bg.src=src;
-        galleryEl.querySelectorAll('.fb-gthumb').forEach(function(t){t.classList.remove('active');});
-        thumb.classList.add('active');
-      });
-    });
+    buildGrid(d);
   }
 
-  /* Core flip: fwd=true flips forward (left pivot), fwd=false flips backward (right pivot) */
-  function go(next){
+  function go(nextIdx){
     if(busy)return;
     busy=true;
-    next=mod(next);
-
-    /* Direction: is next "forward" in the circular sequence? */
-    var fwd=mod(next-cur)<=Math.floor(N/2);
-
-    /* 1. Fade out text */
+    var next=mod(nextIdx);
     content.classList.add('out');
-
-    if(fwd){
-      /* FORWARD: current page peels left, reveals next image behind */
-      front.src=P[cur].imgs[0];
-      bg.src=P[next].imgs[0];          /* next already loaded as bg */
-      card.style.transition='none';
-      card.style.transformOrigin='left center';
-      card.style.transform='rotateY(0deg)';
-      void card.offsetWidth;
-      card.style.transition='transform '+DUR+'ms '+EASE;
-      card.style.transform='rotateY(-180deg)';
-    } else {
-      /* BACKWARD: new page sweeps in from the left */
-      front.src=P[next].imgs[0];       /* incoming page image */
-      bg.src=P[cur].imgs[0];           /* current stays behind */
-      card.style.transition='none';
-      card.style.transformOrigin='right center';
-      card.style.transform='rotateY(180deg)'; /* start: back face showing */
-      void card.offsetWidth;
-      card.style.transition='transform '+DUR+'ms '+EASE;
-      card.style.transform='rotateY(0deg)';   /* closes to front face */
-    }
-
-    /* 2. At mid-flip, swap text + update bg for backward */
+    gridEl.classList.add('out');
     setTimeout(function(){
-      content.classList.remove('out');
-      renderText(next);
-      if(!fwd) bg.src=P[next].imgs[0];
       cur=next;
-    }, DUR*0.5);
-
-    /* 3. After animation: reset card to neutral, ready for next flip */
-    setTimeout(function(){
-      card.style.transition='none';
-      card.style.transform='rotateY(0deg)';
-      front.src=P[cur].imgs[0];
-      void card.offsetWidth;
-      card.style.transition='';
+      render(cur);
+      content.classList.remove('out');
+      gridEl.classList.remove('out');
       busy=false;
-    }, DUR+40);
+    },340);
   }
 
   /* Controls */
   document.getElementById('fbNext').addEventListener('click',function(){go(cur+1);});
   document.getElementById('fbPrev').addEventListener('click',function(){go(cur-1);});
-  document.getElementById('fbRight').addEventListener('click',function(e){
-    if(e.target.closest('.fb-arrow,.fb-segs,.fb-gallery'))return;
-    go(cur+1);
-  });
   dots.forEach(function(dot){
     dot.addEventListener('click',function(e){
       e.stopPropagation();
@@ -1294,7 +1254,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
     });
   });
 
-  /* Touch swipe */
+  /* Touch swipe on right panel */
   var tsx=0;
   var rightEl=document.getElementById('fbRight');
   rightEl.addEventListener('touchstart',function(e){tsx=e.touches[0].clientX;},{passive:true});
@@ -1305,6 +1265,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
 
   /* Keyboard */
   document.addEventListener('keydown',function(e){
+    if(lb.classList.contains('open'))return;
     if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
     var sec=document.getElementById('portfolio');
     if(!sec)return;
@@ -1315,10 +1276,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   });
 
   /* Init */
-  bg.src=P[0].imgs[0];
-  front.src=P[0].imgs[0];
-  back.src=P[1].imgs[0];
-  renderText(0);
+  render(0);
 })();
 
 // PARALLAX HERO GLOW
@@ -1624,5 +1582,14 @@ document.addEventListener('DOMContentLoaded',function(){
   setTimeout(function(){if(!pageLoaded)hide();},3500);
 })();
 </script>
+
+<!-- LIGHTBOX -->
+<div id="fbLightbox">
+  <button class="lb-close" id="lbClose">&times;</button>
+  <button class="lb-nav" id="lbPrev">&#8249;</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-nav" id="lbNext">&#8250;</button>
+  <span class="lb-counter" id="lbCounter"></span>
+</div>
 </body>
 </html>
