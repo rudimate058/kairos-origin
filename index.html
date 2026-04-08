@@ -1133,12 +1133,40 @@ document.getElementById('cform').addEventListener('submit',e=>{
 // PORTFOLIO FLIPBOOK v3 — circular, directional, smooth
 (function(){
   var P=[
-    {n:'01',cat:'Planung mit Pr\u00e4zision',title:'PROJECT<br>MANAGEMENT',desc:'Strukturierte Projektplanung von der Idee bis zur Umsetzung. Wir koordinieren Teams, Ressourcen und Timelines mit Pr\u00e4zision.',tags:['Planung','Koordination','Timelines'],img:'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=85&auto=format&fit=crop'},
-    {n:'02',cat:'Momente, die bewegen',title:'EVENTS &amp;<br>EVENT SUPPORT',desc:'Von Firmenevents bis zu gro\u00dfen Publikumsveranstaltungen \u2013 wir schaffen unvergessliche Erlebnisse mit Liebe zum Detail.',tags:['Events','Live','Experience'],img:'SommerEvent.png'},
-    {n:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],img:'werbemittel/Werbemittel8.png',subImgs:['werbemittel/Werbemittel.png','werbemittel/Werbemittel1.png','werbemittel/Werbemittel2.png','werbemittel/Werbemittel3.png']},
-    {n:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar und erlebbar machen.',tags:['Fashion','Merch','Branding'],img:'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=900&q=85&auto=format&fit=crop'},
-    {n:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS<br>&amp; BRAND',desc:'Strategische Partnerschaften und Markenkollaborationen, die Mehrwert schaffen und neue Reichweiten \u00f6ffnen.',tags:['Partnerships','Strategy','Brand'],img:'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=85&auto=format&fit=crop'},
-    {n:'06',cat:'Visuelle Markenpr\u00e4senz',title:'BRANDING',desc:'Konsistente Markenidentit\u00e4t \u00fcber alle Kan\u00e4le. Von der Strategie bis zum finalen Design \u2013 alles aus einer Hand.',tags:['Design','Identity','Strategy'],img:'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=85&auto=format&fit=crop'}
+    {n:'01',cat:'Planung mit Pr\u00e4zision',title:'PROJECT<br>MANAGEMENT',desc:'Strukturierte Projektplanung von der Idee bis zur Umsetzung. Wir koordinieren Teams, Ressourcen und Timelines mit Pr\u00e4zision.',tags:['Planung','Koordination','Timelines'],imgs:[
+      'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=900&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=900&q=85&auto=format&fit=crop'
+    ]},
+    {n:'02',cat:'Momente, die bewegen',title:'EVENTS &amp;<br>EVENT SUPPORT',desc:'Von Firmenevents bis zu gro\u00dfen Publikumsveranstaltungen \u2013 wir schaffen unvergessliche Erlebnisse mit Liebe zum Detail.',tags:['Events','Live','Experience'],imgs:[
+      'SommerEvent.png',
+      'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?w=900&q=85&auto=format&fit=crop'
+    ]},
+    {n:'03',cat:'Am Puls der Marke',title:'PROMOTION',desc:'Direkte Markenkommunikation am Point of Sale und dar\u00fcber hinaus. Wir bringen Ihre Marke nah zu den Menschen.',tags:['Promotion','POS','Marketing'],imgs:[
+      'werbemittel/Werbemittel8.png',
+      'werbemittel/Werbemittel.png',
+      'werbemittel/Werbemittel1.png',
+      'werbemittel/Werbemittel2.png',
+      'werbemittel/Werbemittel3.png'
+    ]},
+    {n:'04',cat:'Marke zum Anziehen',title:'CLOTHING',desc:'Corporate Fashion und Merchandise, das Identit\u00e4t schafft. Wearables, die Ihre Marke sichtbar und erlebbar machen.',tags:['Fashion','Merch','Branding'],imgs:[
+      'werbemittel/Bekleidung.png',
+      'werbemittel/Bekleidung1.png',
+      'werbemittel/Bekleidung2.png',
+      'werbemittel/Bekleidung4.png',
+      'werbemittel/Sandro_Socken_1.png'
+    ]},
+    {n:'05',cat:'Starke Allianzen',title:'PARTNERSHIPS<br>&amp; BRAND',desc:'Strategische Partnerschaften und Markenkollaborationen, die Mehrwert schaffen und neue Reichweiten \u00f6ffnen.',tags:['Partnerships','Strategy','Brand'],imgs:[
+      'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=900&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=900&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=900&q=85&auto=format&fit=crop'
+    ]},
+    {n:'06',cat:'Visuelle Markenpr\u00e4senz',title:'BRANDING',desc:'Konsistente Markenidentit\u00e4t \u00fcber alle Kan\u00e4le. Von der Strategie bis zum finalen Design \u2013 alles aus einer Hand.',tags:['Design','Identity','Strategy'],imgs:[
+      'https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=900&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&q=85&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=900&q=85&auto=format&fit=crop'
+    ]}
   ];
   var N=P.length, cur=0, busy=false;
   var EASE='cubic-bezier(0.645,0.045,0.355,1.000)';
@@ -1170,26 +1198,20 @@ document.getElementById('cform').addEventListener('submit',e=>{
     tagsEl.innerHTML=d.tags.map(function(t){return'<span class="fb-tag">'+t+'</span>';}).join('');
     curEl.textContent=d.n;
     dots.forEach(function(dot,j){dot.classList.toggle('on',j===i);});
-    /* Gallery strip */
-    if(d.subImgs&&d.subImgs.length){
-      var allImgs=[d.img].concat(d.subImgs);
-      galleryEl.innerHTML=allImgs.map(function(src,idx){
-        return'<img class="fb-gthumb'+(idx===0?' active':'')+'" src="'+src+'" data-src="'+src+'" alt="" loading="lazy">';
-      }).join('');
-      galleryEl.classList.remove('hidden');
-      galleryEl.querySelectorAll('.fb-gthumb').forEach(function(thumb){
-        thumb.addEventListener('click',function(e){
-          e.stopPropagation();
-          var src=thumb.dataset.src;
-          front.src=src; bg.src=src;
-          galleryEl.querySelectorAll('.fb-gthumb').forEach(function(t){t.classList.remove('active');});
-          thumb.classList.add('active');
-        });
+    /* Gallery strip — always shown, one thumb per image */
+    galleryEl.innerHTML=d.imgs.map(function(src,idx){
+      return'<img class="fb-gthumb'+(idx===0?' active':'')+'" src="'+src+'" data-src="'+src+'" alt="" loading="lazy">';
+    }).join('');
+    galleryEl.classList.toggle('hidden', d.imgs.length<=1);
+    galleryEl.querySelectorAll('.fb-gthumb').forEach(function(thumb){
+      thumb.addEventListener('click',function(e){
+        e.stopPropagation();
+        var src=thumb.dataset.src;
+        front.src=src; bg.src=src;
+        galleryEl.querySelectorAll('.fb-gthumb').forEach(function(t){t.classList.remove('active');});
+        thumb.classList.add('active');
       });
-    } else {
-      galleryEl.innerHTML='';
-      galleryEl.classList.add('hidden');
-    }
+    });
   }
 
   /* Core flip: fwd=true flips forward (left pivot), fwd=false flips backward (right pivot) */
@@ -1206,8 +1228,8 @@ document.getElementById('cform').addEventListener('submit',e=>{
 
     if(fwd){
       /* FORWARD: current page peels left, reveals next image behind */
-      front.src=P[cur].img;
-      bg.src=P[next].img;          /* next already loaded as bg */
+      front.src=P[cur].imgs[0];
+      bg.src=P[next].imgs[0];          /* next already loaded as bg */
       card.style.transition='none';
       card.style.transformOrigin='left center';
       card.style.transform='rotateY(0deg)';
@@ -1216,8 +1238,8 @@ document.getElementById('cform').addEventListener('submit',e=>{
       card.style.transform='rotateY(-180deg)';
     } else {
       /* BACKWARD: new page sweeps in from the left */
-      front.src=P[next].img;       /* incoming page image */
-      bg.src=P[cur].img;           /* current stays behind */
+      front.src=P[next].imgs[0];       /* incoming page image */
+      bg.src=P[cur].imgs[0];           /* current stays behind */
       card.style.transition='none';
       card.style.transformOrigin='right center';
       card.style.transform='rotateY(180deg)'; /* start: back face showing */
@@ -1230,7 +1252,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
     setTimeout(function(){
       content.classList.remove('out');
       renderText(next);
-      if(!fwd) bg.src=P[next].img;
+      if(!fwd) bg.src=P[next].imgs[0];
       cur=next;
     }, DUR*0.5);
 
@@ -1238,7 +1260,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
     setTimeout(function(){
       card.style.transition='none';
       card.style.transform='rotateY(0deg)';
-      front.src=P[cur].img;
+      front.src=P[cur].imgs[0];
       void card.offsetWidth;
       card.style.transition='';
       busy=false;
@@ -1249,7 +1271,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   document.getElementById('fbNext').addEventListener('click',function(){go(cur+1);});
   document.getElementById('fbPrev').addEventListener('click',function(){go(cur-1);});
   document.getElementById('fbRight').addEventListener('click',function(e){
-    if(e.target.closest('.fb-arrow,.fb-segs'))return;
+    if(e.target.closest('.fb-arrow,.fb-segs,.fb-gallery'))return;
     go(cur+1);
   });
   dots.forEach(function(dot){
@@ -1281,9 +1303,9 @@ document.getElementById('cform').addEventListener('submit',e=>{
   });
 
   /* Init */
-  bg.src=P[0].img;
-  front.src=P[0].img;
-  back.src=P[1].img;
+  bg.src=P[0].imgs[0];
+  front.src=P[0].imgs[0];
+  back.src=P[1].imgs[0];
   renderText(0);
 })();
 
