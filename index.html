@@ -256,14 +256,16 @@ section{padding:52px 48px}
 .fb-right.product-mode{cursor:default}
 /* NAV — clean unified bar */
 .fb-nav{max-width:1100px;margin:10px auto 0}
-.fb-nav-bar{display:flex;align-items:stretch;border:1px solid var(--border);background:rgba(8,8,8,.75);backdrop-filter:blur(6px)}
+/* KATEGORIE BAR */
+.fb-nav-bar{display:flex;align-items:stretch;border:1px solid var(--border);background:rgba(8,8,8,.8);backdrop-filter:blur(6px)}
 .fb-arrow{width:56px;flex-shrink:0;background:none;border:none;color:rgba(188,215,185,.38);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:color .22s,background .22s}
 #fbPrev{border-right:1px solid var(--border)}
 #fbNext{border-left:1px solid var(--border)}
 .fb-arrow:hover{color:#e8f5e7;background:rgba(188,215,185,.09)}
 .fb-arrow:active{background:rgba(188,215,185,.16)}
 .fb-arrow svg{width:18px;height:18px}
-.fb-nav-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px 0}
+.fb-nav-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:14px 0}
+.fb-cat-label{font-size:7px;letter-spacing:.38em;text-transform:uppercase;color:rgba(188,215,185,.5);font-family:var(--fb);text-shadow:0 0 8px rgba(188,215,185,.3)}
 .fb-segs{display:flex;align-items:center;gap:10px}
 .fb-seg{width:28px;height:2px;background:rgba(255,255,255,.13);cursor:pointer;position:relative;transition:all .45s cubic-bezier(0.16,1,0.3,1);flex-shrink:0}
 .fb-seg::before{content:'';position:absolute;top:-14px;bottom:-14px;left:-3px;right:-3px}
@@ -272,14 +274,14 @@ section{padding:52px 48px}
 .fb-count{padding:0 24px;flex-shrink:0;display:flex;align-items:center;gap:2px;border-left:1px solid var(--border);font-family:'Palatino Linotype',Palatino,serif;letter-spacing:.12em}
 .fb-count em{color:#bcd7b9;font-style:normal;font-size:20px;font-weight:400;line-height:1}
 .fb-count-sep{font-size:11px;color:rgba(188,215,185,.35);margin:0 3px}
-/* image track segs */
-.fb-imgs-row{display:flex;align-items:center;gap:8px;justify-content:center}
-.fb-imgs-label{font-size:7px;letter-spacing:.3em;text-transform:uppercase;color:rgba(188,215,185,.35);font-family:var(--fb)}
-.fb-isegs{display:flex;align-items:center;gap:5px}
-.fb-iseg{width:16px;height:2px;background:rgba(188,215,185,.18);cursor:pointer;border:none;padding:0;transition:all .3s;flex-shrink:0;position:relative}
+/* BILD INNERHALB BAR — eigener Streifen darunter */
+.fb-bild-bar{display:flex;align-items:center;justify-content:center;gap:14px;border:1px solid rgba(188,215,185,.25);border-top:none;background:rgba(188,215,185,.07);padding:11px 0;backdrop-filter:blur(4px)}
+.fb-bild-label{font-size:7.5px;letter-spacing:.36em;text-transform:uppercase;color:rgba(188,215,185,.75);font-family:var(--fb);text-shadow:0 0 10px rgba(188,215,185,.45)}
+.fb-isegs{display:flex;align-items:center;gap:6px}
+.fb-iseg{width:18px;height:2px;background:rgba(188,215,185,.2);cursor:pointer;border:none;padding:0;transition:all .3s;flex-shrink:0;position:relative}
 .fb-iseg::before{content:'';position:absolute;top:-10px;bottom:-10px;left:-2px;right:-2px}
-.fb-iseg:hover{background:rgba(188,215,185,.42)}
-.fb-iseg.on{background:rgba(188,215,185,.75);width:22px;box-shadow:0 0 5px rgba(188,215,185,.35)}
+.fb-iseg:hover{background:rgba(188,215,185,.5)}
+.fb-iseg.on{background:#bcd7b9;width:28px;box-shadow:0 0 6px rgba(188,215,185,.45)}
 /* MOBILE */
 @media(max-width:880px){
   .fb-body{flex-direction:column;height:auto}
@@ -295,41 +297,26 @@ section{padding:52px 48px}
   .port-head{flex-direction:column;gap:8px;align-items:flex-start}
   .port-sub{display:none}
 }
-/* MOBILE NAV — komplett neu geordnet */
+/* MOBILE NAV */
 @media(max-width:640px){
-  /* Bar wird zweizeilig */
+  /* KATEGORIE BAR: zweizeilig — Pfeile+Zähler oben, Dots unten */
   .fb-nav-bar{flex-wrap:wrap}
-
-  /* ZEILE 1: Pfeile + Zähler groß und klar */
-  #fbPrev{order:1;flex:0 0 52px;width:52px;height:56px;border-bottom:1px solid var(--border)}
-  #fbNext{order:3;flex:0 0 52px;width:52px;height:56px;border-bottom:1px solid var(--border)}
+  #fbPrev{order:1;flex:0 0 52px;width:52px;height:54px;border-bottom:1px solid var(--border)}
+  #fbNext{order:3;flex:0 0 52px;width:52px;height:54px;border-bottom:1px solid var(--border)}
   .fb-arrow svg{width:20px;height:20px}
-  .fb-count{order:2;flex:1;border-left:none;border-bottom:1px solid var(--border);padding:0;justify-content:center;gap:4px;height:56px}
+  .fb-count{order:2;flex:1;border-left:none;border-bottom:1px solid var(--border);padding:0;justify-content:center;gap:4px;height:54px}
   .fb-count em{font-size:26px;line-height:1}
-  .fb-count-sep{font-size:13px;color:rgba(188,215,185,.3);margin:0 2px}
-
-  /* ZEILE 2: Kategorie-Dots + Bild-Dots */
-  .fb-nav-center{order:4;flex:0 0 100%;padding:10px 0 0;gap:0;overflow:hidden}
-  .fb-nav-center::before{content:'KATEGORIE';display:block;text-align:center;font-family:var(--fb);font-size:7px;letter-spacing:.35em;color:rgba(188,215,185,.4);text-transform:uppercase;margin-bottom:8px}
-  .fb-segs{gap:9px;padding-bottom:12px}
+  .fb-count-sep{font-size:13px;margin:0 2px}
+  .fb-nav-center{order:4;flex:0 0 100%;padding:12px 0;gap:7px}
+  .fb-cat-label{font-size:7px;letter-spacing:.35em}
+  .fb-segs{gap:9px}
   .fb-seg{width:22px}
-  .fb-seg.on{width:38px}
-
-  /* Bild-Row: eigene sichtbare Zeile mit mintgrünem Hintergrund */
-  .fb-imgs-row{
-    width:100%;box-sizing:border-box;
-    padding:10px 0 11px;
-    background:rgba(188,215,185,.07);
-    border-top:1px solid rgba(188,215,185,.22);
-    justify-content:center;gap:10px
-  }
-  .fb-imgs-label{
-    font-size:8px;letter-spacing:.3em;text-transform:uppercase;
-    color:rgba(188,215,185,.75);font-family:var(--fb);
-    text-shadow:0 0 8px rgba(188,215,185,.4)
-  }
-  .fb-iseg{width:18px}
-  .fb-iseg.on{width:28px}
+  .fb-seg.on{width:36px}
+  /* BILD BAR: bereits eigener Streifen, nur Größen anpassen */
+  .fb-bild-bar{gap:12px;padding:10px 0}
+  .fb-bild-label{font-size:8px}
+  .fb-iseg{width:20px}
+  .fb-iseg.on{width:30px}
 }
 
 /* PARTNERS */
@@ -843,11 +830,13 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     </div>
     <!-- NAV -->
     <div class="fb-nav">
+      <!-- KATEGORIE BAR -->
       <div class="fb-nav-bar">
         <button class="fb-arrow" id="fbPrev" aria-label="Vorherige Kategorie">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
         <div class="fb-nav-center">
+          <span class="fb-cat-label">Kategorie</span>
           <div class="fb-segs" id="fbSegs">
             <div class="fb-seg on" data-i="0"></div>
             <div class="fb-seg"    data-i="1"></div>
@@ -856,15 +845,16 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
             <div class="fb-seg"    data-i="4"></div>
             <div class="fb-seg"    data-i="5"></div>
           </div>
-          <div class="fb-imgs-row" id="fbImgsTrack" style="display:none">
-            <span class="fb-imgs-label">Bild</span>
-            <div class="fb-isegs" id="fbIsegs"></div>
-          </div>
         </div>
         <div class="fb-count"><em id="fbCur">01</em><span class="fb-count-sep">/</span><span style="font-size:13px;color:rgba(188,215,185,.35)">06</span></div>
         <button class="fb-arrow" id="fbNext" aria-label="N&auml;chste Kategorie">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
+      </div>
+      <!-- BILD INNERHALB BAR — eigener Streifen, nur sichtbar wenn mehrere Bilder -->
+      <div class="fb-bild-bar" id="fbImgsTrack" style="display:none">
+        <span class="fb-bild-label">Bild innerhalb</span>
+        <div class="fb-isegs" id="fbIsegs"></div>
       </div>
     </div>
   </div>
