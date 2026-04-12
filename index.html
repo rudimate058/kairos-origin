@@ -254,30 +254,32 @@ section{padding:52px 48px}
 .fb-right.product-mode .fb-img-wrap img{object-fit:contain;background:var(--black);padding:6%}
 .fb-right.product-mode .fb-img-ov{display:none}
 .fb-right.product-mode{cursor:default}
-/* NAV — two-row: image track + category track */
-.fb-nav{display:flex;flex-direction:column;align-items:center;max-width:1100px;margin:14px auto 0;gap:8px}
-.fb-nav-track{display:flex;align-items:center;gap:12px;width:100%}
-.fb-nav-track.imgs-track{justify-content:center;min-height:22px}
-.fb-nav-track.cats-track{justify-content:center}
-.fb-nav-label{font-size:7.5px;letter-spacing:.32em;text-transform:uppercase;color:rgba(188,215,185,.55);font-family:var(--fb);white-space:nowrap;min-width:80px;text-shadow:0 0 8px rgba(188,215,185,.3)}
-.fb-nav-label.right{text-align:right}
-.fb-arrow{width:40px;height:40px;border:1px solid rgba(188,215,185,.25);background:rgba(188,215,185,.06);color:#bcd7b9;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .25s,color .25s,background .25s,box-shadow .25s}
-.fb-arrow:hover{border-color:#bcd7b9;color:#e8f5e7;background:rgba(188,215,185,.18);box-shadow:0 0 12px rgba(188,215,185,.3)}
-.fb-arrow:active{background:rgba(188,215,185,.25)}
-.fb-arrow svg{width:14px;height:14px}
-.fb-segs{display:flex;align-items:center;gap:8px;justify-content:center;flex:1}
-.fb-seg{width:26px;height:2px;background:rgba(255,255,255,.2);cursor:pointer;position:relative;transition:width .45s cubic-bezier(0.16,1,0.3,1),background .4s;flex-shrink:0}
-.fb-seg::before{content:'';position:absolute;top:-12px;bottom:-12px;left:-2px;right:-2px}
-.fb-seg:hover{background:rgba(188,215,185,.5)}
-.fb-seg.on{background:#bcd7b9;width:44px;height:3px;box-shadow:0 0 6px rgba(188,215,185,.45)}
-.fb-count{font-family:'Palatino Linotype',Palatino,serif;font-size:12px;color:rgba(188,215,185,.5);letter-spacing:.15em;min-width:44px;text-align:right}
-.fb-count em{color:#d4ead2;font-style:normal}
+/* NAV — clean unified bar */
+.fb-nav{max-width:1100px;margin:10px auto 0}
+.fb-nav-bar{display:flex;align-items:stretch;border:1px solid var(--border);background:rgba(8,8,8,.75);backdrop-filter:blur(6px)}
+.fb-arrow{width:56px;flex-shrink:0;background:none;border:none;color:rgba(188,215,185,.38);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:color .22s,background .22s}
+#fbPrev{border-right:1px solid var(--border)}
+#fbNext{border-left:1px solid var(--border)}
+.fb-arrow:hover{color:#e8f5e7;background:rgba(188,215,185,.09)}
+.fb-arrow:active{background:rgba(188,215,185,.16)}
+.fb-arrow svg{width:18px;height:18px}
+.fb-nav-center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px 0}
+.fb-segs{display:flex;align-items:center;gap:10px}
+.fb-seg{width:28px;height:2px;background:rgba(255,255,255,.13);cursor:pointer;position:relative;transition:all .45s cubic-bezier(0.16,1,0.3,1);flex-shrink:0}
+.fb-seg::before{content:'';position:absolute;top:-14px;bottom:-14px;left:-3px;right:-3px}
+.fb-seg:hover{background:rgba(188,215,185,.38)}
+.fb-seg.on{background:#bcd7b9;width:48px;height:3px;box-shadow:0 0 8px rgba(188,215,185,.55)}
+.fb-count{padding:0 24px;flex-shrink:0;display:flex;align-items:center;gap:2px;border-left:1px solid var(--border);font-family:'Palatino Linotype',Palatino,serif;letter-spacing:.12em}
+.fb-count em{color:#bcd7b9;font-style:normal;font-size:20px;font-weight:400;line-height:1}
+.fb-count-sep{font-size:11px;color:rgba(188,215,185,.35);margin:0 3px}
 /* image track segs */
-.fb-isegs{display:flex;align-items:center;gap:6px;justify-content:center}
-.fb-iseg{width:18px;height:2px;background:rgba(188,215,185,.18);cursor:pointer;border:none;padding:0;transition:width .3s,background .3s;flex-shrink:0;position:relative}
+.fb-imgs-row{display:flex;align-items:center;gap:8px;justify-content:center}
+.fb-imgs-label{font-size:7px;letter-spacing:.3em;text-transform:uppercase;color:rgba(188,215,185,.35);font-family:var(--fb)}
+.fb-isegs{display:flex;align-items:center;gap:5px}
+.fb-iseg{width:16px;height:2px;background:rgba(188,215,185,.18);cursor:pointer;border:none;padding:0;transition:all .3s;flex-shrink:0;position:relative}
 .fb-iseg::before{content:'';position:absolute;top:-10px;bottom:-10px;left:-2px;right:-2px}
-.fb-iseg:hover{background:rgba(188,215,185,.45)}
-.fb-iseg.on{background:rgba(188,215,185,.75);width:26px;box-shadow:0 0 5px rgba(188,215,185,.35)}
+.fb-iseg:hover{background:rgba(188,215,185,.42)}
+.fb-iseg.on{background:rgba(188,215,185,.75);width:22px;box-shadow:0 0 5px rgba(188,215,185,.35)}
 /* MOBILE */
 @media(max-width:880px){
   .fb-body{flex-direction:column;height:auto}
@@ -805,29 +807,27 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
     </div>
     <!-- NAV -->
     <div class="fb-nav">
-      <!-- Row 1: image track (hidden when only 1 image) -->
-      <div class="fb-nav-track imgs-track" id="fbImgsTrack" style="display:none">
-        <span class="fb-nav-label right">Bild</span>
-        <div class="fb-isegs" id="fbIsegs"></div>
-        <span class="fb-nav-label">innerhalb</span>
-      </div>
-      <!-- Row 2: category track -->
-      <div class="fb-nav-track cats-track">
+      <div class="fb-nav-bar">
         <button class="fb-arrow" id="fbPrev" aria-label="Vorherige Kategorie">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
-        <span class="fb-nav-label right">Kategorie</span>
-        <div class="fb-segs" id="fbSegs">
-          <div class="fb-seg on" data-i="0"></div>
-          <div class="fb-seg"    data-i="1"></div>
-          <div class="fb-seg"    data-i="2"></div>
-          <div class="fb-seg"    data-i="3"></div>
-          <div class="fb-seg"    data-i="4"></div>
-          <div class="fb-seg"    data-i="5"></div>
+        <div class="fb-nav-center">
+          <div class="fb-segs" id="fbSegs">
+            <div class="fb-seg on" data-i="0"></div>
+            <div class="fb-seg"    data-i="1"></div>
+            <div class="fb-seg"    data-i="2"></div>
+            <div class="fb-seg"    data-i="3"></div>
+            <div class="fb-seg"    data-i="4"></div>
+            <div class="fb-seg"    data-i="5"></div>
+          </div>
+          <div class="fb-imgs-row" id="fbImgsTrack" style="display:none">
+            <span class="fb-imgs-label">Bild</span>
+            <div class="fb-isegs" id="fbIsegs"></div>
+          </div>
         </div>
-        <div class="fb-count"><em id="fbCur">01</em>&thinsp;/&thinsp;06</div>
+        <div class="fb-count"><em id="fbCur">01</em><span class="fb-count-sep">/</span><span style="font-size:13px;color:rgba(188,215,185,.35)">06</span></div>
         <button class="fb-arrow" id="fbNext" aria-label="N&auml;chste Kategorie">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
         </button>
       </div>
     </div>
