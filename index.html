@@ -1152,12 +1152,12 @@ document.getElementById('cform').addEventListener('submit',e=>{
 
   // Orbit
   var orbitAngle  = -90;   // degrees, top start
-  var orbitSpeed  = 0.10;
-  var targetSpeed = 0.10;
+  var orbitSpeed  = 0.22;
+  var targetSpeed = 0.22;
   function mob(){ return window.innerWidth <= 768; }
   function tilt(){ return mob() ? 1.05 : 0.85; }
   function R(){   if(!mob()) return 248; return Math.round(Math.min(window.innerWidth-8,390)*0.340); }
-  function Ri(){  if(!mob()) return 268; return Math.round(Math.min(window.innerWidth-8,390)*0.360); }
+  function Ri(){  if(!mob()) return 268; return Math.round(Math.min(window.innerWidth-8,390)*0.330); }
 
   // ── MAIN ORBIT ────────────────────────────
   function animate(){
@@ -1196,7 +1196,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
     });
     seg.addEventListener('mouseleave', function(){
       if(locked) return;
-      targetSpeed = 0.10;
+      targetSpeed = 0.22;
       seg.classList.remove('glowing');
     });
     seg.addEventListener('click', function(){ selectSeg(i); });
@@ -1220,7 +1220,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
       seg.classList.remove('glowing','selected','away');
       if(i === idx){
         seg.style.cssText =
-          'transform:translate(0,0) scale(1.45);opacity:1;z-index:22;filter:brightness(1);'+
+          'transform:translate(0,0) scale(1.0);opacity:1;z-index:22;filter:brightness(1);'+
           'transition:transform .9s cubic-bezier(0.16,1,0.3,1),opacity .5s ease,filter .4s';
         seg.classList.add('selected');
       } else {
@@ -1269,8 +1269,8 @@ document.getElementById('cform').addEventListener('submit',e=>{
   function startImageOrbit(imgs){
     stopImageOrbit();
     imgAngle = 30;
-    var W = mob() ? 100 : 144;
-    var H = mob() ?  68 :  96;
+    var W = mob() ?  88 : 144;
+    var H = mob() ?  58 :  96;
     var IT = tilt();
     var r  = Ri();
 
