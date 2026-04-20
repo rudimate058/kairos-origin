@@ -209,7 +209,7 @@ section{padding:52px 48px}
 .hub-orbit{display:none}
 .hub-orbit2{display:none}
 /* Center logo — shown in idle, hidden when category active */
-.hub-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,0,.14) 0%,rgba(13,13,31,.96) 65%);border:1.5px solid rgba(255,77,0,.75);display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;transition:opacity .5s ease,transform .5s ease}
+.hub-core{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.12) 0%,rgba(255,77,0,.10) 35%,rgba(13,13,31,.92) 70%);border:1.5px solid rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;transition:opacity .5s ease,transform .5s ease;box-shadow:0 0 30px rgba(255,255,255,.12),inset 0 0 20px rgba(255,255,255,.06)}
 @keyframes corePulse{
   0%{
     border-color:rgba(255,77,0,.75);
@@ -225,25 +225,19 @@ section{padding:52px 48px}
 /* Segments container */
 .hub-ring-inner{position:absolute;inset:0}
 /* Each card */
-.hub-seg{position:absolute;top:50%;left:50%;width:148px;height:148px;margin:-74px;border-radius:50%;overflow:hidden;cursor:pointer;border:1px solid rgba(255,77,0,.45);will-change:transform,opacity}
-@keyframes segBreath{
-  0%,100%{box-shadow:0 0 18px rgba(255,77,0,.28),0 0 38px rgba(255,77,0,.12),0 0 60px rgba(255,77,0,.05)}
-  50%{box-shadow:0 0 32px rgba(255,77,0,.50),0 0 60px rgba(255,77,0,.22),0 0 90px rgba(255,77,0,.10)}
-}
-.hub-seg{animation:segBreath 2.8s ease-in-out infinite}
-.hub-seg-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.78;transition:opacity .4s}
-.hub-seg-ov{position:absolute;inset:0;background:radial-gradient(circle,rgba(4,4,16,.42) 0%,rgba(4,4,16,.22) 55%,rgba(4,4,16,.08) 100%);transition:opacity .4s}
+.hub-seg{position:absolute;top:50%;left:50%;width:148px;height:148px;margin:-74px;border-radius:50%;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.22);will-change:transform,opacity;box-shadow:0 0 22px rgba(255,255,255,.08),0 0 45px rgba(255,255,255,.04);transition:box-shadow .4s ease,border-color .4s ease}
+.hub-seg-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.92;transition:opacity .4s}
+.hub-seg-ov{position:absolute;inset:0;background:radial-gradient(circle,rgba(4,4,16,.18) 0%,rgba(4,4,16,.08) 60%,transparent 100%);transition:opacity .4s}
 .hub-seg-content{position:absolute;inset:0;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .hub-seg-num{display:none}
-.hub-seg-accent{width:18px;height:1.5px;background:var(--orange);margin-bottom:7px;opacity:.8;transition:width .4s cubic-bezier(0.16,1,0.3,1)}
-.hub-seg-title{font-family:'Palatino Linotype',Palatino,serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;line-height:1.25;text-shadow:0 1px 8px rgba(0,0,0,1),0 2px 16px rgba(0,0,0,.9)}
-/* Hover */
-@keyframes segGlow{0%,100%{box-shadow:0 0 28px rgba(255,77,0,.45),0 0 55px rgba(255,77,0,.18)}50%{box-shadow:0 0 55px rgba(255,77,0,.75),0 0 90px rgba(255,77,0,.28)}}
-.hub-seg.glowing{animation:segGlow 1.2s ease-in-out infinite;border-color:rgba(255,77,0,.80)}
-.hub-seg.glowing .hub-seg-bg{opacity:.80}
-.hub-seg.glowing .hub-seg-ov{opacity:.6}
-.hub-seg.glowing .hub-seg-accent{width:28px;opacity:1}
-.hub-seg.glowing .hub-seg-title{color:#fff;text-shadow:0 0 16px rgba(255,77,0,.4),0 1px 8px rgba(0,0,0,1)}
+.hub-seg-accent{width:18px;height:1.5px;background:var(--orange);margin-bottom:7px;opacity:.8;transition:width .4s cubic-bezier(0.16,1,0.3,1),background .4s}
+.hub-seg-title{font-family:'Palatino Linotype',Palatino,serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.9),0 2px 14px rgba(0,0,0,.8)}
+/* Hover — mintgrün, kein Pulsieren */
+.hub-seg.glowing{border-color:rgba(188,215,185,.7);box-shadow:0 0 28px rgba(188,215,185,.45),0 0 55px rgba(188,215,185,.18),0 0 80px rgba(188,215,185,.08);animation:none}
+.hub-seg.glowing .hub-seg-bg{opacity:1}
+.hub-seg.glowing .hub-seg-ov{opacity:.3}
+.hub-seg.glowing .hub-seg-accent{width:28px;opacity:1;background:#bcd7b9}
+.hub-seg.glowing .hub-seg-title{color:#e8f5e7;text-shadow:0 0 12px rgba(188,215,185,.4),0 1px 6px rgba(0,0,0,.8)}
 /* Selected card in center — circular like the core sphere */
 .hub-seg.selected{border-color:rgba(255,77,0,.8);z-index:20!important;
   box-shadow:0 0 0 10px rgba(255,77,0,.05),0 0 60px rgba(255,77,0,.18),0 0 120px rgba(255,77,0,.08)}
