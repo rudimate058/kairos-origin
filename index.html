@@ -226,18 +226,20 @@ section{padding:52px 48px}
 .hub-ring-inner{position:absolute;inset:0}
 /* Each card */
 .hub-seg{position:absolute;top:50%;left:50%;width:148px;height:148px;margin:-74px;border-radius:50%;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.22);will-change:transform,opacity;box-shadow:0 0 22px rgba(255,255,255,.08),0 0 45px rgba(255,255,255,.04);transition:box-shadow .4s ease,border-color .4s ease}
-.hub-seg-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.92;transition:opacity .4s}
-.hub-seg-ov{position:absolute;inset:0;background:radial-gradient(circle,rgba(4,4,16,.18) 0%,rgba(4,4,16,.08) 60%,transparent 100%);transition:opacity .4s}
+.hub-seg-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.88;transition:opacity .4s}
+/* Dunkler Gradient unten — Text immer lesbar, auch wenn Karte im Hintergrund */
+.hub-seg-ov{position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,rgba(4,4,16,.72) 0%,rgba(4,4,16,.38) 45%,rgba(4,4,16,.10) 100%);transition:opacity .4s}
 .hub-seg-content{position:absolute;inset:0;padding:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .hub-seg-num{display:none}
-.hub-seg-accent{width:18px;height:1.5px;background:var(--orange);margin-bottom:7px;opacity:.8;transition:width .4s cubic-bezier(0.16,1,0.3,1),background .4s}
-.hub-seg-title{font-family:'Palatino Linotype',Palatino,serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#fff;line-height:1.25;text-shadow:0 1px 6px rgba(0,0,0,.9),0 2px 14px rgba(0,0,0,.8)}
-/* Hover — mintgrün, kein Pulsieren */
-.hub-seg.glowing{border-color:rgba(188,215,185,.7);box-shadow:0 0 28px rgba(188,215,185,.45),0 0 55px rgba(188,215,185,.18),0 0 80px rgba(188,215,185,.08);animation:none}
+.hub-seg-accent{width:18px;height:1.5px;background:var(--orange);margin-bottom:7px;opacity:.9;transition:width .4s cubic-bezier(0.16,1,0.3,1),background .4s}
+/* Titel: fett + starker Schatten für Lesbarkeit auf jedem Hintergrund */
+.hub-seg-title{font-family:'Palatino Linotype',Palatino,serif;font-size:11px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#fff;line-height:1.3;text-shadow:0 0 12px rgba(0,0,0,1),0 1px 4px rgba(0,0,0,1),0 2px 16px rgba(0,0,0,.95)}
+/* Hover — starkes Mintgrün, kein Pulsieren */
+.hub-seg.glowing{border-color:#bcd7b9;box-shadow:0 0 0 2px rgba(188,215,185,.35),0 0 30px rgba(188,215,185,.65),0 0 60px rgba(188,215,185,.30),0 0 90px rgba(188,215,185,.12);animation:none}
 .hub-seg.glowing .hub-seg-bg{opacity:1}
-.hub-seg.glowing .hub-seg-ov{opacity:.3}
-.hub-seg.glowing .hub-seg-accent{width:28px;opacity:1;background:#bcd7b9}
-.hub-seg.glowing .hub-seg-title{color:#e8f5e7;text-shadow:0 0 12px rgba(188,215,185,.4),0 1px 6px rgba(0,0,0,.8)}
+.hub-seg.glowing .hub-seg-ov{background:radial-gradient(circle at 50% 100%,rgba(4,4,16,.55) 0%,rgba(4,4,16,.20) 50%,transparent 100%);opacity:1}
+.hub-seg.glowing .hub-seg-accent{width:30px;opacity:1;background:#bcd7b9}
+.hub-seg.glowing .hub-seg-title{color:#e8f5e7;text-shadow:0 0 16px rgba(188,215,185,.6),0 0 6px rgba(188,215,185,.3),0 1px 4px rgba(0,0,0,.9)}
 /* Selected card in center — circular like the core sphere */
 .hub-seg.selected{border-color:rgba(255,77,0,.8);z-index:20!important;
   box-shadow:0 0 0 10px rgba(255,77,0,.05),0 0 60px rgba(255,77,0,.18),0 0 120px rgba(255,77,0,.08)}
