@@ -1280,8 +1280,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   function startImageOrbit(imgs){
     stopImageOrbit();
     imgAngle = 30;
-    var W = mob() ?  88 : 144;
-    var H = mob() ?  58 :  96;
+    var SZ = mob() ? 96 : 158;   // square — shows full product, much more recognisable
     var IT = tilt();
     var r  = Ri();
 
@@ -1290,26 +1289,26 @@ document.getElementById('cform').addEventListener('submit',e=>{
     imgs.forEach(function(src, i){
       var wrap = document.createElement('div');
       wrap.style.cssText =
-        'position:absolute;top:50%;left:50%;width:'+W+'px;height:'+H+'px;'+
-        'margin:'+(-(H/2))+'px '+(-(W/2))+'px;'+
-        'border-radius:10px;overflow:hidden;cursor:pointer;opacity:0;z-index:14;'+
-        'box-shadow:0 6px 28px rgba(0,0,0,.70);'+
+        'position:absolute;top:50%;left:50%;width:'+SZ+'px;height:'+SZ+'px;'+
+        'margin:'+(-(SZ/2))+'px '+(-(SZ/2))+'px;'+
+        'border-radius:12px;overflow:hidden;cursor:pointer;opacity:0;z-index:14;'+
+        'box-shadow:0 4px 18px rgba(0,0,0,.60);'+
+        'border:1.5px solid rgba(255,255,255,.20);'+
         'will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;'+
-        'transition:opacity .55s ease,box-shadow .28s';
+        'transition:opacity .55s ease,box-shadow .30s,border-color .30s';
 
       var img = document.createElement('img');
       img.src = src; img.alt='';
       img.style.cssText =
         'width:100%;height:100%;object-fit:cover;display:block;'+
-        'transition:transform .35s ease';
+        'transition:transform .40s cubic-bezier(0.16,1,0.3,1)';
 
-      /* subtle dark vignette overlay so image edges look crisp */
+      /* lightweight vignette — less darkening so image content stays clear */
       var ov = document.createElement('div');
       ov.style.cssText =
-        'position:absolute;inset:0;border-radius:10px;'+
-        'box-shadow:inset 0 0 18px rgba(0,0,0,.55);'+
-        'border:1px solid rgba(255,255,255,.0);'+
-        'transition:border-color .28s,box-shadow .28s;pointer-events:none';
+        'position:absolute;inset:0;border-radius:11px;'+
+        'box-shadow:inset 0 0 10px rgba(0,0,0,.28);'+
+        'pointer-events:none';
 
       wrap.appendChild(img);
       wrap.appendChild(ov);
@@ -1319,13 +1318,13 @@ document.getElementById('cform').addEventListener('submit',e=>{
       setTimeout(function(){ wrap.style.opacity='1'; }, 90 + i*140);
 
       wrap.addEventListener('mouseenter', function(){
-        wrap.style.boxShadow = '0 6px 28px rgba(0,0,0,.70),0 0 0 2px rgba(188,215,185,.55),0 0 28px rgba(188,215,185,.85),0 0 60px rgba(188,215,185,.45),0 0 100px rgba(188,215,185,.18)';
-        ov.style.borderColor = 'rgba(188,215,185,.35)';
-        img.style.transform  = 'scale(1.06)';
+        wrap.style.boxShadow = '0 4px 18px rgba(0,0,0,.60),0 0 0 2px rgba(188,215,185,.65),0 0 26px rgba(188,215,185,.80),0 0 55px rgba(188,215,185,.35)';
+        wrap.style.borderColor = 'rgba(188,215,185,.70)';
+        img.style.transform  = 'scale(1.12)';
       });
       wrap.addEventListener('mouseleave', function(){
-        wrap.style.boxShadow = '0 6px 28px rgba(0,0,0,.70)';
-        ov.style.borderColor = 'rgba(255,255,255,.0)';
+        wrap.style.boxShadow = '0 4px 18px rgba(0,0,0,.60)';
+        wrap.style.borderColor = 'rgba(255,255,255,.20)';
         img.style.transform  = '';
       });
       wrap.addEventListener('click', function(e){
