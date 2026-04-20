@@ -1195,7 +1195,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
   segEls.forEach(function(seg, i){
     seg.addEventListener('mouseenter', function(){
       if(locked) return;
-      targetSpeed = 0.025;
+      targetSpeed = 0;
       seg.classList.add('glowing');
     });
     seg.addEventListener('mouseleave', function(){
@@ -1380,6 +1380,8 @@ document.getElementById('cform').addEventListener('submit',e=>{
   function closeHub(){
     active = -1;
     locked = false;
+    targetSpeed = 0.22;
+    orbitSpeed  = 0.22;
     lb.classList.remove('open');
     stopImageOrbit();
     if(closeBtn) closeBtn.classList.remove('visible');
