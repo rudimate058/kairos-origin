@@ -274,7 +274,7 @@ section{padding:52px 48px}
   .port-head{flex-direction:column;gap:8px;align-items:flex-start;padding:0 20px;margin-bottom:32px}
   .port-sub{display:none}
   .hub-stage{padding:0}
-  .hub-ring{width:min(390px,calc(100vw - 8px));height:355px}
+  .hub-ring{width:min(390px,calc(100vw - 8px));height:395px}
   .hub-seg{width:112px;height:112px;margin:-56px;border-radius:50%}
   .hub-pulse-ring{width:100px;height:100px}
   .hub-seg-title{font-size:10px}
@@ -1154,11 +1154,10 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var orbitAngle  = -90;   // degrees, top start
   var orbitSpeed  = 0.10;
   var targetSpeed = 0.10;
-  var TILT        = 0.85;  // near-circular so visual distance stays consistent
-
   function mob(){ return window.innerWidth <= 768; }
-  function R(){   if(!mob()) return 248; return Math.round(Math.min(window.innerWidth-8,390)*0.338); }
-  function Ri(){  if(!mob()) return 268; return Math.round(Math.min(window.innerWidth-8,390)*0.410); }
+  function tilt(){ return mob() ? 0.95 : 0.85; }
+  function R(){   if(!mob()) return 248; return Math.round(Math.min(window.innerWidth-8,390)*0.384); }
+  function Ri(){  if(!mob()) return 268; return Math.round(Math.min(window.innerWidth-8,390)*0.430); }
 
   // ── MAIN ORBIT ────────────────────────────
   function animate(){
@@ -1170,7 +1169,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
       segEls.forEach(function(seg, i){
         var a    = (i*(360/N) + orbitAngle) * Math.PI/180;
         var x    = Math.cos(a) * r;
-        var y    = Math.sin(a) * r * TILT;
+        var y    = Math.sin(a) * r * tilt();
         var sinA = Math.sin(a);
         var nZ   = (sinA+1)/2;
         var sc   = 0.82 + nZ*0.22;
@@ -1227,7 +1226,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
       } else {
         var a    = (i*(360/N) + orbitAngle) * Math.PI/180;
         var flyR = R() * 3.8;
-        var x    = Math.cos(a)*flyR, y = Math.sin(a)*flyR*TILT;
+        var x    = Math.cos(a)*flyR, y = Math.sin(a)*flyR*tilt();
         var d    = 25 + Math.min(Math.abs(i-idx), 3)*60;
         seg.style.cssText =
           'transform:translate('+x+'px,'+y+'px) scale(0.3);opacity:0;z-index:1;filter:brightness(1);'+
@@ -1272,7 +1271,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
     imgAngle = 30;
     var W = mob() ? 100 : 144;
     var H = mob() ?  68 :  96;
-    var IT = 0.85;
+    var IT = tilt();
     var r  = Ri();
 
     showImgTrack(r, IT);
@@ -1282,7 +1281,7 @@ document.getElementById('cform').addEventListener('submit',e=>{
       wrap.style.cssText =
         'position:absolute;top:50%;left:50%;width:'+W+'px;height:'+H+'px;'+
         'margin:'+(-(H/2))+'px '+(-(W/2))+'px;'+
-        'border-radius:10px;overflow:hidden;cursor:pointer;opacity:0;z-index:28;'+
+        'border-radius:10px;overflow:hidden;cursor:pointer;opacity:0;z-index:14;'+
         'box-shadow:0 6px 28px rgba(0,0,0,.70);'+
         'will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;'+
         'transition:opacity .55s ease,box-shadow .28s';
@@ -1334,10 +1333,13 @@ document.getElementById('cform').addEventListener('submit',e=>{
       var IT = o.tilt;
       var a  = (i*(360/n) + imgAngle) * Math.PI/180;
       // Round to integers → pixel-perfect, no subpixel blur
-      var x  = Math.round(Math.cos(a)*r);
-      var y  = Math.round(Math.sin(a)*r*IT);
-      // translate3d forces GPU compositing layer — no scale variation to keep images crisp
+      var x    = Math.round(Math.cos(a)*r);
+      var y    = Math.round(Math.sin(a)*r*IT);
+      var nZ   = (Math.sin(a)+1)/2;
+      // back half (nZ<0.5): z:14-19 → behind selected card (z:20); front half: z:21-28
+      var zi   = nZ < 0.5 ? Math.round(14+nZ*10) : Math.round(21+(nZ-0.5)*14);
       o.wrap.style.transform = 'translate3d('+x+'px,'+y+'px,0)';
+      o.wrap.style.zIndex    = zi;
     });
     imgRAF = requestAnimationFrame(loopImgs);
   }
