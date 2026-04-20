@@ -1155,9 +1155,9 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var orbitSpeed  = 0.10;
   var targetSpeed = 0.10;
   function mob(){ return window.innerWidth <= 768; }
-  function tilt(){ return mob() ? 0.95 : 0.85; }
-  function R(){   if(!mob()) return 248; return Math.round(Math.min(window.innerWidth-8,390)*0.384); }
-  function Ri(){  if(!mob()) return 268; return Math.round(Math.min(window.innerWidth-8,390)*0.430); }
+  function tilt(){ return mob() ? 1.05 : 0.85; }
+  function R(){   if(!mob()) return 248; return Math.round(Math.min(window.innerWidth-8,390)*0.340); }
+  function Ri(){  if(!mob()) return 268; return Math.round(Math.min(window.innerWidth-8,390)*0.360); }
 
   // ── MAIN ORBIT ────────────────────────────
   function animate(){
