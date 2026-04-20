@@ -273,8 +273,10 @@ section{padding:52px 48px}
 @media(max-width:768px){
   .port-head{flex-direction:column;gap:8px;align-items:flex-start;padding:0 20px;margin-bottom:32px}
   .port-sub{display:none}
-  .hub-ring{width:390px;height:355px}
-  .hub-seg{width:112px;height:112px;margin:-56px;border-radius:11px}
+  .hub-stage{padding:0}
+  .hub-ring{width:min(390px,calc(100vw - 8px));height:355px}
+  .hub-seg{width:112px;height:112px;margin:-56px;border-radius:50%}
+  .hub-pulse-ring{width:100px;height:100px}
   .hub-seg-title{font-size:10px}
   .hub-core{width:90px;height:90px}
   .hub-logo{width:52px;height:52px}
@@ -1148,34 +1150,32 @@ document.getElementById('cform').addEventListener('submit',e=>{
   var TILT        = 0.85;  // near-circular so visual distance stays consistent
 
   function mob(){ return window.innerWidth <= 768; }
-  function R(){   return mob() ? 120 : 248; }
-  function Ri(){  return mob() ? 146 : 268; }  // image orbit radius
+  function R(){   if(!mob()) return 248; return Math.round(Math.min(window.innerWidth-8,390)*0.308); }
+  function Ri(){  if(!mob()) return 268; return Math.round(Math.min(window.innerWidth-8,390)*0.374); }
 
   // ── MAIN ORBIT ────────────────────────────
   function animate(){
     if(!locked){
       orbitSpeed += (targetSpeed - orbitSpeed) * 0.055;
       orbitAngle += orbitSpeed;
-      var r = R();
+      var r     = R();
+      var isMob = mob();
       segEls.forEach(function(seg, i){
         var a    = (i*(360/N) + orbitAngle) * Math.PI/180;
         var x    = Math.cos(a) * r;
         var y    = Math.sin(a) * r * TILT;
-        var sinA = Math.sin(a);            // -1 back → +1 front
-        var nZ   = (sinA+1)/2;             // 0..1
-        // scale & opacity: depth illusion — higher minimums so text stays readable
-        var sc   = 0.82 + nZ*0.22;        // 0.82..1.04
-        var op   = 0.70 + nZ*0.30;        // 0.70..1.0
-        // z-index split: back (nZ<0.5)=1..9, front (nZ≥0.5)=11..20
-        // core sits at z:10 → front segs pass in front, back segs go behind
+        var sinA = Math.sin(a);
+        var nZ   = (sinA+1)/2;
+        var sc   = 0.82 + nZ*0.22;
+        var op   = 0.70 + nZ*0.30;
         var zi   = nZ < 0.5
-                   ? Math.round(1 + nZ*16)      // 1..9
-                   : Math.round(11 + (nZ-0.5)*18); // 11..20
-        // brightness shift for depth — keep min high so text stays legible
-        var br   = 0.82 + nZ*0.18;
-        seg.style.cssText =
-          'transform:translate3d('+Math.round(x)+'px,'+Math.round(y)+'px,0) scale('+sc.toFixed(3)+');'+
-          'opacity:'+op.toFixed(3)+';z-index:'+zi+';filter:brightness('+br.toFixed(2)+');transition:none';
+                   ? Math.round(1 + nZ*16)
+                   : Math.round(11 + (nZ-0.5)*18);
+        seg.style.transform = 'translate3d('+Math.round(x)+'px,'+Math.round(y)+'px,0) scale('+sc.toFixed(3)+')';
+        seg.style.opacity   = op.toFixed(3);
+        seg.style.zIndex    = zi;
+        // filter:brightness() blocks GPU compositing on mobile → skip it
+        if(!isMob){ seg.style.filter = 'brightness('+(0.82+nZ*0.18).toFixed(2)+')'; }
       });
     }
     requestAnimationFrame(animate);
@@ -1383,6 +1383,10 @@ document.getElementById('cform').addEventListener('submit',e=>{
       seg.style.opacity         = '1';
       seg.classList.remove('selected','away','glowing');
     });
+    // Clear inline transitions after fly-back completes so animate() runs without lag
+    setTimeout(function(){
+      segEls.forEach(function(seg){ seg.style.transition = ''; });
+    }, 500);
   }
 
   if(closeBtn) closeBtn.addEventListener('click', closeHub);
