@@ -457,17 +457,19 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 
 /* PAGE LOADER */
 #pg-loader{position:fixed;inset:0;background:var(--black);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.pl-glow{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,77,0,.10) 0%,transparent 70%);pointer-events:none;transition:none}
-.pl-ring{position:absolute;width:140px;height:140px;border-radius:50%;border:1px solid rgba(255,77,0,.25);animation:plRingPulse 2.4s ease-in-out infinite}
-.pl-ring2{position:absolute;width:220px;height:220px;border-radius:50%;border:1px solid rgba(255,77,0,.11);animation:plRingPulse 2.4s ease-in-out .6s infinite}
-.pl-ring3{position:absolute;width:330px;height:330px;border-radius:50%;border:1px solid rgba(255,77,0,.05);animation:plRingPulse 2.4s ease-in-out 1.2s infinite}
-@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.08);opacity:.2}}
-.pl-icon-wrap{position:relative;z-index:2}
-.pl-icon{width:90px;height:90px;object-fit:contain;display:block;transform:scale(0.25);opacity:0;transition:opacity .4s ease}
-.pl-wordmark{position:relative;z-index:2;margin-top:24px;font-family:'Palatino Linotype',Palatino,Georgia,serif;font-size:11px;letter-spacing:.48em;text-transform:uppercase;color:rgba(240,235,227,.28);white-space:nowrap;height:18px}
-.pl-wordmark span{opacity:0;display:inline-block;transform:translateY(7px);transition:opacity .28s ease,transform .35s cubic-bezier(0.16,1,0.3,1)}
-.pl-wordmark span.on{opacity:1;transform:translateY(0)}
-.pl-scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(255,77,0,.45),transparent);opacity:0;pointer-events:none;z-index:3;transform:translateY(-50vh)}
+.pl-glow{position:absolute;border-radius:50%;pointer-events:none;width:520px;height:200px;background:radial-gradient(ellipse,rgba(255,77,0,.06) 0%,transparent 65%);transition:none}
+.pl-ring{position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,77,0,.18);animation:plRingPulse 3.2s ease-in-out infinite}
+.pl-ring2{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(255,77,0,.08);animation:plRingPulse 3.2s ease-in-out .8s infinite}
+.pl-ring3{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,77,0,.03);animation:plRingPulse 3.2s ease-in-out 1.6s infinite}
+@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.18}}
+/* Logo wrap — clips image to show only KAIROS ORIGIN text (hides orange symbol + tagline) */
+.pl-logo-wrap{position:relative;z-index:2;width:290px;height:188px;overflow:hidden;opacity:0;transform:scale(0.96) translateY(12px);transition:opacity .85s ease,transform 1s cubic-bezier(0.16,1,0.3,1),filter .85s ease;filter:blur(10px)}
+.pl-logo-wrap.on{opacity:1;transform:scale(1) translateY(0);filter:blur(0)}
+.pl-logo{position:absolute;width:290px;height:auto;top:-72px;left:0;pointer-events:none;user-select:none}
+/* Horizontal shimmer sweep */
+.pl-shine{position:absolute;inset:0;background:linear-gradient(108deg,transparent 18%,rgba(255,255,255,.48) 50%,transparent 82%);transform:translateX(-140%);pointer-events:none;z-index:3}
+.pl-shine.sweep{transition:transform .85s cubic-bezier(0.4,0,0.2,1);transform:translateX(140%)}
+/* Progress bar */
 .pl-bar{position:absolute;bottom:0;left:0;height:1.5px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
 
 /* COOKIE BANNER */
@@ -1497,147 +1499,95 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="pl-ring"></div>
   <div class="pl-ring2"></div>
   <div class="pl-ring3"></div>
-  <div class="pl-scan" id="plScan"></div>
-  <div class="pl-icon-wrap">
-    <img src="Icon-KairosOrginsRGB-White.png" class="pl-icon" id="plIcon" alt="Kairos Origin">
+  <div class="pl-logo-wrap" id="plLogoWrap">
+    <img src="Logo/logowebsiteneu/Kairos-Origin Logo Weiß.png" class="pl-logo" id="plLogo" alt="Kairos Origin">
+    <div class="pl-shine" id="plShine"></div>
   </div>
-  <div class="pl-wordmark" id="plWordmark"><span>K</span><span>A</span><span>I</span><span>R</span><span>O</span><span>S</span><span>&thinsp;</span><span>O</span><span>R</span><span>I</span><span>G</span><span>I</span><span>N</span></div>
   <div class="pl-bar" id="plBar"></div>
 </div>
 
 <script>
 (function(){
-  var loader=document.getElementById('pg-loader');
-  var icon=document.getElementById('plIcon');
-  var glow=document.getElementById('plGlow');
-  var bar=document.getElementById('plBar');
-  var scan=document.getElementById('plScan');
-  var wordmark=document.getElementById('plWordmark');
-  if(!loader||!icon)return;
+  var loader   = document.getElementById('pg-loader');
+  var logoWrap = document.getElementById('plLogoWrap');
+  var shine    = document.getElementById('plShine');
+  var glow     = document.getElementById('plGlow');
+  var bar      = document.getElementById('plBar');
+  if(!loader || !logoWrap) return;
 
   window.scrollTo(0,0);
-  document.body.style.overflow='hidden';
+  document.body.style.overflow = 'hidden';
 
-  var angle=0, speed=0, maxSpeed=16, raf, isDone=false;
-  var startTime=Date.now(), minDuration=1800;
-  var textTriggered=false, scanTriggered=false;
+  var startTime = Date.now(), minDuration = 1700;
+  var shineTriggered = false, isDone = false;
+  var raf;
 
-  // Fade icon in gently
-  setTimeout(function(){ icon.style.opacity='1'; }, 80);
+  // Logo reveals with blur-to-sharp + subtle rise
+  setTimeout(function(){ logoWrap.classList.add('on'); }, 100);
 
   function frame(){
-    if(isDone)return;
-    speed=Math.min(speed+0.18, maxSpeed);
-    angle+=speed;
-    var t=Math.min(speed/maxSpeed,1);
+    if(isDone) return;
+    var t = Math.min((Date.now() - startTime) / minDuration, 1);
 
-    // Scale: 0.25 → 1.0 with smooth ease
-    var scale=0.25+0.75*(t<0.5?2*t*t:(1-Math.pow(-2*t+2,2)/2));
-    icon.style.transform='rotate('+angle+'deg) scale('+scale.toFixed(4)+')';
+    // Elliptical glow behind the wordmark pulses gently
+    var ga = (0.04 + t * 0.09).toFixed(3);
+    glow.style.background = 'radial-gradient(ellipse,rgba(255,77,0,'+ga+') 0%,transparent 65%)';
 
-    // Orange glow builds up slowly
-    var shadowBlur=Math.round(t*28);
-    var shadowAlpha=(t*0.6).toFixed(2);
-    icon.style.filter='drop-shadow(0 0 '+shadowBlur+'px rgba(255,77,0,'+shadowAlpha+'))';
-
-    // Halo grows
-    var ga=(0.05+t*0.28).toFixed(3);
-    var gs=180+t*160;
-    glow.style.width=gs+'px'; glow.style.height=gs+'px';
-    glow.style.background='radial-gradient(circle,rgba(255,77,0,'+ga+') 0%,rgba(255,77,0,'+((ga*.35)).toFixed(3)+') 40%,transparent 70%)';
-
-    // Scan line sweeps once at ~45% speed
-    if(!scanTriggered && t>0.45 && scan){
-      scanTriggered=true;
-      scan.style.opacity='1';
-      scan.style.transition='transform 0.65s cubic-bezier(0.4,0,0.6,1),opacity 0.15s ease';
-      scan.style.transform='translateY(50vh)';
-      setTimeout(function(){ scan.style.opacity='0'; scan.style.transition='opacity .35s ease'; },600);
+    // Shimmer sweeps across text at 60% progress
+    if(!shineTriggered && t > 0.60 && shine){
+      shineTriggered = true;
+      shine.classList.add('sweep');
     }
 
-    // Letter-by-letter reveal at ~65% speed, slower stagger = elegant
-    if(!textTriggered && t>0.65 && wordmark){
-      textTriggered=true;
-      var letters=wordmark.querySelectorAll('span');
-      letters.forEach(function(l,i){ setTimeout(function(){ l.classList.add('on'); }, i*62); });
-    }
-
-    bar.style.width=Math.min((Date.now()-startTime)/minDuration*88,88)+'%';
-    raf=requestAnimationFrame(frame);
+    bar.style.width = Math.min(t * 88, 88) + '%';
+    raf = requestAnimationFrame(frame);
   }
   frame();
 
   function hide(){
-    if(isDone)return;
-    isDone=true;
+    if(isDone) return;
+    isDone = true;
     cancelAnimationFrame(raf);
-    bar.style.transition='width .22s ease';
-    bar.style.width='100%';
+    bar.style.transition = 'width .22s ease';
+    bar.style.width = '100%';
 
-    var navLogo=document.querySelector('.nav-logo img, nav img');
-    var logoRect=navLogo?navLogo.getBoundingClientRect():null;
-    var iconRect=icon.getBoundingClientRect();
+    var navLogo  = document.querySelector('.nav-logo img, nav img');
+    var logoRect = navLogo ? navLogo.getBoundingClientRect() : null;
 
     if(logoRect){
-      // Create free-flying clone
-      var fly=document.createElement('img');
-      fly.src=icon.src;
-      fly.style.cssText='position:fixed;z-index:100000;pointer-events:none;'
-        +'left:'+iconRect.left+'px;top:'+iconRect.top+'px;'
-        +'width:'+iconRect.width+'px;height:'+iconRect.height+'px;'
-        +'object-fit:contain;'
-        +'transform:rotate('+angle+'deg) scale(1);'
-        +'filter:'+icon.style.filter+';';
-      document.body.appendChild(fly);
-      icon.style.opacity='0';
+      // Wordmark fades + contracts first
+      logoWrap.style.transition = 'opacity .32s ease, transform .32s ease, filter .32s ease';
+      logoWrap.style.opacity    = '0';
+      logoWrap.style.transform  = 'scale(0.90) translateY(-6px)';
+      logoWrap.style.filter     = 'blur(4px)';
 
-      // Brief deceleration spin
-      var burst=angle, bSpd=Math.max(speed,14), bF=0;
-      function burstSpin(){
-        burst+=bSpd; bSpd*=1.06; bF++;
-        fly.style.transform='rotate('+burst+'deg) scale(1)';
-        if(bF<10){ requestAnimationFrame(burstSpin); }
-        else {
-          // Background collapses toward nav logo
-          var cpX=Math.round(logoRect.left+logoRect.width/2)+'px';
-          var cpY=Math.round(logoRect.top+logoRect.height/2)+'px';
-          loader.style.transition='clip-path .9s cubic-bezier(0.4,0,0.2,1)';
-          loader.style.clipPath='circle(0% at '+cpX+' '+cpY+')';
-          document.body.classList.add('page-loaded');
-          document.body.style.overflow='';
+      setTimeout(function(){
+        // Screen collapses toward nav-logo position
+        var cpX = Math.round(logoRect.left + logoRect.width  / 2) + 'px';
+        var cpY = Math.round(logoRect.top  + logoRect.height / 2) + 'px';
+        loader.style.transition = 'clip-path .9s cubic-bezier(0.4,0,0.2,1)';
+        loader.style.clipPath   = 'circle(0% at ' + cpX + ' ' + cpY + ')';
+        document.body.classList.add('page-loaded');
+        document.body.style.overflow = '';
+        setTimeout(function(){ loader.style.display = 'none'; }, 950);
+      }, 300);
 
-          // Icon flies to nav position
-          var dx=(logoRect.left+logoRect.width/2)-(iconRect.left+iconRect.width/2);
-          var dy=(logoRect.top+logoRect.height/2)-(iconRect.top+iconRect.height/2);
-          var sc=(logoRect.height/iconRect.height).toFixed(4);
-          fly.style.transition='transform .8s cubic-bezier(0.16,1,0.3,1),filter .45s ease,opacity .18s ease .72s';
-          fly.style.transform='translate('+dx+'px,'+dy+'px) rotate('+burst+'deg) scale('+sc+')';
-          fly.style.filter='drop-shadow(0 0 6px rgba(255,77,0,.4))';
-
-          setTimeout(function(){
-            loader.style.display='none';
-            if(fly.parentNode)fly.parentNode.removeChild(fly);
-          },950);
-        }
-      }
-      requestAnimationFrame(burstSpin);
     } else {
-      // Fallback: simple fade
-      loader.style.transition='opacity .9s ease';
-      loader.style.opacity='0';
+      loader.style.transition = 'opacity .9s ease';
+      loader.style.opacity    = '0';
       document.body.classList.add('page-loaded');
-      document.body.style.overflow='';
-      setTimeout(function(){ loader.style.display='none'; },950);
+      document.body.style.overflow = '';
+      setTimeout(function(){ loader.style.display = 'none'; }, 950);
     }
   }
 
-  var pageLoaded=false;
-  window.addEventListener('load',function(){
-    pageLoaded=true;
-    var elapsed=Date.now()-startTime;
-    setTimeout(hide, Math.max(0, minDuration-elapsed));
+  var pageLoaded = false;
+  window.addEventListener('load', function(){
+    pageLoaded = true;
+    var elapsed = Date.now() - startTime;
+    setTimeout(hide, Math.max(0, minDuration - elapsed));
   });
-  setTimeout(function(){if(!pageLoaded)hide();}, 4000);
+  setTimeout(function(){ if(!pageLoaded) hide(); }, 4000);
 })();
 </script>
 
