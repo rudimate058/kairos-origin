@@ -469,18 +469,11 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 
 /* PAGE LOADER */
 #pg-loader{position:fixed;inset:0;background:var(--black);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.pl-glow{position:absolute;border-radius:50%;pointer-events:none;width:520px;height:200px;background:radial-gradient(ellipse,rgba(255,77,0,.06) 0%,transparent 65%);transition:none}
-.pl-ring{position:absolute;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,77,0,.18);animation:plRingPulse 3.2s ease-in-out infinite}
-.pl-ring2{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(255,77,0,.08);animation:plRingPulse 3.2s ease-in-out .8s infinite}
-.pl-ring3{position:absolute;width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,77,0,.03);animation:plRingPulse 3.2s ease-in-out 1.6s infinite}
+.pl-glow{position:absolute;border-radius:50%;pointer-events:none;width:180px;height:180px;background:radial-gradient(circle,rgba(255,77,0,.06) 0%,transparent 70%);transition:none}
+.pl-ring{position:absolute;width:120px;height:120px;border-radius:50%;border:1px solid rgba(255,77,0,.18);animation:plRingPulse 2s ease-in-out infinite}
+.pl-ring2{position:absolute;width:170px;height:170px;border-radius:50%;border:1px solid rgba(255,77,0,.08);animation:plRingPulse 2s ease-in-out .5s infinite}
 @keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.05);opacity:.18}}
-/* Logo wrap — clips image to show only KAIROS ORIGIN text (hides orange symbol + tagline) */
-.pl-logo-wrap{position:relative;z-index:2;width:290px;height:188px;overflow:hidden;opacity:0;transform:scale(0.96) translateY(12px);transition:opacity .85s ease,transform 1s cubic-bezier(0.16,1,0.3,1),filter .85s ease;filter:blur(10px)}
-.pl-logo-wrap.on{opacity:1;transform:scale(1) translateY(0);filter:blur(0)}
-.pl-logo{position:absolute;width:290px;height:auto;top:-72px;left:0;pointer-events:none;user-select:none}
-/* Horizontal shimmer sweep */
-.pl-shine{position:absolute;inset:0;background:linear-gradient(108deg,transparent 18%,rgba(255,255,255,.48) 50%,transparent 82%);transform:translateX(-140%);pointer-events:none;z-index:3}
-.pl-shine.sweep{transition:transform .85s cubic-bezier(0.4,0,0.2,1);transform:translateX(140%)}
+.pl-icon{width:90px;height:90px;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 0 12px rgba(255,77,0,0))}
 /* Progress bar */
 .pl-bar{position:absolute;bottom:0;left:0;height:1.5px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
 
@@ -1521,48 +1514,45 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="pl-glow" id="plGlow"></div>
   <div class="pl-ring"></div>
   <div class="pl-ring2"></div>
-  <div class="pl-ring3"></div>
-  <div class="pl-logo-wrap" id="plLogoWrap">
-    <img src="Logo/logowebsiteneu/Kairos-Origin Logo Weiß.png" class="pl-logo" id="plLogo" alt="Kairos Origin">
-    <div class="pl-shine" id="plShine"></div>
-  </div>
+  <img src="Icon-KairosOrginsRGB-White.png" class="pl-icon" id="plIcon" alt="">
   <div class="pl-bar" id="plBar"></div>
 </div>
 
 <script>
 (function(){
-  var loader   = document.getElementById('pg-loader');
-  var logoWrap = document.getElementById('plLogoWrap');
-  var shine    = document.getElementById('plShine');
-  var glow     = document.getElementById('plGlow');
-  var bar      = document.getElementById('plBar');
-  if(!loader || !logoWrap) return;
+  var loader = document.getElementById('pg-loader');
+  var icon   = document.getElementById('plIcon');
+  var glow   = document.getElementById('plGlow');
+  var bar    = document.getElementById('plBar');
+  if(!loader || !icon) return;
 
   window.scrollTo(0,0);
   document.body.style.overflow = 'hidden';
 
   var startTime = Date.now(), minDuration = 1700;
-  var shineTriggered = false, isDone = false;
-  var raf;
-
-  // Logo reveals with blur-to-sharp + subtle rise
-  setTimeout(function(){ logoWrap.classList.add('on'); }, 100);
+  var angle = 0, speed = 0.15, maxSpeed = 30, raf, isDone = false;
 
   function frame(){
     if(isDone) return;
-    var t = Math.min((Date.now() - startTime) / minDuration, 1);
+    speed = Math.min(speed * 1.042, maxSpeed);
+    angle += speed;
+    var t = speed / maxSpeed;
 
-    // Elliptical glow behind the wordmark pulses gently
-    var ga = (0.04 + t * 0.09).toFixed(3);
-    glow.style.background = 'radial-gradient(ellipse,rgba(255,77,0,'+ga+') 0%,transparent 65%)';
+    var blurPx     = (t * 2.2).toFixed(2);
+    var scalePulse = t > 0.55 ? 1 + 0.04 * Math.sin(angle * Math.PI / 90) : 1;
+    var shadowBlur = Math.round(t * 36);
+    var shadowAlpha= (t * 0.85).toFixed(2);
+    icon.style.transform = 'rotate('+angle+'deg) scale('+scalePulse.toFixed(4)+')';
+    icon.style.filter    = 'blur('+blurPx+'px) drop-shadow(0 0 '+shadowBlur+'px rgba(255,77,0,'+shadowAlpha+'))';
 
-    // Shimmer sweeps across text at 60% progress
-    if(!shineTriggered && t > 0.60 && shine){
-      shineTriggered = true;
-      shine.classList.add('sweep');
-    }
+    var glowSize   = 180 + t * 300;
+    var glowAlpha  = (0.06 + t * 0.49).toFixed(3);
+    var glowAlpha2 = (0.03 + t * 0.18).toFixed(3);
+    glow.style.width  = glowSize + 'px';
+    glow.style.height = glowSize + 'px';
+    glow.style.background = 'radial-gradient(circle,rgba(255,77,0,'+glowAlpha+') 0%,rgba(255,77,0,'+glowAlpha2+') 35%,transparent 70%)';
 
-    bar.style.width = Math.min(t * 88, 88) + '%';
+    bar.style.width = Math.min((Date.now() - startTime) / minDuration * 90, 90) + '%';
     raf = requestAnimationFrame(frame);
   }
   frame();
@@ -1571,36 +1561,61 @@ document.addEventListener('DOMContentLoaded',function(){
     if(isDone) return;
     isDone = true;
     cancelAnimationFrame(raf);
-    bar.style.transition = 'width .22s ease';
+    bar.style.transition = 'width .2s ease';
     bar.style.width = '100%';
 
-    var navLogo  = document.querySelector('.nav-logo img, nav img');
+    var navLogo  = document.querySelector('.nav-logo img');
     var logoRect = navLogo ? navLogo.getBoundingClientRect() : null;
+    var iconRect = icon.getBoundingClientRect();
 
     if(logoRect){
-      // Wordmark fades + contracts first
-      logoWrap.style.transition = 'opacity .32s ease, transform .32s ease, filter .32s ease';
-      logoWrap.style.opacity    = '0';
-      logoWrap.style.transform  = 'scale(0.90) translateY(-6px)';
-      logoWrap.style.filter     = 'blur(4px)';
+      var fly = document.createElement('img');
+      fly.src = icon.src;
+      fly.style.cssText = 'position:fixed;z-index:100000;pointer-events:none;'
+        +'left:'+iconRect.left+'px;top:'+iconRect.top+'px;'
+        +'width:'+iconRect.width+'px;height:'+iconRect.height+'px;'
+        +'object-fit:contain;margin:0;padding:0;'
+        +'transform:rotate('+angle+'deg);'
+        +'filter:'+icon.style.filter+';';
+      document.body.appendChild(fly);
+      icon.style.opacity = '0';
 
-      setTimeout(function(){
-        // Screen collapses toward nav-logo position
-        var cpX = Math.round(logoRect.left + logoRect.width  / 2) + 'px';
-        var cpY = Math.round(logoRect.top  + logoRect.height / 2) + 'px';
-        loader.style.transition = 'clip-path .9s cubic-bezier(0.4,0,0.2,1)';
-        loader.style.clipPath   = 'circle(0% at ' + cpX + ' ' + cpY + ')';
-        document.body.classList.add('page-loaded');
-        document.body.style.overflow = '';
-        setTimeout(function(){ loader.style.display = 'none'; }, 950);
-      }, 300);
+      var burst = angle, burstSpeed = Math.max(speed, 22), bFrames = 0;
+      function burstSpin(){
+        burst += burstSpeed * 1.07; burstSpeed *= 1.07;
+        fly.style.transform = 'rotate('+burst+'deg)';
+        bFrames++;
+        if(bFrames < 12){
+          requestAnimationFrame(burstSpin);
+        } else {
+          var cpX = Math.round(logoRect.left + logoRect.width  / 2) + 'px';
+          var cpY = Math.round(logoRect.top  + logoRect.height / 2) + 'px';
+          loader.style.transition = 'clip-path .85s cubic-bezier(0.4,0,0.2,1)';
+          loader.style.clipPath   = 'circle(0% at ' + cpX + ' ' + cpY + ')';
 
+          var dx = (logoRect.left + logoRect.width  / 2) - (iconRect.left + iconRect.width  / 2);
+          var dy = (logoRect.top  + logoRect.height / 2) - (iconRect.top  + iconRect.height / 2);
+          var sc = (logoRect.height / iconRect.height).toFixed(4);
+          fly.style.transition = 'transform .75s cubic-bezier(0.16,1,0.3,1),filter .4s ease,opacity .2s ease .65s';
+          fly.style.transform  = 'translate('+dx+'px,'+dy+'px) rotate('+burst+'deg) scale('+sc+')';
+          fly.style.filter     = 'drop-shadow(0 0 5px rgba(255,77,0,.35))';
+          fly.style.opacity    = '1';
+
+          document.body.classList.add('page-loaded');
+          document.body.style.overflow = '';
+
+          setTimeout(function(){
+            loader.style.display = 'none';
+            if(fly.parentNode) fly.parentNode.removeChild(fly);
+          }, 900);
+        }
+      }
+      requestAnimationFrame(burstSpin);
     } else {
-      loader.style.transition = 'opacity .9s ease';
-      loader.style.opacity    = '0';
+      loader.classList.add('hidden');
       document.body.classList.add('page-loaded');
       document.body.style.overflow = '';
-      setTimeout(function(){ loader.style.display = 'none'; }, 950);
+      setTimeout(function(){ loader.style.display = 'none'; }, 900);
     }
   }
 
