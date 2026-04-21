@@ -476,7 +476,7 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 @keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.14}}
 .pl-icon-wrap{position:relative;z-index:2;width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .pl-icon{width:88px;height:88px;object-fit:contain;display:block;transform-origin:center center;will-change:transform}
-.pl-wordmark{position:relative;z-index:2;width:280px;height:68px;overflow:hidden;opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .75s ease,transform .75s cubic-bezier(0.16,1,0.3,1),filter .75s ease;margin-top:18px;flex-shrink:0}
+.pl-wordmark{position:relative;z-index:2;width:280px;height:106px;overflow:hidden;opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .75s ease,transform .75s cubic-bezier(0.16,1,0.3,1),filter .75s ease;margin-top:18px;flex-shrink:0}
 .pl-wordmark.on{opacity:1;transform:translateY(0);filter:blur(0)}
 .pl-wm-img{position:absolute;width:280px;height:auto;top:-68px;left:0;pointer-events:none;user-select:none}
 /* Progress bar */
@@ -1563,49 +1563,65 @@ document.addEventListener('DOMContentLoaded',function(){
     isDone = true;
     cancelAnimationFrame(raf);
 
-    // Bar snaps to 100%
     bar.style.transition = 'width .22s ease';
     bar.style.width = '100%';
 
-    // Content fades out — icon scales down slightly, wordmark lifts and blurs
-    var iconWrap = icon.parentNode;
-    iconWrap.style.transition  = 'opacity .3s ease, transform .3s ease';
-    iconWrap.style.opacity     = '0';
-    iconWrap.style.transform   = 'scale(0.82)';
+    // Wordmark fades out upward
     if(wordmark){
-      wordmark.style.transition = 'opacity .24s ease, transform .24s ease, filter .24s ease';
+      wordmark.style.transition = 'opacity .28s ease, transform .28s ease, filter .28s ease';
       wordmark.style.opacity    = '0';
       wordmark.style.transform  = 'translateY(-10px)';
       wordmark.style.filter     = 'blur(5px)';
     }
 
-    // Curtain reveal: top half slides up, bottom half slides down — page splits open
-    setTimeout(function(){
-      var h = window.innerHeight;
-      var top = document.createElement('div');
-      var bot = document.createElement('div');
-      var base = 'position:fixed;left:0;right:0;background:var(--black);z-index:99998;';
-      top.style.cssText = base + 'top:0;height:' + Math.ceil(h/2) + 'px;';
-      bot.style.cssText = base + 'bottom:0;height:' + Math.ceil(h/2 + 1) + 'px;';
-      document.body.appendChild(top);
-      document.body.appendChild(bot);
-      loader.style.display = 'none';
+    var navLogo  = document.querySelector('.nav-logo img');
+    var logoRect = navLogo  ? navLogo.getBoundingClientRect()         : null;
+    var iconWrap = icon.parentNode;
+    var wrapRect = iconWrap ? iconWrap.getBoundingClientRect()        : null;
 
-      document.body.classList.add('page-loaded');
-      document.body.style.overflow = '';
+    if(logoRect && wrapRect){
+      // Clone icon as a free fixed element so it can fly independently
+      var fly = document.createElement('img');
+      fly.src = icon.src;
+      fly.style.cssText =
+        'position:fixed;z-index:100001;pointer-events:none;will-change:transform;'
+        +'left:'+wrapRect.left+'px;top:'+wrapRect.top+'px;'
+        +'width:'+wrapRect.width+'px;height:'+wrapRect.height+'px;'
+        +'object-fit:contain;transform:rotate('+angle.toFixed(2)+'deg);';
+      document.body.appendChild(fly);
+      iconWrap.style.opacity = '0'; // hide original
 
-      // One rAF to let the divs paint, then animate
-      requestAnimationFrame(function(){
-        requestAnimationFrame(function(){
-          var ease = 'transform .72s cubic-bezier(0.76,0,0.24,1)';
-          top.style.transition = ease;
-          bot.style.transition = ease;
-          top.style.transform  = 'translateY(-100%)';
-          bot.style.transform  = 'translateY(100%)';
-          setTimeout(function(){ top.remove(); bot.remove(); }, 760);
-        });
-      });
-    }, 340);
+      // Loader background fades out — smooth, no clipping
+      setTimeout(function(){
+        loader.style.transition = 'opacity .70s ease';
+        loader.style.opacity    = '0';
+        document.body.classList.add('page-loaded');
+        document.body.style.overflow = '';
+
+        // Icon glides to nav-logo position while still spinning
+        var dx = (logoRect.left + logoRect.width  / 2) - (wrapRect.left + wrapRect.width  / 2);
+        var dy = (logoRect.top  + logoRect.height / 2) - (wrapRect.top  + wrapRect.height / 2);
+        var sc = (logoRect.height / wrapRect.height).toFixed(4);
+        fly.style.transition = 'transform .78s cubic-bezier(0.16,1,0.3,1), opacity .25s ease .60s';
+        fly.style.transform  = 'translate('+dx+'px,'+dy+'px) rotate('+angle.toFixed(2)+'deg) scale('+sc+')';
+        fly.style.opacity    = '0'; // fades just before landing
+
+        setTimeout(function(){
+          loader.style.display = 'none';
+          fly.remove();
+        }, 820);
+      }, 260);
+
+    } else {
+      // Fallback: simple fade
+      setTimeout(function(){
+        loader.style.transition = 'opacity .65s ease';
+        loader.style.opacity    = '0';
+        document.body.classList.add('page-loaded');
+        document.body.style.overflow = '';
+        setTimeout(function(){ loader.style.display = 'none'; }, 700);
+      }, 260);
+    }
   }
 
   var pageLoaded = false;
