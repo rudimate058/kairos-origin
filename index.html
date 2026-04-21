@@ -469,19 +469,27 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 
 /* PAGE LOADER */
 #pg-loader{position:fixed;inset:0;background:var(--black);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-.pl-glow{position:absolute;border-radius:50%;pointer-events:none;width:220px;height:220px;background:radial-gradient(circle,rgba(255,77,0,.13) 0%,rgba(255,77,0,.04) 50%,transparent 70%);animation:plGlowPulse 2.8s ease-in-out infinite}
-@keyframes plGlowPulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.22)}}
-.pl-ring{position:absolute;width:120px;height:120px;border-radius:50%;border:1px solid rgba(255,77,0,.22);animation:plRingPulse 2.2s ease-in-out infinite}
-.pl-ring2{position:absolute;width:174px;height:174px;border-radius:50%;border:1px solid rgba(255,77,0,.09);animation:plRingPulse 2.2s ease-in-out .55s infinite}
-@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.14}}
 .pl-canvas{position:absolute;inset:0;pointer-events:none;z-index:1}
-.pl-icon-wrap{position:relative;z-index:2;width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pl-glow{position:absolute;border-radius:50%;pointer-events:none;width:220px;height:220px;background:radial-gradient(circle,rgba(255,77,0,.13) 0%,rgba(255,77,0,.04) 50%,transparent 70%);animation:plGlowPulse 2.8s ease-in-out infinite;z-index:2}
+@keyframes plGlowPulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.22)}}
+.pl-ring{position:absolute;width:120px;height:120px;border-radius:50%;border:1px solid rgba(255,77,0,.22);animation:plRingPulse 2.2s ease-in-out infinite;z-index:2}
+.pl-ring2{position:absolute;width:174px;height:174px;border-radius:50%;border:1px solid rgba(255,77,0,.09);animation:plRingPulse 2.2s ease-in-out .55s infinite;z-index:2}
+@keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.14}}
+.pl-icon-wrap{position:relative;z-index:3;width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .pl-icon{width:88px;height:88px;object-fit:contain;display:block;transform-origin:center center;will-change:transform}
-.pl-wordmark{position:relative;z-index:2;width:280px;height:124px;overflow:hidden;opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .75s ease,transform .75s cubic-bezier(0.16,1,0.3,1),filter .75s ease;margin-top:18px;flex-shrink:0}
+.pl-wordmark{position:relative;z-index:3;width:280px;height:124px;overflow:hidden;opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .75s ease,transform .75s cubic-bezier(0.16,1,0.3,1),filter .75s ease;margin-top:16px;flex-shrink:0}
 .pl-wordmark.on{opacity:1;transform:translateY(0);filter:blur(0)}
 .pl-wm-img{position:absolute;width:280px;height:auto;top:-73px;left:0;pointer-events:none;user-select:none}
-/* Progress bar */
-.pl-bar{position:absolute;bottom:0;left:0;height:1.5px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
+.pl-status{position:relative;z-index:3;width:280px;margin-top:20px;opacity:0;transform:translateY(8px);transition:opacity .55s ease,transform .55s ease;flex-shrink:0}
+.pl-status.on{opacity:1;transform:translateY(0)}
+.pl-status-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pl-status-label{font-family:var(--fb);font-size:8px;font-weight:700;letter-spacing:.32em;color:rgba(255,77,0,.50);text-transform:uppercase}
+.pl-status-dots{display:inline-block;min-width:22px;font-family:var(--fb);font-size:8px;letter-spacing:.08em;color:rgba(255,77,0,.50)}
+.pl-pct{font-family:var(--fb);font-size:8px;font-weight:700;letter-spacing:.20em;color:rgba(255,77,0,.45)}
+.pl-segs{display:flex;align-items:stretch;gap:2px}
+.pl-seg{flex:1;height:10px;background:rgba(255,77,0,.08);transition:background .07s ease,box-shadow .07s ease}
+.pl-seg.lit{background:rgba(255,77,0,.70);box-shadow:0 0 5px rgba(255,77,0,.55),0 0 10px rgba(255,77,0,.22)}
+.pl-seg.tip{background:#FF6622;box-shadow:0 0 8px rgba(255,100,30,.95),0 0 18px rgba(255,77,0,.70),0 0 32px rgba(255,77,0,.30)}
 
 /* COOKIE BANNER */
 .cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9100;opacity:0;pointer-events:none;transition:opacity .4s var(--ease);backdrop-filter:blur(3px)}
@@ -1529,7 +1537,13 @@ document.addEventListener('DOMContentLoaded',function(){
   <div class="pl-wordmark" id="plWordmark">
     <img src="Logo/logowebsiteneu/Kairos-Origin Logo Weiß.png" class="pl-wm-img" alt="">
   </div>
-  <div class="pl-bar" id="plBar"></div>
+  <div class="pl-status" id="plStatus">
+    <div class="pl-status-row">
+      <span class="pl-status-label">LOADING<span class="pl-status-dots" id="plDots"></span></span>
+      <span class="pl-pct" id="plPct">0%</span>
+    </div>
+    <div class="pl-segs" id="plSegs"></div>
+  </div>
 </div>
 
 <script>
@@ -1537,85 +1551,120 @@ document.addEventListener('DOMContentLoaded',function(){
   var loader   = document.getElementById('pg-loader');
   var icon     = document.getElementById('plIcon');
   var wordmark = document.getElementById('plWordmark');
-  var bar      = document.getElementById('plBar');
   var canvas   = document.getElementById('plCanvas');
+  var statusEl = document.getElementById('plStatus');
+  var dotsEl   = document.getElementById('plDots');
+  var segsEl   = document.getElementById('plSegs');
+  var pctEl    = document.getElementById('plPct');
   if(!loader || !icon) return;
 
   window.scrollTo(0,0);
   document.body.style.overflow = 'hidden';
 
   var startTime   = Date.now();
-  var minDuration = 1900;
-  var angle = 0, speed = 0, targetSpeed = 6.5, raf, isDone = false;
+  var minDuration = 2200;
+  var angle = 0, speed = 0, baseSpeed = 6.5, raf, isDone = false;
 
-  // ── PARTICLES ─────────────────────────────────
+  // ── SEGMENTS ──────────────────────────────────
+  var SEGS = 28, segEls = [];
+  if(segsEl){
+    for(var s=0; s<SEGS; s++){
+      var d = document.createElement('div');
+      d.className = 'pl-seg';
+      segsEl.appendChild(d);
+      segEls.push(d);
+    }
+  }
+
+  function updateProgress(pct){
+    var filled = Math.floor((pct/100)*SEGS);
+    for(var k=0; k<SEGS; k++){
+      if(!segEls[k]) continue;
+      segEls[k].className = 'pl-seg' + (k < filled-1 ? ' lit' : k === filled-1 ? ' tip' : '');
+    }
+    if(pctEl) pctEl.textContent = Math.round(pct)+'%';
+  }
+
+  // ── ANIMATED DOTS ─────────────────────────────
+  var dotTick = 0;
+  setInterval(function(){
+    if(isDone||!dotsEl) return;
+    dotsEl.textContent = ['','·','··','···'][dotTick++ % 4];
+  }, 380);
+
+  // ── REVEAL STAGGER ────────────────────────────
+  setTimeout(function(){ if(wordmark) wordmark.classList.add('on'); }, 360);
+  setTimeout(function(){ if(statusEl) statusEl.classList.add('on'); }, 680);
+
+  // ── PARTICLES (full screen) ────────────────────
   var ctx = canvas ? canvas.getContext('2d') : null;
-  var particles = [];
+  var parts = [];
   if(ctx){
     canvas.width  = window.innerWidth;
     canvas.height = window.innerHeight;
-    for(var i = 0; i < 42; i++){
-      var cx = canvas.width  * 0.5;
-      var cy = canvas.height * 0.5;
-      particles.push({
-        bx: cx + (Math.random()-0.5)*320,
-        by: cy + (Math.random()-0.5)*240,
-        dx: (Math.random()-0.5)*80,
-        dy: -(18 + Math.random()*55),
-        sz: 0.7 + Math.random()*2.0,
-        al: 0.12 + Math.random()*0.48,
-        lf: Math.random(),
-        sp: 0.0025 + Math.random()*0.004,
-        og: Math.random() > 0.58
-      });
+    var W = canvas.width, H = canvas.height;
+    // Ambient sparks — full viewport scatter
+    for(var i=0; i<70; i++){
+      parts.push({ shoot:false,
+        bx: Math.random()*W, by: Math.random()*H,
+        dx: (Math.random()-.5)*55, dy: -(10+Math.random()*52),
+        sz: 0.5+Math.random()*1.9, al: 0.09+Math.random()*0.38,
+        lf: Math.random(), sp: 0.0020+Math.random()*0.0038,
+        og: Math.random()>.55 });
+    }
+    // Shooting sparks — long fast arcs
+    for(var i=0; i<12; i++){
+      parts.push({ shoot:true,
+        bx: Math.random()*W, by: Math.random()*H,
+        dx: (Math.random()-.5)*280, dy: -(55+Math.random()*140),
+        sz: 1.1+Math.random()*1.6, al: 0.18+Math.random()*0.42,
+        lf: Math.random(), sp: 0.0055+Math.random()*0.0075,
+        og: true });
     }
   }
   function drawParticles(){
     if(!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for(var j = 0; j < particles.length; j++){
-      var p = particles[j];
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(var j=0; j<parts.length; j++){
+      var p = parts[j];
       p.lf += p.sp;
       if(p.lf >= 1){
         p.lf = 0;
-        p.bx = canvas.width*0.5 + (Math.random()-0.5)*360;
-        p.by = canvas.height*0.5 + (Math.random()-0.5)*260;
+        p.bx = Math.random()*canvas.width;
+        p.by = Math.random()*canvas.height;
       }
       var t  = p.lf;
-      var a  = Math.sin(t * Math.PI) * p.al;
-      var px = p.bx + p.dx * t;
-      var py = p.by + p.dy * t;
-      var sz = p.sz * Math.sin(t * Math.PI);
+      var a  = Math.sin(t*Math.PI)*p.al;
+      var sz = p.sz*Math.sin(t*Math.PI);
+      if(sz < 0.06||a < 0.005) continue;
       ctx.beginPath();
-      ctx.arc(px, py, sz < 0.1 ? 0.1 : sz, 0, Math.PI*2);
-      ctx.fillStyle = p.og
-        ? 'rgba(255,77,0,'  +a.toFixed(3)+')'
-        : 'rgba(255,228,190,'+a.toFixed(3)+')';
+      ctx.arc(p.bx+p.dx*t, p.by+p.dy*t, sz, 0, Math.PI*2);
+      ctx.fillStyle = p.og ? 'rgba(255,77,0,'+a.toFixed(3)+')' : 'rgba(255,222,180,'+a.toFixed(3)+')';
       ctx.fill();
     }
   }
 
-  // Wordmark fades in once icon is visibly spinning
-  setTimeout(function(){ if(wordmark) wordmark.classList.add('on'); }, 380);
-
+  // ── FRAME LOOP ────────────────────────────────
   function frame(){
     if(isDone) return;
-    speed += (targetSpeed - speed) * 0.036;
+    var t = Math.min((Date.now()-startTime)/minDuration, 1);
+    // Accelerate in final 30%
+    var tgt = baseSpeed * (t > 0.68 ? 1+(t-0.68)*7.5 : 1);
+    speed += (tgt-speed)*0.038;
     angle += speed;
-    icon.style.transform = 'rotate(' + angle.toFixed(2) + 'deg)';
-    bar.style.width = Math.min((Date.now() - startTime) / minDuration * 90, 90) + '%';
+    icon.style.transform = 'rotate('+angle.toFixed(2)+'deg)';
+    updateProgress(Math.min(t*90, 90));
     drawParticles();
     raf = requestAnimationFrame(frame);
   }
   frame();
 
+  // ── HIDE & REVEAL ─────────────────────────────
   function hide(){
     if(isDone) return;
     isDone = true;
     cancelAnimationFrame(raf);
-
-    bar.style.transition = 'width .22s ease';
-    bar.style.width = '100%';
+    updateProgress(100);
 
     var navImg   = document.querySelector('.nav-logo img');
     var logoRect = navImg   ? navImg.getBoundingClientRect()   : null;
@@ -1623,7 +1672,7 @@ document.addEventListener('DOMContentLoaded',function(){
     var wRect    = iconWrap ? iconWrap.getBoundingClientRect() : null;
     var wmRect   = wordmark ? wordmark.getBoundingClientRect() : null;
 
-    // ── fly icon ───────────────────────────────
+    // Clone icon for flight
     var flyIcon = document.createElement('img');
     flyIcon.src = icon.src;
     flyIcon.style.cssText =
@@ -1634,15 +1683,14 @@ document.addEventListener('DOMContentLoaded',function(){
     document.body.appendChild(flyIcon);
     iconWrap.style.opacity = '0';
 
-    // ── fly wordmark ──────────────────────────
+    // Clone wordmark for flight
     var flyText = null;
     if(wordmark && wmRect && wmRect.width > 0){
       flyText = document.createElement('div');
       flyText.style.cssText =
         'position:fixed;z-index:100001;pointer-events:none;will-change:transform;'
         +'left:'+wmRect.left+'px;top:'+wmRect.top+'px;'
-        +'width:'+wmRect.width+'px;height:'+wmRect.height+'px;'
-        +'overflow:hidden;';
+        +'width:'+wmRect.width+'px;height:'+wmRect.height+'px;overflow:hidden;';
       var wmi = document.createElement('img');
       wmi.src = wordmark.querySelector('img').src;
       wmi.style.cssText = 'position:absolute;width:280px;height:auto;top:-73px;left:0;';
@@ -1652,50 +1700,46 @@ document.addEventListener('DOMContentLoaded',function(){
     }
 
     setTimeout(function(){
-      // Fade out loader background
-      loader.style.transition = 'opacity .75s ease';
+      loader.style.transition = 'opacity .78s ease';
       loader.style.opacity    = '0';
       document.body.classList.add('page-loaded');
       document.body.style.overflow = '';
 
       if(logoRect && wRect){
-        // Icon flies to nav logo (top-left)
-        var icX = (logoRect.left + logoRect.width /2) - (wRect.left + wRect.width /2);
-        var icY = (logoRect.top  + logoRect.height/2) - (wRect.top  + wRect.height/2);
-        var icS = (logoRect.height / wRect.height).toFixed(4);
-        flyIcon.style.transition = 'transform .80s cubic-bezier(0.16,1,0.3,1)';
+        var icX = (logoRect.left+logoRect.width /2)-(wRect.left +wRect.width /2);
+        var icY = (logoRect.top +logoRect.height/2)-(wRect.top  +wRect.height/2);
+        var icS = (logoRect.height/wRect.height).toFixed(4);
+        flyIcon.style.transition = 'transform .82s cubic-bezier(0.16,1,0.3,1)';
         flyIcon.style.transform  = 'translate('+icX+'px,'+icY+'px) scale('+icS+')';
 
-        // Wordmark flies toward nav logo, shrinks and dissolves
         if(flyText && wmRect){
-          var txX = (logoRect.left + logoRect.width /2) - (wmRect.left + wmRect.width /2);
-          var txY = (logoRect.top  + logoRect.height/2) - (wmRect.top  + wmRect.height/2);
+          var txX = (logoRect.left+logoRect.width /2)-(wmRect.left+wmRect.width /2);
+          var txY = (logoRect.top +logoRect.height/2)-(wmRect.top +wmRect.height/2);
           flyText.style.transformOrigin = '50% 50%';
-          flyText.style.transition = 'transform .75s cubic-bezier(0.16,1,0.3,1), opacity .28s ease .50s';
+          flyText.style.transition = 'transform .76s cubic-bezier(0.16,1,0.3,1),opacity .28s ease .50s';
           flyText.style.transform  = 'translate('+txX+'px,'+txY+'px) scale(0.10)';
           flyText.style.opacity    = '0';
         }
       } else {
-        flyIcon.style.transition = 'opacity .4s ease';
-        flyIcon.style.opacity    = '0';
-        if(flyText){ flyText.style.transition = 'opacity .4s ease'; flyText.style.opacity = '0'; }
+        flyIcon.style.transition = 'opacity .4s ease'; flyIcon.style.opacity = '0';
+        if(flyText){ flyText.style.transition='opacity .4s ease'; flyText.style.opacity='0'; }
       }
 
       setTimeout(function(){
         loader.style.display = 'none';
         flyIcon.remove();
         if(flyText) flyText.remove();
-      }, 860);
+      }, 880);
     }, 260);
   }
 
   var pageLoaded = false;
   window.addEventListener('load', function(){
     pageLoaded = true;
-    var elapsed = Date.now() - startTime;
-    setTimeout(hide, Math.max(0, minDuration - elapsed));
+    var elapsed = Date.now()-startTime;
+    setTimeout(hide, Math.max(0, minDuration-elapsed));
   });
-  setTimeout(function(){ if(!pageLoaded) hide(); }, 4000);
+  setTimeout(function(){ if(!pageLoaded) hide(); }, 4500);
 })();
 </script>
 
