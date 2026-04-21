@@ -1526,6 +1526,9 @@ document.addEventListener('DOMContentLoaded',function(){
   </div>
 </div>
 
+<!-- SITE EMBERS -->
+<canvas id="siteEmbers" style="position:fixed;inset:0;pointer-events:none;z-index:1;"></canvas>
+
 <!-- PAGE LOADER -->
 <div id="pg-loader">
   <canvas class="pl-canvas" id="plCanvas"></canvas>
@@ -1566,6 +1569,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var startTime   = Date.now();
   var minDuration = 3400;
   var angle = 0, speed = 0, baseSpeed = 6.5, raf, isDone = false;
+  var currentT = 0;
 
   // ── SEGMENTS ──────────────────────────────────
   var SEGS = 28, segEls = [];
@@ -1606,42 +1610,44 @@ document.addEventListener('DOMContentLoaded',function(){
     canvas.height = window.innerHeight;
     var W = canvas.width, H = canvas.height;
     // Ambient sparks — full viewport scatter
-    for(var i=0; i<130; i++){
+    for(var i=0; i<200; i++){
       parts.push({ shoot:false,
         bx: Math.random()*W, by: Math.random()*H,
-        dx: (Math.random()-.5)*70, dy: -(8+Math.random()*65),
-        sz: 0.5+Math.random()*2.6, al: 0.12+Math.random()*0.55,
-        lf: Math.random(), sp: 0.0018+Math.random()*0.0040,
-        og: Math.random()>.50 });
+        dx: (Math.random()-.5)*80, dy: -(10+Math.random()*75),
+        sz: 0.5+Math.random()*3.0, al: 0.15+Math.random()*0.65,
+        lf: Math.random(), sp: 0.0018+Math.random()*0.0042,
+        og: Math.random()>.45 });
     }
     // Shooting sparks — long fast arcs
-    for(var i=0; i<22; i++){
+    for(var i=0; i<42; i++){
       parts.push({ shoot:true,
         bx: Math.random()*W, by: Math.random()*H,
-        dx: (Math.random()-.5)*340, dy: -(65+Math.random()*170),
-        sz: 1.2+Math.random()*2.0, al: 0.22+Math.random()*0.52,
-        lf: Math.random(), sp: 0.0050+Math.random()*0.0080,
+        dx: (Math.random()-.5)*440, dy: -(80+Math.random()*210),
+        sz: 1.5+Math.random()*3.2, al: 0.38+Math.random()*0.62,
+        lf: Math.random(), sp: 0.0050+Math.random()*0.0085,
         og: true });
     }
   }
   function drawParticles(){
     if(!ctx) return;
     ctx.clearRect(0,0,canvas.width,canvas.height);
+    var intensity = 0.28 + currentT * 0.72; // 0.28 at start → 1.0 at end
     for(var j=0; j<parts.length; j++){
       var p = parts[j];
-      p.lf += p.sp;
+      var spd = p.sp * (p.shoot ? 1 + currentT*0.6 : 1 + currentT*0.3);
+      p.lf += spd;
       if(p.lf >= 1){
         p.lf = 0;
         p.bx = Math.random()*canvas.width;
         p.by = Math.random()*canvas.height;
       }
       var t  = p.lf;
-      var a  = Math.sin(t*Math.PI)*p.al;
-      var sz = p.sz*Math.sin(t*Math.PI);
+      var a  = Math.sin(t*Math.PI)*p.al*intensity;
+      var sz = p.sz*Math.sin(t*Math.PI)*(p.shoot ? 1+currentT*0.5 : 1);
       if(sz < 0.06||a < 0.005) continue;
       ctx.beginPath();
       ctx.arc(p.bx+p.dx*t, p.by+p.dy*t, sz, 0, Math.PI*2);
-      ctx.fillStyle = p.og ? 'rgba(255,77,0,'+a.toFixed(3)+')' : 'rgba(255,222,180,'+a.toFixed(3)+')';
+      ctx.fillStyle = p.og ? 'rgba(255,77,0,'+a.toFixed(3)+')' : 'rgba(255,210,140,'+a.toFixed(3)+')';
       ctx.fill();
     }
   }
@@ -1650,6 +1656,7 @@ document.addEventListener('DOMContentLoaded',function(){
   function frame(){
     if(isDone) return;
     var t = Math.min((Date.now()-startTime)/minDuration, 1);
+    currentT = t;
     // Accelerate in final 30%
     var tgt = baseSpeed * (t > 0.68 ? 1+(t-0.68)*7.5 : 1);
     speed += (tgt-speed)*0.038;
@@ -1743,6 +1750,52 @@ document.addEventListener('DOMContentLoaded',function(){
     setTimeout(hide, Math.max(0, minDuration-elapsed));
   });
   setTimeout(function(){ if(!pageLoaded) hide(); }, 4500);
+})();
+</script>
+
+<script>
+/* Site-wide ambient embers — very subtle, slow rising */
+(function(){
+  var c = document.getElementById('siteEmbers');
+  if(!c) return;
+  var ctx = c.getContext('2d');
+  var W, H;
+  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var pts = [];
+  for(var i=0; i<30; i++){
+    pts.push({
+      x:  Math.random()*innerWidth,
+      y:  Math.random()*innerHeight,
+      vx: (Math.random()-.5)*.22,
+      vy: -(0.10+Math.random()*.26),
+      sz: .35+Math.random()*1.4,
+      maxAl: .055+Math.random()*.085,
+      ph:  Math.random()*Math.PI*2,
+      fsp: .004+Math.random()*.011
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0; i<pts.length; i++){
+      var p = pts[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.ph += p.fsp;
+      if(p.y < -8){ p.y = H+8; p.x = Math.random()*W; }
+      var a = p.maxAl*(.5+.5*Math.sin(p.ph));
+      if(a < .003) continue;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.sz, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,88,12,'+a.toFixed(3)+')';
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
 })();
 </script>
 
