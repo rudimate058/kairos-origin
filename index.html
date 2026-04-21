@@ -474,11 +474,12 @@ footer{background:var(--dark);border-top:1px solid var(--border);padding:36px 48
 .pl-ring{position:absolute;width:120px;height:120px;border-radius:50%;border:1px solid rgba(255,77,0,.22);animation:plRingPulse 2.2s ease-in-out infinite}
 .pl-ring2{position:absolute;width:174px;height:174px;border-radius:50%;border:1px solid rgba(255,77,0,.09);animation:plRingPulse 2.2s ease-in-out .55s infinite}
 @keyframes plRingPulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.06);opacity:.14}}
+.pl-canvas{position:absolute;inset:0;pointer-events:none;z-index:1}
 .pl-icon-wrap{position:relative;z-index:2;width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .pl-icon{width:88px;height:88px;object-fit:contain;display:block;transform-origin:center center;will-change:transform}
-.pl-wordmark{position:relative;z-index:2;width:280px;height:106px;overflow:hidden;opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .75s ease,transform .75s cubic-bezier(0.16,1,0.3,1),filter .75s ease;margin-top:18px;flex-shrink:0}
+.pl-wordmark{position:relative;z-index:2;width:280px;height:124px;overflow:hidden;opacity:0;transform:translateY(10px);filter:blur(6px);transition:opacity .75s ease,transform .75s cubic-bezier(0.16,1,0.3,1),filter .75s ease;margin-top:18px;flex-shrink:0}
 .pl-wordmark.on{opacity:1;transform:translateY(0);filter:blur(0)}
-.pl-wm-img{position:absolute;width:280px;height:auto;top:-68px;left:0;pointer-events:none;user-select:none}
+.pl-wm-img{position:absolute;width:280px;height:auto;top:-73px;left:0;pointer-events:none;user-select:none}
 /* Progress bar */
 .pl-bar{position:absolute;bottom:0;left:0;height:1.5px;width:0%;background:linear-gradient(to right,transparent,var(--orange),transparent);transition:none}
 
@@ -1518,6 +1519,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 <!-- PAGE LOADER -->
 <div id="pg-loader">
+  <canvas class="pl-canvas" id="plCanvas"></canvas>
   <div class="pl-glow"></div>
   <div class="pl-ring"></div>
   <div class="pl-ring2"></div>
@@ -1536,6 +1538,7 @@ document.addEventListener('DOMContentLoaded',function(){
   var icon     = document.getElementById('plIcon');
   var wordmark = document.getElementById('plWordmark');
   var bar      = document.getElementById('plBar');
+  var canvas   = document.getElementById('plCanvas');
   if(!loader || !icon) return;
 
   window.scrollTo(0,0);
@@ -1543,17 +1546,65 @@ document.addEventListener('DOMContentLoaded',function(){
 
   var startTime   = Date.now();
   var minDuration = 1900;
-  var angle = 0, speed = 0, targetSpeed = 3.2, raf, isDone = false;
+  var angle = 0, speed = 0, targetSpeed = 6.5, raf, isDone = false;
+
+  // ── PARTICLES ─────────────────────────────────
+  var ctx = canvas ? canvas.getContext('2d') : null;
+  var particles = [];
+  if(ctx){
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    for(var i = 0; i < 42; i++){
+      var cx = canvas.width  * 0.5;
+      var cy = canvas.height * 0.5;
+      particles.push({
+        bx: cx + (Math.random()-0.5)*320,
+        by: cy + (Math.random()-0.5)*240,
+        dx: (Math.random()-0.5)*80,
+        dy: -(18 + Math.random()*55),
+        sz: 0.7 + Math.random()*2.0,
+        al: 0.12 + Math.random()*0.48,
+        lf: Math.random(),
+        sp: 0.0025 + Math.random()*0.004,
+        og: Math.random() > 0.58
+      });
+    }
+  }
+  function drawParticles(){
+    if(!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for(var j = 0; j < particles.length; j++){
+      var p = particles[j];
+      p.lf += p.sp;
+      if(p.lf >= 1){
+        p.lf = 0;
+        p.bx = canvas.width*0.5 + (Math.random()-0.5)*360;
+        p.by = canvas.height*0.5 + (Math.random()-0.5)*260;
+      }
+      var t  = p.lf;
+      var a  = Math.sin(t * Math.PI) * p.al;
+      var px = p.bx + p.dx * t;
+      var py = p.by + p.dy * t;
+      var sz = p.sz * Math.sin(t * Math.PI);
+      ctx.beginPath();
+      ctx.arc(px, py, sz < 0.1 ? 0.1 : sz, 0, Math.PI*2);
+      ctx.fillStyle = p.og
+        ? 'rgba(255,77,0,'  +a.toFixed(3)+')'
+        : 'rgba(255,228,190,'+a.toFixed(3)+')';
+      ctx.fill();
+    }
+  }
 
   // Wordmark fades in once icon is visibly spinning
-  setTimeout(function(){ if(wordmark) wordmark.classList.add('on'); }, 420);
+  setTimeout(function(){ if(wordmark) wordmark.classList.add('on'); }, 380);
 
   function frame(){
     if(isDone) return;
-    speed += (targetSpeed - speed) * 0.036; // smooth ease-in, no blur or distortion
+    speed += (targetSpeed - speed) * 0.036;
     angle += speed;
     icon.style.transform = 'rotate(' + angle.toFixed(2) + 'deg)';
     bar.style.width = Math.min((Date.now() - startTime) / minDuration * 90, 90) + '%';
+    drawParticles();
     raf = requestAnimationFrame(frame);
   }
   frame();
@@ -1566,62 +1617,76 @@ document.addEventListener('DOMContentLoaded',function(){
     bar.style.transition = 'width .22s ease';
     bar.style.width = '100%';
 
-    // Wordmark fades out upward
-    if(wordmark){
-      wordmark.style.transition = 'opacity .28s ease, transform .28s ease, filter .28s ease';
-      wordmark.style.opacity    = '0';
-      wordmark.style.transform  = 'translateY(-10px)';
-      wordmark.style.filter     = 'blur(5px)';
-    }
-
-    var navLogo  = document.querySelector('.nav-logo img');
-    var logoRect = navLogo  ? navLogo.getBoundingClientRect()         : null;
+    var navImg   = document.querySelector('.nav-logo img');
+    var logoRect = navImg   ? navImg.getBoundingClientRect()   : null;
     var iconWrap = icon.parentNode;
-    var wrapRect = iconWrap ? iconWrap.getBoundingClientRect()        : null;
+    var wRect    = iconWrap ? iconWrap.getBoundingClientRect() : null;
+    var wmRect   = wordmark ? wordmark.getBoundingClientRect() : null;
 
-    if(logoRect && wrapRect){
-      // Clone icon as a free fixed element so it can fly independently
-      var fly = document.createElement('img');
-      fly.src = icon.src;
-      fly.style.cssText =
+    // ── fly icon ───────────────────────────────
+    var flyIcon = document.createElement('img');
+    flyIcon.src = icon.src;
+    flyIcon.style.cssText =
+      'position:fixed;z-index:100002;pointer-events:none;will-change:transform;'
+      +'left:'+wRect.left+'px;top:'+wRect.top+'px;'
+      +'width:'+wRect.width+'px;height:'+wRect.height+'px;'
+      +'object-fit:contain;transform:rotate('+angle.toFixed(2)+'deg);';
+    document.body.appendChild(flyIcon);
+    iconWrap.style.opacity = '0';
+
+    // ── fly wordmark ──────────────────────────
+    var flyText = null;
+    if(wordmark && wmRect && wmRect.width > 0){
+      flyText = document.createElement('div');
+      flyText.style.cssText =
         'position:fixed;z-index:100001;pointer-events:none;will-change:transform;'
-        +'left:'+wrapRect.left+'px;top:'+wrapRect.top+'px;'
-        +'width:'+wrapRect.width+'px;height:'+wrapRect.height+'px;'
-        +'object-fit:contain;transform:rotate('+angle.toFixed(2)+'deg);';
-      document.body.appendChild(fly);
-      iconWrap.style.opacity = '0'; // hide original
-
-      // Loader background fades out — smooth, no clipping
-      setTimeout(function(){
-        loader.style.transition = 'opacity .70s ease';
-        loader.style.opacity    = '0';
-        document.body.classList.add('page-loaded');
-        document.body.style.overflow = '';
-
-        // Icon glides to nav-logo position while still spinning
-        var dx = (logoRect.left + logoRect.width  / 2) - (wrapRect.left + wrapRect.width  / 2);
-        var dy = (logoRect.top  + logoRect.height / 2) - (wrapRect.top  + wrapRect.height / 2);
-        var sc = (logoRect.height / wrapRect.height).toFixed(4);
-        fly.style.transition = 'transform .78s cubic-bezier(0.16,1,0.3,1), opacity .25s ease .60s';
-        fly.style.transform  = 'translate('+dx+'px,'+dy+'px) rotate('+angle.toFixed(2)+'deg) scale('+sc+')';
-        fly.style.opacity    = '0'; // fades just before landing
-
-        setTimeout(function(){
-          loader.style.display = 'none';
-          fly.remove();
-        }, 820);
-      }, 260);
-
-    } else {
-      // Fallback: simple fade
-      setTimeout(function(){
-        loader.style.transition = 'opacity .65s ease';
-        loader.style.opacity    = '0';
-        document.body.classList.add('page-loaded');
-        document.body.style.overflow = '';
-        setTimeout(function(){ loader.style.display = 'none'; }, 700);
-      }, 260);
+        +'left:'+wmRect.left+'px;top:'+wmRect.top+'px;'
+        +'width:'+wmRect.width+'px;height:'+wmRect.height+'px;'
+        +'overflow:hidden;';
+      var wmi = document.createElement('img');
+      wmi.src = wordmark.querySelector('img').src;
+      wmi.style.cssText = 'position:absolute;width:280px;height:auto;top:-73px;left:0;';
+      flyText.appendChild(wmi);
+      document.body.appendChild(flyText);
+      wordmark.style.opacity = '0';
     }
+
+    setTimeout(function(){
+      // Fade out loader background
+      loader.style.transition = 'opacity .75s ease';
+      loader.style.opacity    = '0';
+      document.body.classList.add('page-loaded');
+      document.body.style.overflow = '';
+
+      if(logoRect && wRect){
+        // Icon flies to nav logo (top-left)
+        var icX = (logoRect.left + logoRect.width /2) - (wRect.left + wRect.width /2);
+        var icY = (logoRect.top  + logoRect.height/2) - (wRect.top  + wRect.height/2);
+        var icS = (logoRect.height / wRect.height).toFixed(4);
+        flyIcon.style.transition = 'transform .80s cubic-bezier(0.16,1,0.3,1)';
+        flyIcon.style.transform  = 'translate('+icX+'px,'+icY+'px) scale('+icS+')';
+
+        // Wordmark flies toward nav logo, shrinks and dissolves
+        if(flyText && wmRect){
+          var txX = (logoRect.left + logoRect.width /2) - (wmRect.left + wmRect.width /2);
+          var txY = (logoRect.top  + logoRect.height/2) - (wmRect.top  + wmRect.height/2);
+          flyText.style.transformOrigin = '50% 50%';
+          flyText.style.transition = 'transform .75s cubic-bezier(0.16,1,0.3,1), opacity .28s ease .50s';
+          flyText.style.transform  = 'translate('+txX+'px,'+txY+'px) scale(0.10)';
+          flyText.style.opacity    = '0';
+        }
+      } else {
+        flyIcon.style.transition = 'opacity .4s ease';
+        flyIcon.style.opacity    = '0';
+        if(flyText){ flyText.style.transition = 'opacity .4s ease'; flyText.style.opacity = '0'; }
+      }
+
+      setTimeout(function(){
+        loader.style.display = 'none';
+        flyIcon.remove();
+        if(flyText) flyText.remove();
+      }, 860);
+    }, 260);
   }
 
   var pageLoaded = false;
