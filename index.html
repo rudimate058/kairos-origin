@@ -1775,56 +1775,89 @@ document.addEventListener('DOMContentLoaded',function(){
   var c = document.getElementById('siteEmbers');
   if(!c) return;
   var ctx = c.getContext('2d');
-  var W, H, ZONE;
-  function resize(){
-    W = c.width  = innerWidth;
-    H = c.height = innerHeight;
-    ZONE = H * 0.28; // sparks only in top 28% — hero/logo area
-  }
+  var W, H;
+  function resize(){ W = c.width = innerWidth; H = c.height = innerHeight; }
   resize();
   window.addEventListener('resize', resize);
 
-  // Small rising embers — all confined to the top zone
+  // Scroll fade — canvas disappears as user scrolls past hero
+  var scrollAlpha = 1;
+  window.addEventListener('scroll', function(){
+    scrollAlpha = Math.max(0, 1 - window.scrollY / (H * 0.65));
+  }, {passive:true});
+
+  // — Rising embers (spread across full hero)
   var embers = [];
-  for(var i=0; i<38; i++){
+  for(var i=0; i<65; i++){
     embers.push({
       x:   Math.random()*innerWidth,
-      y:   Math.random()*ZONE,
-      vx:  (Math.random()-.5)*.25,
-      vy:  -(0.12+Math.random()*.28),
-      sz:  .4+Math.random()*1.8,
-      maxAl: .10+Math.random()*.18,
+      y:   Math.random()*innerHeight,
+      vx:  (Math.random()-.5)*.35,
+      vy:  -(0.18+Math.random()*.55),
+      sz:  .5+Math.random()*2.0,
+      maxAl: .12+Math.random()*.22,
       ph:  Math.random()*Math.PI*2,
-      fsp: .004+Math.random()*.012,
-      warm: Math.random()>.5
+      fsp: .005+Math.random()*.014,
+      warm: Math.random()>.45
+    });
+  }
+
+  // — Shooting sparks (fast diagonal arcs)
+  var shoots = [];
+  for(var i=0; i<10; i++){
+    shoots.push({
+      bx:  Math.random()*innerWidth,
+      by:  Math.random()*innerHeight,
+      dx:  (Math.random()-.5)*520,
+      dy:  -(60+Math.random()*180),
+      sz:  1.0+Math.random()*2.2,
+      al:  0.22+Math.random()*.42,
+      lf:  Math.random(),
+      sp:  .0018+Math.random()*.0032
     });
   }
 
   function draw(){
     ctx.clearRect(0,0,W,H);
+    if(scrollAlpha <= 0){ requestAnimationFrame(draw); return; }
+
+    // Rising embers
     for(var i=0; i<embers.length; i++){
       var p = embers[i];
-      p.x  += p.vx;
-      p.y  += p.vy;
-      p.ph += p.fsp;
-      // Reset back into the top zone when particle drifts above top
-      if(p.y < -8){
-        p.y = ZONE;
-        p.x = Math.random()*W;
-      }
-      // Fade out as particle approaches the zone boundary (bottom of zone)
-      var zoneFade = p.y < ZONE ? 1 : 0;
-      if(!zoneFade) continue;
-      var depthFade = Math.max(0, 1 - (p.y / ZONE) * 0.4); // brighter near top
-      var a = p.maxAl * (.45+.55*Math.sin(p.ph)) * depthFade;
+      p.x += p.vx; p.y += p.vy; p.ph += p.fsp;
+      if(p.y < -8){ p.y = H + 8; p.x = Math.random()*W; }
+      var a = p.maxAl * (.45+.55*Math.sin(p.ph)) * scrollAlpha;
       if(a < .003) continue;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.sz * Math.max(.4, depthFade), 0, Math.PI*2);
+      ctx.arc(p.x, p.y, p.sz, 0, Math.PI*2);
       ctx.fillStyle = p.warm
-        ? 'rgba(255,95,10,'+a.toFixed(3)+')'
-        : 'rgba(255,200,120,'+a.toFixed(3)+')';
+        ? 'rgba(255,90,8,'+a.toFixed(3)+')'
+        : 'rgba(255,195,100,'+a.toFixed(3)+')';
       ctx.fill();
     }
+
+    // Shooting sparks
+    for(var i=0; i<shoots.length; i++){
+      var s = shoots[i];
+      s.lf += s.sp;
+      if(s.lf >= 1){ s.lf=0; s.bx=Math.random()*W; s.by=H*(.3+Math.random()*.6); }
+      var t  = s.lf;
+      var a  = Math.sin(t*Math.PI) * s.al * scrollAlpha;
+      var sz = s.sz * Math.sin(t*Math.PI);
+      if(sz<.05||a<.003) continue;
+      var px = s.bx+s.dx*t, py = s.by+s.dy*t;
+      // Glow core
+      ctx.beginPath();
+      ctx.arc(px, py, sz, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,80,0,'+a.toFixed(3)+')';
+      ctx.fill();
+      // Bright tip
+      ctx.beginPath();
+      ctx.arc(px, py, sz*.45, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,210,140,'+(a*1.6).toFixed(3)+')';
+      ctx.fill();
+    }
+
     requestAnimationFrame(draw);
   }
   draw();
