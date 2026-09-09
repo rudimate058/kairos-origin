@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rudimate058.github.io/kairos-origin/sitemap.xml
