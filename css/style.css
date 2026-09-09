@@ -2019,7 +2019,7 @@ button.cookie-option { cursor: pointer; }
     white-space: nowrap;
   }
 
-  .hero-mitte { gap: 22px; padding-top: 12px; }
+  .hero-mitte { gap: 10px; padding-top: 12px; }
 
   /* Die senkrechten Social-Leisten funktionieren nur auf breiten Schirmen.
      Am Handy weg — Instagram und WhatsApp stehen im Plus-Menü und im Fuß. */
@@ -2049,8 +2049,8 @@ button.cookie-option { cursor: pointer; }
     max-height: none;
   }
 
-  .hero-unten { gap: 18px; }
-  .hero-claim { font-size: 11px; letter-spacing: .26em; }
+  .hero-unten { gap: 12px; }
+  .hero-claim { font-size: 10.5px; letter-spacing: .22em; }
   .hero-cta { padding: 16px 28px; font-size: 11px; }
 
   /* ----- Partner ----- */
