@@ -1,0 +1,4 @@
+# Vorschaufassung auf GitHub Pages — bewusst nicht in der Suche.
+# Die echte Seite laeuft auf https://kairos-origin.com/
+User-agent: *
+Disallow: /
