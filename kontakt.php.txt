@@ -1,0 +1,109 @@
+<?php
+/* ==========================================================================
+   Kontaktformular — versendet die Nachricht an office@kairos-origin.com
+   Laeuft auf jedem Webspace mit PHP. Nichts wird gespeichert, nur versendet.
+
+   Aenderbar:
+     EMPFAENGER  Zieladresse
+     BETREFF     Betreffzeile der eingehenden Mail
+
+   Gepruefte Felder: name, email, firma (optional), nachricht, zustimmung.
+   Das unsichtbare Feld "website" ist die Spam-Falle. Die Rechenaufgabe des
+   Formulars wird im Browser geprueft; ein direkter POST umgeht sie, deshalb
+   fangen hier Pflichtfeld- und Laengenpruefung zusaetzlich ab.
+   ========================================================================== */
+
+const EMPFAENGER = 'office@kairos-origin.com';
+const BETREFF    = 'Neue Anfrage über kairos-origin.com';
+
+/* Sprache aus dem Pfad der absendenden Seite ableiten. Das Formular der
+   englischen Fassung liegt unter /en/, also zeigen Rueckleitungen dorthin. */
+$englisch = str_contains((string) ($_SERVER['HTTP_REFERER'] ?? ''), '/en/');
+$start    = $englisch ? 'en/index.html' : 'index.html';
+$danke    = $englisch ? 'en/danke.html' : 'danke.html';
+
+/* Der Hostname kommt aus dem Aufruf und wird auf erlaubte Zeichen begrenzt,
+   damit er nicht in Kopfzeilen eingeschmuggelt werden kann. */
+$host = strtolower((string) ($_SERVER['HTTP_HOST'] ?? 'kairos-origin.com'));
+$host = preg_replace('/[^a-z0-9.\-]/', '', $host);
+if ($host === '') $host = 'kairos-origin.com';
+
+/* Nur POST zulassen */
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: ' . $start, true, 303);
+    exit;
+}
+
+/* Abbruch mit Rueckleitung auf das Formular */
+function abbruch(): void {
+    global $start;
+    header('Location: ' . $start . '?fehler=1#contact', true, 303);
+    exit;
+}
+
+/* Bremse gegen Massenversand: hoechstens fuenf Nachrichten je Stunde und
+   Absender-Adresse. Schlaegt das Schreiben fehl, laesst die Bremse durch —
+   ein funktionierendes Formular ist wichtiger als eine perfekte Zaehlung. */
+$spur = sys_get_temp_dir() . '/ko-' . sha1('kairos' . ($_SERVER['REMOTE_ADDR'] ?? ''));
+$liste = @file_exists($spur) ? array_filter(explode(',', (string) @file_get_contents($spur))) : [];
+$liste = array_values(array_filter($liste, fn($t) => (int) $t > time() - 3600));
+if (count($liste) >= 5) {
+    header('Location: ' . $start . '?fehler=3#contact', true, 303);
+    exit;
+}
+$liste[] = time();
+@file_put_contents($spur, implode(',', $liste), LOCK_EX);
+
+/* Honigtopf: dieses Feld ist fuer Menschen unsichtbar.
+   Ist es ausgefuellt, war es ein Roboter. */
+if (!empty($_POST['website'] ?? '')) {
+    header('Location: ' . $danke, true, 303); // Roboter still abweisen
+    exit;
+}
+
+/* Zeilenumbrueche entfernen — verhindert das Einschleusen von Mail-Kopfzeilen */
+function sauber(string $wert): string {
+    return trim(str_replace(["\r", "\n", "%0a", "%0d"], ' ', $wert));
+}
+
+$name      = sauber((string) ($_POST['name'] ?? ''));
+$email     = sauber((string) ($_POST['email'] ?? ''));
+$firma     = sauber((string) ($_POST['firma'] ?? ''));
+$nachricht = trim((string) ($_POST['nachricht'] ?? ''));
+
+/* Pflichtfelder und plausible Laengen pruefen */
+if ($name === '' || $email === '' || $nachricht === '') abbruch();
+if (mb_strlen($name) > 120 || mb_strlen($email) > 180) abbruch();
+if (mb_strlen($nachricht) < 5 || mb_strlen($nachricht) > 5000) abbruch();
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) abbruch();
+if (empty($_POST['zustimmung'] ?? '')) abbruch();
+
+/* Mailtext */
+$text = "Neue Nachricht über das Kontaktformular\n"
+      . "----------------------------------------\n\n"
+      . "Name:     $name\n"
+      . "E-Mail:   $email\n"
+      . ($firma !== '' ? "Firma:    $firma\n" : '')
+      . "Zeit:     " . date('d.m.Y H:i') . "\n\n"
+      . "Nachricht:\n$nachricht\n";
+
+/* Absender bleibt eine Adresse der eigenen Domain — sonst landet die Mail
+   wegen SPF/DMARC im Spam. Die Adresse des Absenders steht in Reply-To,
+   ein Klick auf "Antworten" geht also direkt an die anfragende Person. */
+$absender = 'no-reply@' . preg_replace('/^www\./', '', $host);
+
+$kopf = [
+    'From'         => 'Kairos Origin Website <' . $absender . '>',
+    'Reply-To'     => $email,
+    'Content-Type' => 'text/plain; charset=UTF-8',
+];
+
+$erfolg = mail(
+    EMPFAENGER,
+    '=?UTF-8?B?' . base64_encode(BETREFF) . '?=',
+    $text,
+    $kopf
+);
+
+header('Location: ' . ($erfolg ? $danke : $start . '?fehler=2#contact'), true, 303);
+exit;
